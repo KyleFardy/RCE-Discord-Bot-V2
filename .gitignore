@@ -1,6 +1,5 @@
 node_modules
 tests
 .env
-servers.json
 rce.log
 .vscode/settings.json
