@@ -9,7 +9,7 @@ module.exports = {
     // Asynchronous function to execute when a message event occurs
     async execute(data, rce, client) {
         // Construct the log message with the server identifier and the received message
-        const logMessage = `[${data.server.identifier}] ${data.message}`;
+        const logMessage = `[${data.server.identifier}] [MESSAGE]  ${data.message}`;
 
         // Log the message at the "info" level using the client's logging function
         //await client.functions.log("info", logMessage);

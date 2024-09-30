@@ -9,7 +9,7 @@ module.exports = {
     // Asynchronous function to execute when a log event occurs
     async execute(data, rce, client) {
         // Construct the log message using the level and content from the data
-        const logMessage = `[${data.level}] ${data.content}`;
+        const logMessage = `[${data.level}] [LOG] ${data.content}`;
 
         // Log the message with the specified level (info, warning, error, etc.)
         //await client.functions.log("info", logMessage);

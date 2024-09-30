@@ -18,7 +18,7 @@ module.exports = {
             await client.functions.log("error", errorMessage);
         } catch (logError) {
             // Handle any potential errors that occur during logging
-            console.error("Failed to log error:", logError);
+            await client.functions.log("error", "Failed To Log Error:", logError);
         }
     }
 };

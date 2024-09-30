@@ -11,7 +11,7 @@ module.exports = {
     // Asynchronous function to execute when a player joins the server
     async execute(data, rce, client) {
         // Log a message indicating that a player has joined the server
-        const joinMessage = `[${data.server.identifier}] ${data.ign} Joined The Server!`;
+        const joinMessage = `[${data.server.identifier}] [PLAYER JOINED] ${data.ign} Joined The Server!`;
         await client.functions.log("info", joinMessage);
 
         // Read the welcome message from the environment variable
