@@ -1,1 +1,1 @@
-"# RCE-Discord-Bot-V2" 
+# RCE-Discord-Bot-V2
