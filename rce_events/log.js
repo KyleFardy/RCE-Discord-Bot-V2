@@ -12,6 +12,6 @@ module.exports = {
         const logMessage = `[${data.level}] ${data.content}`;
 
         // Log the message with the specified level (info, warning, error, etc.)
-        await client.functions.log("info", logMessage);
+        //await client.functions.log("info", logMessage);
     }
 };

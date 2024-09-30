@@ -189,10 +189,12 @@ function format_hostname(hostname) {
         '#a0522d': '\x1b[33m', // Sienna
         '#7b68ee': '\x1b[34m', // MediumSlateBlue
     };
-
-
-    // Return the formatted hostname with the appropriate color code
-    return colorCodes[hostname] || hostname; // If color code not found, return the hostname unchanged
+    // Use a regular expression to find the color tags and their contents
+    return hostname.replace(/<color=([^>]+)>(.*?)<\/color>/g, (match, hexColor, text) => {
+        // Use the corresponding ANSI code or default to reset if the color is not defined
+        const ansiColor = colorCodes[hexColor] || '\x1b[0m'; // Reset to default if color not found
+        return `${ansiColor}${text}\x1b[0m`; // Append reset code after the text
+    });
 }
 
 module.exports = {

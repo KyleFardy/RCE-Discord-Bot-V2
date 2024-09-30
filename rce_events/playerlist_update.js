@@ -49,7 +49,7 @@ module.exports = {
                 };
 
                 // Log a message indicating successful connection to the server
-                await client.functions.log("SERVER INFO", `Connected To ${client.server_information[data.server.identifier].Hostname}!`);
+                await client.functions.log("SERVER INFO", `Connected To ${client.server_information[data.server.identifier].Hostname}`);
 
                 // Mark that a message has been shown for this server
                 shown_message[data.server.identifier] = true;

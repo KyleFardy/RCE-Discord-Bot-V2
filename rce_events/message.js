@@ -12,6 +12,6 @@ module.exports = {
         const logMessage = `[${data.server.identifier}] ${data.message}`;
 
         // Log the message at the "info" level using the client's logging function
-        await client.functions.log("info", logMessage);
+        //await client.functions.log("info", logMessage);
     }
 };
