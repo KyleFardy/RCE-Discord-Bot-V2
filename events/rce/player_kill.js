@@ -8,19 +8,32 @@ module.exports = {
 
     // Asynchronous function to execute when a player is killed
     async execute(data, rce, client) {
-        // Log an informational message indicating that a player has been killed
-        const playerKilledMessage = `[${data.server.identifier}] [KILL] ${data.killer.name} Killed ${data.victim.name}!`;
+        const { server, killer, victim } = data; // Destructure data for better readability
 
-        // Utilize the logging function from the client to log the join event
+        // Log an informational message indicating that a player has been killed
+        const playerKilledMessage = `[${server.identifier}] [KILL] ${killer.name} killed ${victim.name}!`;
         await client.functions.log("info", playerKilledMessage);
 
-        if(data.victim.type === "npc"){
-            return;
-        }
-        
-        const killer_killsCount = await client.functions.get_count('SELECT COUNT(*) as count FROM kills WHERE display_name = ? AND victim != "A Scientist"', [data.killer.name]);
-        const killer_deathsCount = await client.functions.get_count('SELECT COUNT(*) as count FROM kills WHERE victim = ? AND display_name != "A Scientist"', [data.killer.name]);
-        const kd_ratio = killer_deathsCount === 0 ? killer_killsCount : Math.round((killer_killsCount / killer_deathsCount) * 100) / 100;
+        // Skip further processing if the victim is an NPC
+        if (victim.type === "npc") return;
+
+        // Get kill and death counts for the killer
+        const killerKillsCount = await client.functions.get_count(
+            'SELECT COUNT(*) as count FROM kills WHERE display_name = ? AND victim != "A Scientist"',
+            [killer.name]
+        );
+
+        const killerDeathsCount = await client.functions.get_count(
+            'SELECT COUNT(*) as count FROM kills WHERE victim = ? AND display_name != "A Scientist"',
+            [killer.name]
+        );
+
+        // Calculate the kill/death ratio
+        const kdRatio = killerDeathsCount === 0
+            ? killerKillsCount
+            : Math.round((killerKillsCount / killerDeathsCount) * 100) / 100;
+
+        // Prepare kill feed messages
         const killFeeds = [
             `<color=green><b>${data.killer.name}</b></color> Smoked <color=red><b>${data.victim.name}</b></color>`,
             `<color=red><b>${data.victim.name}</b></color> Was Doubled By <color=green><b>${data.killer.name}</b></color>`,
@@ -29,14 +42,17 @@ module.exports = {
             `<color=green><b>${data.killer.name}</b></color> Shat On <color=red><b>${data.victim.name}</b></color>`,
             `<color=red><b>${data.victim.name}</b></color> Was Bummed By <color=green><b>${data.killer.name}</b></color>`
         ];
-        await client.player_stats.insert_player(data.killer.name, data.server);
-        await client.player_stats.insert_player(data.victim.name, data.server);
 
-        await client.player_stats.add_points(data.server, data.killer.name, client.config.kill_points);
-        await client.player_stats.remove_points(data.server, data.victim.name, client.config.death_points);
-        await client.player_stats.insert_kill(data.server, data.killer.name, data.victim.name, "Kill");
+        // Update player statistics for both killer and victim
+        await Promise.all([
+            client.player_stats.insert_player(killer.name, server),
+            client.player_stats.insert_player(victim.name, server),
+            client.player_stats.add_points(server, killer.name, client.config.kill_points),
+            client.player_stats.remove_points(server, victim.name, client.config.death_points),
+            client.player_stats.insert_kill(server, killer.name, victim.name, "Kill")
+        ]);
 
-        await rce.sendCommand(`say <color=green><b>[KILL]</b></color> ${killFeeds[Math.floor(Math.random() * killFeeds.length)]}<br><color=green><color=white>(</color>Kills: <color=white>${killer_killsCount}</color> <color=red>|</color> Deaths: <color=white>${killer_deathsCount}</color> <color=red>|</color> K/D Ratio: <color=white>${kd_ratio.toFixed(1)}</color><color=white>)</color></color>`);
-
+        // Send kill message to the server
+        await rce.sendCommand(`say <color=green><b>[KILL]</b></color> ${killFeeds[Math.floor(Math.random() * killFeeds.length)]}<br><color=green><color=white>(</color>Kills: <color=white>${killerKillsCount}</color> <color=red>|</color> Deaths: <color=white>${killerDeathsCount}</color> <color=red>|</color> K/D Ratio: <color=white>${kdRatio.toFixed(1)}</color><color=white>)</color></color>`);
     }
 };
