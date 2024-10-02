@@ -1,7 +1,7 @@
 // Import necessary components from the rce.js library
 const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
 
-// Export the player joined event handler module
+// Export the event handler module
 module.exports = {
     // Set the name of the event this handler listens for
     name: RCEEvent.PlayerSuicide,

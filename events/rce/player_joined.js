@@ -3,7 +3,7 @@ const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
 // Load environment variables from the .env file
 require('dotenv').config();
 
-// Export the player joined event handler module
+// Export the event handler module
 module.exports = {
     // Set the name of the event this handler listens for
     name: RCEEvent.PlayerJoined,
@@ -18,8 +18,9 @@ module.exports = {
         let welcomeMessage = process.env.WELCOME_MESSAGE;
         // Replace placeholder with the player's in-game name (IGN)
         welcomeMessage = welcomeMessage.replace('{{username}}', data.ign);
-
         // Send the welcome message to the server
-        await rce.sendCommand(data.server.identifier, `say ${welcomeMessage}`);
+        //await rce.sendCommand(data.server.identifier, `say ${welcomeMessage}`);
+
+        await client.player_stats.insert_player(data.ign, data.server);
     }
 };

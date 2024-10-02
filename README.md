@@ -42,12 +42,12 @@ RCE Discord Bot V2 is a Rust Console Discord Bot Designed To Interact With Rust 
 
 4. Create A `.env` File In The Root Directory And Add Your Configuration Variables:
     ```env
-    TOKEN=YOUR_DISCORD_BOT_TOKEN
-    CLIENT_ID=YOUR_CLIENT_ID
-    GUILD_ID=YOUR_GUILD_ID
-    GPORTAL_EMAIL=YOUR_GPORTAL_EMAIL
-    GPORTAL_PASSWORD=YOUR_GPORTAL_PASSWORD
-    WELCOME_MESSAGE=<br><size=40>Hello <color=orange>{{username}}</color>,<br>Welcome To The Server!</size>
+    TOKEN="YOUR_DISCORD_BOT_TOKEN"
+    CLIENT_ID="YOUR_CLIENT_ID"
+    GUILD_ID="YOUR_GUILD_ID"
+    GPORTAL_EMAIL="YOUR_GPORTAL_EMAIL"
+    GPORTAL_PASSWORD="YOUR_GPORTAL_PASSWORD"
+    WELCOME_MESSAGE="<br><size=40>Hello <color=orange>{{username}}</color>,<br>Welcome To The Server!</size>"
     ```
 
 5. Run The Bot:
