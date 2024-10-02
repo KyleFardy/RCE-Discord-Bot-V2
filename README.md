@@ -47,6 +47,12 @@ RCE Discord Bot V2 is a Rust Console Discord Bot Designed To Interact With Rust 
     GUILD_ID="YOUR_GUILD_ID"
     GPORTAL_EMAIL="YOUR_GPORTAL_EMAIL"
     GPORTAL_PASSWORD="YOUR_GPORTAL_PASSWORD"
+    DATABASE_TYPE="mysql"
+    DATABASE_HOST="localhost"
+    DATABASE_USER="root"
+    DATABASE_PASSWORD=""
+    DATABASE_NAME="rce_discord_bot"
+    LOG_LEVEL="info"
     WELCOME_MESSAGE="<br><size=40>Hello <color=orange>{{username}}</color>,<br>Welcome To The Server!</size>"
     ```
 
