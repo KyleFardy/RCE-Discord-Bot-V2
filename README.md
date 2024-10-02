@@ -56,7 +56,26 @@ RCE Discord Bot V2 is a Rust Console Discord Bot Designed To Interact With Rust 
     WELCOME_MESSAGE="<br><size=40>Hello <color=orange>{{username}}</color>,<br>Welcome To The Server!</size>"
     ```
 
-5. Run The Bot:
+5. Add Your Servers:
+    ```json
+    [
+        {
+            "identifier": "MM1",
+            "region": "EU",
+            "serverId": 6479404,
+            "refreshPlayers": 2
+        },
+        {
+            "identifier": "MM2",
+            "region": "EU",
+            "serverId": 6831535,
+            "refreshPlayers": 2
+        }
+    ]
+    ```
+
+
+6. Run The Bot:
     ```bash
     node index.js
     ```
