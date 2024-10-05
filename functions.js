@@ -318,7 +318,7 @@ async function get_player_by_discord(discord_id, server) {
         throw err;
     }
 }
-const get_count = async (condition, params) => (await client.database_connection.query(condition, params))[0][0].count;
+const get_count = async (condition, params) => (await client.database_connection.execute(condition, params))[0][0].count;
 const events = Object.freeze({
 
     //rce
