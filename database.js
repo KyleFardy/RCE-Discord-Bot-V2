@@ -255,8 +255,7 @@ class STATS {
                     return;
                 }
                 if (player[0].discord_id === null) {
-                    const query = 'UPDATE players SET discord_id = ? WHERE display_name = ? AND server = ? AND region = ?';
-                    await this.client.database_connection.execute(query, [discord_id, player_name, server_identifier.serverId, server_identifier.region], (updateErr) => {
+                    await this.client.database_connection.execute('UPDATE players SET discord_id = ? WHERE display_name = ? AND server = ? AND region = ?', [discord_id, player_name, server_identifier.serverId, server_identifier.region], (updateErr) => {
                         if (updateErr) {
                             reject(updateErr);
                         } else {
