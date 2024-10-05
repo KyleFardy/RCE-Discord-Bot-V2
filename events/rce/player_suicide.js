@@ -9,7 +9,7 @@ module.exports = {
     // Asynchronous function to execute when a player kills themself
     async execute(data, rce, client) {
         // Log an informational message indicating that a player has killed themself
-        const playerSuicideMessage = `[${data.server.identifier}] [PLAYER SUICIDE] ${data.ign} Killed Themself!`;
+        const playerSuicideMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[PLAYER SUICIDE]\x1b[0m \x1b[32;1m${data.ign}\x1b[0m Killed Themself!`;
 
         // Utilize the logging function from the client to log the join event
         await client.functions.log("info", playerSuicideMessage);

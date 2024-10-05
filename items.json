@@ -1,0 +1,2726 @@
+[
+  {
+    "id": "-1478212975",
+    "image": "https://wiki.rustclash.com/img/items180/red.berry.png",
+    "displayName": "Red Berry",
+    "shortName": "red.berry",
+    "category": "Food"
+  },
+  {
+    "id": "-1478212975",
+    "image": "https://wiki.rustclash.com/img/items180/green.berry.png",
+    "displayName": "Green Berry",
+    "shortName": "green.berry",
+    "category": "Food"
+  },
+  {
+    "id": "-1478212975",
+    "image": "https://wiki.rustclash.com/img/items180/yellow.berry.png",
+    "displayName": "Yellow Berry",
+    "shortName": "yellow.berry",
+    "category": "Food"
+  },
+  {
+    "id": "-1478212975",
+    "image": "https://wiki.rustclash.com/img/items180/blue.berry.png",
+    "displayName": "Blue Berry",
+    "shortName": "blue.berry",
+    "category": "Food"
+  },
+  {
+    "id": "-1478212975",
+    "image": "https://wiki.rustclash.com/img/items180/white.berry.png",
+    "displayName": "White Berry",
+    "shortName": "white.berry",
+    "category": "Food"
+  },
+
+  {
+    "id": "-1478212975",
+    "image": "https://wiki.rustclash.com/img/items180/hat.wolf.png",
+    "displayName": "Wolf Headdress",
+    "shortName": "hat.wolf",
+    "category": "Attire"
+  },
+  {
+    "id": "1055319033",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.grenadelauncher.buckshot.png",
+    "displayName": "40mm Shotgun Round",
+    "shortName": "ammo.grenadelauncher.buckshot",
+    "category": "Ammunition"
+  },
+  {
+    "id": "349762871",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.grenadelauncher.he.png",
+    "displayName": "40mm HE Grenade",
+    "shortName": "ammo.grenadelauncher.he",
+    "category": "Ammunition"
+  },
+  {
+    "id": "915408809",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.grenadelauncher.smoke.png",
+    "displayName": "40mm Smoke Grenade",
+    "shortName": "ammo.grenadelauncher.smoke",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1023065463",
+    "image": "https://wiki.rustclash.com/img/items180/arrow.hv.png",
+    "displayName": "High Velocity Arrow",
+    "shortName": "arrow.hv",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1234735557",
+    "image": "https://wiki.rustclash.com/img/items180/arrow.wooden.png",
+    "displayName": "Wooden Arrow",
+    "shortName": "arrow.wooden",
+    "category": "Ammunition"
+  },
+  {
+    "id": "215754713",
+    "image": "https://wiki.rustclash.com/img/items180/arrow.bone.png",
+    "displayName": "Bone Arrow",
+    "shortName": "arrow.bone",
+    "category": "Ammunition"
+  },
+  {
+    "id": "14241751",
+    "image": "https://wiki.rustclash.com/img/items180/arrow.fire.png",
+    "displayName": "Fire Arrow",
+    "shortName": "arrow.fire",
+    "category": "Ammunition"
+  },
+  {
+    "id": "588596902",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.handmade.shell.png",
+    "displayName": "Handmade Shell",
+    "shortName": "ammo.handmade.shell",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-2097376851",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.nailgun.nails.png",
+    "displayName": "Nailgun Nails",
+    "shortName": "ammo.nailgun.nails",
+    "category": "Ammunition"
+  },
+  {
+    "id": "785728077",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.pistol.png",
+    "displayName": "Pistol Bullet",
+    "shortName": "ammo.pistol",
+    "category": "Ammunition"
+  },
+  {
+    "id": "51984655",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.pistol.fire.png",
+    "displayName": "Incendiary Pistol Bullet",
+    "shortName": "ammo.pistol.fire",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1691396643",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.pistol.hv.png",
+    "displayName": "HV Pistol Ammo",
+    "shortName": "ammo.pistol.hv",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1211166256",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rifle.png",
+    "displayName": "5.56 Rifle Ammo",
+    "shortName": "ammo.rifle",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1321651331",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rifle.explosive.png",
+    "displayName": "Explosive 5.56 Rifle Ammo",
+    "shortName": "ammo.rifle.explosive",
+    "category": "Ammunition"
+  },
+  {
+    "id": "605467368",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rifle.incendiary.png",
+    "displayName": "Incendiary 5.56 Rifle Ammo",
+    "shortName": "ammo.rifle.incendiary",
+    "category": "Ammunition"
+  },
+  {
+    "id": "1712070256",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rifle.hv.png",
+    "displayName": "HV 5.56 Rifle Ammo",
+    "shortName": "ammo.rifle.hv",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-742865266",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rocket.basic.png",
+    "displayName": "Rocket",
+    "shortName": "ammo.rocket.basic",
+    "category": "Ammunition"
+  },
+  {
+    "id": "1638322904",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rocket.fire.png",
+    "displayName": "Incendiary Rocket",
+    "shortName": "ammo.rocket.fire",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1841918730",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rocket.hv.png",
+    "displayName": "High Velocity Rocket",
+    "shortName": "ammo.rocket.hv",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-17123659",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.rocket.smoke.png",
+    "displayName": "Smoke Rocket WIP!!!!",
+    "shortName": "ammo.rocket.smoke",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1685290200",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.shotgun.png",
+    "displayName": "12 Gauge Buckshot",
+    "shortName": "ammo.shotgun",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-1036635990",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.shotgun.fire.png",
+    "displayName": "12 Gauge Incendiary Shell",
+    "shortName": "ammo.shotgun.fire",
+    "category": "Ammunition"
+  },
+  {
+    "id": "-727717969",
+    "image": "https://wiki.rustclash.com/img/items180/ammo.shotgun.slug.png",
+    "displayName": "12 Gauge Slug",
+    "shortName": "ammo.shotgun.slug",
+    "category": "Ammunition"
+  },
+  {
+    "id": "1390353317",
+    "image": "https://wiki.rustclash.com/img/items180/door.double.hinged.metal.png",
+    "displayName": "Sheet Metal Double Door",
+    "shortName": "door.double.hinged.metal",
+    "category": "Construction"
+  },
+  {
+    "id": "1221063409",
+    "image": "https://wiki.rustclash.com/img/items180/door.double.hinged.toptier.png",
+    "displayName": "Armored Double Door",
+    "shortName": "door.double.hinged.toptier",
+    "category": "Construction"
+  },
+  {
+    "id": "-1336109173",
+    "image": "https://wiki.rustclash.com/img/items180/door.double.hinged.wood.png",
+    "displayName": "Wood Double Door",
+    "shortName": "door.double.hinged.wood",
+    "category": "Construction"
+  },
+  {
+    "id": "-2067472972",
+    "image": "https://wiki.rustclash.com/img/items180/door.hinged.metal.png",
+    "displayName": "Sheet Metal Door",
+    "shortName": "door.hinged.metal",
+    "category": "Construction"
+  },
+  {
+    "id": "1353298668",
+    "image": "https://wiki.rustclash.com/img/items180/door.hinged.toptier.png",
+    "displayName": "Armored Door",
+    "shortName": "door.hinged.toptier",
+    "category": "Construction"
+  },
+  {
+    "id": "1729120840",
+    "image": "https://wiki.rustclash.com/img/items180/door.hinged.wood.png",
+    "displayName": "Wooden Door",
+    "shortName": "door.hinged.wood",
+    "category": "Construction"
+  },
+  {
+    "id": "936496778",
+    "image": "https://wiki.rustclash.com/img/items180/floor.grill.png",
+    "displayName": "Floor grill",
+    "shortName": "floor.grill",
+    "category": "Construction"
+  },
+  {
+    "id": "1948067030",
+    "image": "https://wiki.rustclash.com/img/items180/floor.ladder.hatch.png",
+    "displayName": "Ladder Hatch",
+    "shortName": "floor.ladder.hatch",
+    "category": "Construction"
+  },
+  {
+    "id": "-691113464",
+    "image": "https://wiki.rustclash.com/img/items180/gates.external.high.stone.png",
+    "displayName": "High External Stone Gate",
+    "shortName": "gates.external.high.stone",
+    "category": "Construction"
+  },
+  {
+    "id": "-335089230",
+    "image": "https://wiki.rustclash.com/img/items180/gates.external.high.wood.png",
+    "displayName": "High External Wooden Gate",
+    "shortName": "gates.external.high.wood",
+    "category": "Construction"
+  },
+  {
+    "id": "-316250604",
+    "image": "https://wiki.rustclash.com/img/items180/ladder.wooden.wall.png",
+    "displayName": "Wooden Ladder",
+    "shortName": "ladder.wooden.wall",
+    "category": "Construction"
+  },
+  {
+    "id": "-967648160",
+    "image": "https://wiki.rustclash.com/img/items180/wall.external.high.stone.png",
+    "displayName": "High External Stone Wall",
+    "shortName": "wall.external.high.stone",
+    "category": "Construction"
+  },
+  {
+    "id": "99588025",
+    "image": "https://wiki.rustclash.com/img/items180/wall.external.high.png",
+    "displayName": "High External Wooden Wall",
+    "shortName": "wall.external.high",
+    "category": "Construction"
+  },
+  {
+    "id": "-956706906",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.cell.gate.png",
+    "displayName": "Prison Cell Gate",
+    "shortName": "wall.frame.cell.gate",
+    "category": "Construction"
+  },
+  {
+    "id": "-1429456799",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.cell.png",
+    "displayName": "Prison Cell Wall",
+    "shortName": "wall.frame.cell",
+    "category": "Construction"
+  },
+  {
+    "id": "1451568081",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.fence.gate.png",
+    "displayName": "Chainlink Fence Gate",
+    "shortName": "wall.frame.fence.gate",
+    "category": "Construction"
+  },
+  {
+    "id": "-1117626326",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.fence.png",
+    "displayName": "Chainlink Fence",
+    "shortName": "wall.frame.fence",
+    "category": "Construction"
+  },
+  {
+    "id": "-148794216",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.garagedoor.png",
+    "displayName": "Garage Door",
+    "shortName": "wall.frame.garagedoor",
+    "category": "Construction"
+  },
+  {
+    "id": "1516985844",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.netting.png",
+    "displayName": "Netting",
+    "shortName": "wall.frame.netting",
+    "category": "Construction"
+  },
+  {
+    "id": "-796583652",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.shopfront.png",
+    "displayName": "Shop Front",
+    "shortName": "wall.frame.shopfront",
+    "category": "Construction"
+  },
+  {
+    "id": "-148229307",
+    "image": "https://wiki.rustclash.com/img/items180/wall.frame.shopfront.metal.png",
+    "displayName": "Metal Shop Front",
+    "shortName": "wall.frame.shopfront.metal",
+    "category": "Construction"
+  },
+  {
+    "id": "-819720157",
+    "image": "https://wiki.rustclash.com/img/items180/wall.window.bars.metal.png",
+    "displayName": "Metal Window Bars",
+    "shortName": "wall.window.bars.metal",
+    "category": "Construction"
+  },
+  {
+    "id": "671706427",
+    "image": "https://wiki.rustclash.com/img/items180/wall.window.bars.toptier.png",
+    "displayName": "Reinforced Window Bars",
+    "shortName": "wall.window.bars.toptier",
+    "category": "Construction"
+  },
+  {
+    "id": "-1183726687",
+    "image": "https://wiki.rustclash.com/img/items180/wall.window.bars.wood.png",
+    "displayName": "Wooden Window Bars",
+    "shortName": "wall.window.bars.wood",
+    "category": "Construction"
+  },
+  {
+    "id": "-1199897169",
+    "image": "https://wiki.rustclash.com/img/items180/shutter.metal.embrasure.a.png",
+    "displayName": "Metal horizontal embrasure",
+    "shortName": "shutter.metal.embrasure.a",
+    "category": "Construction"
+  },
+  {
+    "id": "-1199897172",
+    "image": "https://wiki.rustclash.com/img/items180/shutter.metal.embrasure.b.png",
+    "displayName": "Metal Vertical embrasure",
+    "shortName": "shutter.metal.embrasure.b",
+    "category": "Construction"
+  },
+  {
+    "id": "-1614955425",
+    "image": "https://wiki.rustclash.com/img/items180/wall.window.glass.reinforced.png",
+    "displayName": "Reinforced Glass Window",
+    "shortName": "wall.window.glass.reinforced",
+    "category": "Construction"
+  },
+  {
+    "id": "-1023374709",
+    "image": "https://wiki.rustclash.com/img/items180/shutter.wood.a.png",
+    "displayName": "Wood Shutters",
+    "shortName": "shutter.wood.a",
+    "category": "Construction"
+  },
+  {
+    "id": "-463122489",
+    "image": "https://wiki.rustclash.com/img/items180/watchtower.wood.png",
+    "displayName": "Watch Tower",
+    "shortName": "watchtower.wood",
+    "category": "Construction"
+  },
+  {
+    "id": "296519935",
+    "image": "https://wiki.rustclash.com/img/items180/diving.fins.png",
+    "displayName": "Diving Fins",
+    "shortName": "diving.fins",
+    "category": "Attire"
+  },
+  {
+    "id": "-113413047",
+    "image": "https://wiki.rustclash.com/img/items180/diving.mask.png",
+    "displayName": "Diving Mask",
+    "shortName": "diving.mask",
+    "category": "Attire"
+  },
+  {
+    "id": "-2022172587",
+    "image": "https://wiki.rustclash.com/img/items180/diving.tank.png",
+    "displayName": "Diving Tank",
+    "shortName": "diving.tank",
+    "category": "Attire"
+  },
+  {
+    "id": "-1101924344",
+    "image": "https://wiki.rustclash.com/img/items180/diving.wetsuit.png",
+    "displayName": "Wetsuit",
+    "shortName": "diving.wetsuit",
+    "category": "Attire"
+  },
+  {
+    "id": "21402876",
+    "image": "https://wiki.rustclash.com/img/items180/burlap.gloves.new.png",
+    "displayName": "Burlap Gloves",
+    "shortName": "burlap.gloves.new",
+    "category": "Attire"
+  },
+  {
+    "id": "1366282552",
+    "image": "https://wiki.rustclash.com/img/items180/burlap.gloves.png",
+    "displayName": "Leather Gloves",
+    "shortName": "burlap.gloves",
+    "category": "Attire"
+  },
+  {
+    "id": "-699558439",
+    "image": "https://wiki.rustclash.com/img/items180/roadsign.gloves.png",
+    "displayName": "Roadsign Gloves",
+    "shortName": "roadsign.gloves",
+    "category": "Attire"
+  },
+  {
+    "id": "-1108136649",
+    "image": "https://wiki.rustclash.com/img/items180/tactical.gloves.png",
+    "displayName": "Tactical Gloves",
+    "shortName": "tactical.gloves",
+    "category": "Attire"
+  },
+  {
+    "id": "1675639563",
+    "image": "https://wiki.rustclash.com/img/items180/hat.beenie.png",
+    "displayName": "Beenie Hat",
+    "shortName": "hat.beenie",
+    "category": "Attire"
+  },
+  {
+    "id": "-23994173",
+    "image": "https://wiki.rustclash.com/img/items180/hat.boonie.png",
+    "displayName": "Boonie Hat",
+    "shortName": "hat.boonie",
+    "category": "Attire"
+  },
+  {
+    "id": "850280505",
+    "image": "https://wiki.rustclash.com/img/items180/bucket.helmet.png",
+    "displayName": "Bucket Helmet",
+    "shortName": "bucket.helmet",
+    "category": "Attire"
+  },
+  {
+    "id": "1877339384",
+    "image": "https://wiki.rustclash.com/img/items180/burlap.headwrap.png",
+    "displayName": "Burlap Headwrap",
+    "shortName": "burlap.headwrap",
+    "category": "Attire"
+  },
+  {
+    "id": "1714496074",
+    "image": "https://wiki.rustclash.com/img/items180/hat.candle.png",
+    "displayName": "Candle Hat",
+    "shortName": "hat.candle",
+    "category": "Attire"
+  },
+  {
+    "id": "-1022661119",
+    "image": "https://wiki.rustclash.com/img/items180/hat.cap.png",
+    "displayName": "Baseball Cap",
+    "shortName": "hat.cap",
+    "category": "Attire"
+  },
+  {
+    "id": "-803263829",
+    "image": "https://wiki.rustclash.com/img/items180/coffeecan.helmet.png",
+    "displayName": "Coffee Can Helmet",
+    "shortName": "coffeecan.helmet",
+    "category": "Attire"
+  },
+  {
+    "id": "-1903165497",
+    "image": "https://wiki.rustclash.com/img/items180/deer.skull.mask.png",
+    "displayName": "Bone Helmet",
+    "shortName": "deer.skull.mask",
+    "category": "Attire"
+  },
+  {
+    "id": "1181207482",
+    "image": "https://wiki.rustclash.com/img/items180/heavy.plate.helmet.png",
+    "displayName": "Heavy Plate Helmet",
+    "shortName": "heavy.plate.helmet",
+    "category": "Attire"
+  },
+  {
+    "id": "-1539025626",
+    "image": "https://wiki.rustclash.com/img/items180/hat.miner.png",
+    "displayName": "Miners Hat",
+    "shortName": "hat.miner",
+    "category": "Attire"
+  },
+  {
+    "id": "-575744869",
+    "image": "https://wiki.rustclash.com/img/items180/partyhat.png",
+    "displayName": "Party Hat",
+    "shortName": "partyhat",
+    "category": "Attire"
+  },
+  {
+    "id": "671063303",
+    "image": "https://wiki.rustclash.com/img/items180/riot.helmet.png",
+    "displayName": "Riot Helmet",
+    "shortName": "riot.helmet",
+    "category": "Attire"
+  },
+  {
+    "id": "-2094954543",
+    "image": "https://wiki.rustclash.com/img/items180/wood.armor.helmet.png",
+    "displayName": "Wood Armor Helmet",
+    "shortName": "wood.armor.helmet",
+    "category": "Attire"
+  },
+  {
+    "id": "1751045826",
+    "image": "https://wiki.rustclash.com/img/items180/hoodie.png",
+    "displayName": "Hoodie",
+    "shortName": "hoodie",
+    "category": "Attire"
+  },
+  {
+    "id": "1746956556",
+    "image": "https://wiki.rustclash.com/img/items180/bone.armor.suit.png",
+    "displayName": "Bone Armor",
+    "shortName": "bone.armor.suit",
+    "category": "Attire"
+  },
+  {
+    "id": "-1102429027",
+    "image": "https://wiki.rustclash.com/img/items180/heavy.plate.jacket.png",
+    "displayName": "Heavy Plate Jacket",
+    "shortName": "heavy.plate.jacket",
+    "category": "Attire"
+  },
+  {
+    "id": "-48090175",
+    "image": "https://wiki.rustclash.com/img/items180/jacket.snow.png",
+    "displayName": "Snow Jacket",
+    "shortName": "jacket.snow",
+    "category": "Attire"
+  },
+  {
+    "id": "-1163532624",
+    "image": "https://wiki.rustclash.com/img/items180/jacket.png",
+    "displayName": "Jacket",
+    "shortName": "jacket",
+    "category": "Attire"
+  },
+  {
+    "id": "418081930",
+    "image": "https://wiki.rustclash.com/img/items180/wood.armor.jacket.png",
+    "displayName": "Wood Chestplate",
+    "shortName": "wood.armor.jacket",
+    "category": "Attire"
+  },
+  {
+    "id": "-2012470695",
+    "image": "https://wiki.rustclash.com/img/items180/mask.balaclava.png",
+    "displayName": "Improvised Balaclava",
+    "shortName": "mask.balaclava",
+    "category": "Attire"
+  },
+  {
+    "id": "-702051347",
+    "image": "https://wiki.rustclash.com/img/items180/mask.bandana.png",
+    "displayName": "Bandana Mask",
+    "shortName": "mask.bandana",
+    "category": "Attire"
+  },
+  {
+    "id": "-194953424",
+    "image": "https://wiki.rustclash.com/img/items180/metal.facemask.png",
+    "displayName": "Metal Facemask",
+    "shortName": "metal.facemask",
+    "category": "Attire"
+  },
+  {
+    "id": "1992974553",
+    "image": "https://wiki.rustclash.com/img/items180/burlap.trousers.png",
+    "displayName": "Burlap Trousers",
+    "shortName": "burlap.trousers",
+    "category": "Attire"
+  },
+  {
+    "id": "-1778159885",
+    "image": "https://wiki.rustclash.com/img/items180/heavy.plate.pants.png",
+    "displayName": "Heavy Plate Pants",
+    "shortName": "heavy.plate.pants",
+    "category": "Attire"
+  },
+  {
+    "id": "1722154847",
+    "image": "https://wiki.rustclash.com/img/items180/attire.hide.pants.png",
+    "displayName": "Hide Pants",
+    "shortName": "attire.hide.pants",
+    "category": "Attire"
+  },
+  {
+    "id": "1850456855",
+    "image": "https://wiki.rustclash.com/img/items180/roadsign.kilt.png",
+    "displayName": "Road Sign Kilt",
+    "shortName": "roadsign.kilt",
+    "category": "Attire"
+  },
+  {
+    "id": "-1695367501",
+    "image": "https://wiki.rustclash.com/img/items180/pants.shorts.png",
+    "displayName": "Shorts",
+    "shortName": "pants.shorts",
+    "category": "Attire"
+  },
+  {
+    "id": "832133926",
+    "image": "https://wiki.rustclash.com/img/items180/wood.armor.pants.png",
+    "displayName": "Wood Armor Pants",
+    "shortName": "wood.armor.pants",
+    "category": "Attire"
+  },
+  {
+    "id": "237239288",
+    "image": "https://wiki.rustclash.com/img/items180/pants.png",
+    "displayName": "Pants",
+    "shortName": "pants",
+    "category": "Attire"
+  },
+  {
+    "id": "980333378",
+    "image": "https://wiki.rustclash.com/img/items180/attire.hide.poncho.png",
+    "displayName": "Hide Poncho",
+    "shortName": "attire.hide.poncho",
+    "category": "Attire"
+  },
+  {
+    "id": "602741290",
+    "image": "https://wiki.rustclash.com/img/items180/burlap.shirt.png",
+    "displayName": "Burlap Shirt",
+    "shortName": "burlap.shirt",
+    "category": "Attire"
+  },
+  {
+    "id": "-2025184684",
+    "image": "https://wiki.rustclash.com/img/items180/shirt.collared.png",
+    "displayName": "Shirt",
+    "shortName": "shirt.collared",
+    "category": "Attire"
+  },
+  {
+    "id": "196700171",
+    "image": "https://wiki.rustclash.com/img/items180/attire.hide.vest.png",
+    "displayName": "Hide Vest",
+    "shortName": "attire.hide.vest",
+    "category": "Attire"
+  },
+  {
+    "id": "1608640313",
+    "image": "https://wiki.rustclash.com/img/items180/shirt.tanktop.png",
+    "displayName": "Tank Top",
+    "shortName": "shirt.tanktop",
+    "category": "Attire"
+  },
+  {
+    "id": "-1549739227",
+    "image": "https://wiki.rustclash.com/img/items180/shoes.boots.png",
+    "displayName": "Boots",
+    "shortName": "shoes.boots",
+    "category": "Attire"
+  },
+  {
+    "id": "-761829530",
+    "image": "https://wiki.rustclash.com/img/items180/burlap.shoes.png",
+    "displayName": "Burlap Shoes",
+    "shortName": "burlap.shoes",
+    "category": "Attire"
+  },
+  {
+    "id": "794356786",
+    "image": "https://wiki.rustclash.com/img/items180/attire.hide.boots.png",
+    "displayName": "Hide Boots",
+    "shortName": "attire.hide.boots",
+    "category": "Attire"
+  },
+  {
+    "id": "-1773144852",
+    "image": "https://wiki.rustclash.com/img/items180/attire.hide.skirt.png",
+    "displayName": "Hide Skirt",
+    "shortName": "attire.hide.skirt",
+    "category": "Attire"
+  },
+  {
+    "id": "1266491000",
+    "image": "https://wiki.rustclash.com/img/items180/hazmatsuit.png",
+    "displayName": "Hazmat Suit",
+    "shortName": "hazmatsuit",
+    "category": "Attire"
+  },
+  {
+    "id": "935692442",
+    "image": "https://wiki.rustclash.com/img/items180/tshirt.long.png",
+    "displayName": "Longsleeve T-Shirt",
+    "shortName": "tshirt.long",
+    "category": "Attire"
+  },
+  {
+    "id": "223891266",
+    "image": "https://wiki.rustclash.com/img/items180/tshirt.png",
+    "displayName": "T-Shirt",
+    "shortName": "tshirt",
+    "category": "Attire"
+  },
+  {
+    "id": "1110385766",
+    "image": "https://wiki.rustclash.com/img/items180/metal.plate.torso.png",
+    "displayName": "Metal Chest Plate",
+    "shortName": "metal.plate.torso",
+    "category": "Attire"
+  },
+  {
+    "id": "-2002277461",
+    "image": "https://wiki.rustclash.com/img/items180/roadsign.jacket.png",
+    "displayName": "Road Sign Jacket",
+    "shortName": "roadsign.jacket",
+    "category": "Attire"
+  },
+  {
+    "id": "-629028935",
+    "image": "https://wiki.rustclash.com/img/items180/fuse.png",
+    "displayName": "Electric Fuse",
+    "shortName": "fuse",
+    "category": "Component"
+  },
+  {
+    "id": "479143914",
+    "image": "https://wiki.rustclash.com/img/items180/gears.png",
+    "displayName": "Gears",
+    "shortName": "gears",
+    "category": "Component"
+  },
+  {
+    "id": "1882709339",
+    "image": "https://wiki.rustclash.com/img/items180/metalblade.png",
+    "displayName": "Metal Blade",
+    "shortName": "metalblade",
+    "category": "Component"
+  },
+  {
+    "id": "95950017",
+    "image": "https://wiki.rustclash.com/img/items180/metalpipe.png",
+    "displayName": "Metal Pipe",
+    "shortName": "metalpipe",
+    "category": "Component"
+  },
+  {
+    "id": "-1673693549",
+    "image": "https://wiki.rustclash.com/img/items180/propanetank.png",
+    "displayName": "Empty Propane Tank",
+    "shortName": "propanetank",
+    "category": "Component"
+  },
+  {
+    "id": "1199391518",
+    "image": "https://wiki.rustclash.com/img/items180/roadsigns.png",
+    "displayName": "Road Signs",
+    "shortName": "roadsigns",
+    "category": "Component"
+  },
+  {
+    "id": "1414245522",
+    "image": "https://wiki.rustclash.com/img/items180/rope.png",
+    "displayName": "Rope",
+    "shortName": "rope",
+    "category": "Component"
+  },
+  {
+    "id": "1234880403",
+    "image": "https://wiki.rustclash.com/img/items180/sewingkit.png",
+    "displayName": "Sewing Kit",
+    "shortName": "sewingkit",
+    "category": "Component"
+  },
+  {
+    "id": "-1994909036",
+    "image": "https://wiki.rustclash.com/img/items180/sheetmetal.png",
+    "displayName": "Sheet Metal",
+    "shortName": "sheetmetal",
+    "category": "Component"
+  },
+  {
+    "id": "-1021495308",
+    "image": "https://wiki.rustclash.com/img/items180/metalspring.png",
+    "displayName": "Metal Spring",
+    "shortName": "metalspring",
+    "category": "Component"
+  },
+  {
+    "id": "2019042823",
+    "image": "https://wiki.rustclash.com/img/items180/tarp.png",
+    "displayName": "Tarp",
+    "shortName": "tarp",
+    "category": "Component"
+  },
+  {
+    "id": "73681876",
+    "image": "https://wiki.rustclash.com/img/items180/techparts.png",
+    "displayName": "Tech Trash",
+    "shortName": "techparts",
+    "category": "Component"
+  },
+  {
+    "id": "176787552",
+    "image": "https://wiki.rustclash.com/img/items180/riflebody.png",
+    "displayName": "Rifle Body",
+    "shortName": "riflebody",
+    "category": "Component"
+  },
+  {
+    "id": "573926264",
+    "image": "https://wiki.rustclash.com/img/items180/semibody.png",
+    "displayName": "Semi Automatic Body",
+    "shortName": "semibody",
+    "category": "Component"
+  },
+  {
+    "id": "1230323789",
+    "image": "https://wiki.rustclash.com/img/items180/smgbody.png",
+    "displayName": "SMG Body",
+    "shortName": "smgbody",
+    "category": "Component"
+  },
+  {
+    "id": "-1950721390",
+    "image": "https://wiki.rustclash.com/img/items180/barricade.concrete.png",
+    "displayName": "Concrete Barricade",
+    "shortName": "barricade.concrete",
+    "category": "Construction"
+  },
+  {
+    "id": "1655650836",
+    "image": "https://wiki.rustclash.com/img/items180/barricade.metal.png",
+    "displayName": "Metal Barricade",
+    "shortName": "barricade.metal",
+    "category": "Construction"
+  },
+  {
+    "id": "-559599960",
+    "image": "https://wiki.rustclash.com/img/items180/barricade.sandbags.png",
+    "displayName": "Sandbag Barricade",
+    "shortName": "barricade.sandbags",
+    "category": "Construction"
+  },
+  {
+    "id": "15388698",
+    "image": "https://wiki.rustclash.com/img/items180/barricade.stone.png",
+    "displayName": "Stone Barricade",
+    "shortName": "barricade.stone",
+    "category": "Construction"
+  },
+  {
+    "id": "866889860",
+    "image": "https://wiki.rustclash.com/img/items180/barricade.wood.png",
+    "displayName": "Wooden Barricade",
+    "shortName": "barricade.wood",
+    "category": "Construction"
+  },
+  {
+    "id": "1382263453",
+    "image": "https://wiki.rustclash.com/img/items180/barricade.woodwire.png",
+    "displayName": "Barbed Wooden Barricade",
+    "shortName": "barricade.woodwire",
+    "category": "Construction"
+  },
+  {
+    "id": "1099314009",
+    "image": "https://wiki.rustclash.com/img/items180/bbq.png",
+    "displayName": "Barbeque",
+    "shortName": "bbq",
+    "category": "Items"
+  },
+  {
+    "id": "-582782051",
+    "image": "https://wiki.rustclash.com/img/items180/trap.bear.png",
+    "displayName": "Snap Trap",
+    "shortName": "trap.bear",
+    "category": "Traps"
+  },
+  {
+    "id": "-1273339005",
+    "image": "https://wiki.rustclash.com/img/items180/bed.png",
+    "displayName": "Bed",
+    "shortName": "bed",
+    "category": "Items"
+  },
+  {
+    "id": "1946219319",
+    "image": "https://wiki.rustclash.com/img/items180/campfire.png",
+    "displayName": "Camp Fire",
+    "shortName": "campfire",
+    "category": "Items"
+  },
+  {
+    "id": "1142993169",
+    "image": "https://wiki.rustclash.com/img/items180/ceilinglight.png",
+    "displayName": "Ceiling Light",
+    "shortName": "ceilinglight",
+    "category": "Electrical"
+  },
+  {
+    "id": "1534542921",
+    "image": "https://wiki.rustclash.com/img/items180/chair.png",
+    "displayName": "Chair",
+    "shortName": "chair",
+    "category": "Items"
+  },
+  {
+    "id": "-1519126340",
+    "image": "https://wiki.rustclash.com/img/items180/dropbox.png",
+    "displayName": "Drop Box",
+    "shortName": "dropbox",
+    "category": "Items"
+  },
+  {
+    "id": "-1535621066",
+    "image": "https://wiki.rustclash.com/img/items180/fireplace.stone.png",
+    "displayName": "Stone Fireplace",
+    "shortName": "fireplace.stone",
+    "category": "Items"
+  },
+  {
+    "id": "-92759291",
+    "image": "https://wiki.rustclash.com/img/items180/spikes.floor.png",
+    "displayName": "Wooden Floor Spikes",
+    "shortName": "spikes.floor",
+    "category": "Traps"
+  },
+  {
+    "id": "1413014235",
+    "image": "https://wiki.rustclash.com/img/items180/fridge.png",
+    "displayName": "Fridge",
+    "shortName": "fridge",
+    "category": "Items"
+  },
+  {
+    "id": "-1992717673",
+    "image": "https://wiki.rustclash.com/img/items180/furnace.large.png",
+    "displayName": "Large Furnace",
+    "shortName": "furnace.large",
+    "category": "Items"
+  },
+  {
+    "id": "-1999722522",
+    "image": "https://wiki.rustclash.com/img/items180/furnace.png",
+    "displayName": "Furnace",
+    "shortName": "furnace",
+    "category": "Items"
+  },
+  {
+    "id": "1160881421",
+    "image": "https://wiki.rustclash.com/img/items180/hitchtroughcombo.png",
+    "displayName": "Hitch & Trough",
+    "shortName": "hitchtroughcombo",
+    "category": "Items"
+  },
+  {
+    "id": "-1663759755",
+    "image": "https://wiki.rustclash.com/img/items180/trap.landmine.png",
+    "displayName": "Land Mine",
+    "shortName": "trap.landmine",
+    "category": "Traps"
+  },
+  {
+    "id": "1658229558",
+    "image": "https://wiki.rustclash.com/img/items180/lantern.png",
+    "displayName": "Lantern",
+    "shortName": "lantern",
+    "category": "Items"
+  },
+  {
+    "id": "833533164",
+    "image": "https://wiki.rustclash.com/img/items180/box.wooden.large.png",
+    "displayName": "Large Wood Box",
+    "shortName": "box.wooden.large",
+    "category": "Items"
+  },
+  {
+    "id": "-1863559151",
+    "image": "https://wiki.rustclash.com/img/items180/water.barrel.png",
+    "displayName": "Water Barrel",
+    "shortName": "water.barrel",
+    "category": "Items"
+  },
+  {
+    "id": "-110921842",
+    "image": "https://wiki.rustclash.com/img/items180/locker.png",
+    "displayName": "Locker",
+    "shortName": "locker",
+    "category": "Items"
+  },
+  {
+    "id": "-1293296287",
+    "image": "https://wiki.rustclash.com/img/items180/small.oil.refinery.png",
+    "displayName": "Small Oil Refinery",
+    "shortName": "small.oil.refinery",
+    "category": "Items"
+  },
+  {
+    "id": "1581210395",
+    "image": "https://wiki.rustclash.com/img/items180/planter.large.png",
+    "displayName": "Large Planter Box",
+    "shortName": "planter.large",
+    "category": "Items"
+  },
+  {
+    "id": "1903654061",
+    "image": "https://wiki.rustclash.com/img/items180/planter.small.png",
+    "displayName": "Small Planter Box",
+    "shortName": "planter.small",
+    "category": "Items"
+  },
+  {
+    "id": "2100007442",
+    "image": "https://wiki.rustclash.com/img/items180/electric.audioalarm.png",
+    "displayName": "Audio Alarm",
+    "shortName": "electric.audioalarm",
+    "category": "Electrical"
+  },
+  {
+    "id": "553270375",
+    "image": "https://wiki.rustclash.com/img/items180/electric.battery.rechargable.large.png",
+    "displayName": "Large Rechargable Battery",
+    "shortName": "electric.battery.rechargable.large",
+    "category": "Electrical"
+  },
+  {
+    "id": "2023888403",
+    "image": "https://wiki.rustclash.com/img/items180/electric.battery.rechargable.medium.png",
+    "displayName": "Medium Rechargable Battery",
+    "shortName": "electric.battery.rechargable.medium",
+    "category": "Electrical"
+  },
+  {
+    "id": "-692338819",
+    "image": "https://wiki.rustclash.com/img/items180/electric.battery.rechargable.small.png",
+    "displayName": "Small Rechargable Battery",
+    "shortName": "electric.battery.rechargable.small",
+    "category": "Electrical"
+  },
+  {
+    "id": "-216999575",
+    "image": "https://wiki.rustclash.com/img/items180/electric.counter.png",
+    "displayName": "Counter",
+    "shortName": "electric.counter",
+    "category": "Electrical"
+  },
+  {
+    "id": "-1507239837",
+    "image": "https://wiki.rustclash.com/img/items180/electric.hbhfsensor.png",
+    "displayName": "HBHF Sensor",
+    "shortName": "electric.hbhfsensor",
+    "category": "Electrical"
+  },
+  {
+    "id": "-798293154",
+    "image": "https://wiki.rustclash.com/img/items180/electric.laserdetector.png",
+    "displayName": "Laser Detector",
+    "shortName": "electric.laserdetector",
+    "category": "Electrical"
+  },
+  {
+    "id": "-2049214035",
+    "image": "https://wiki.rustclash.com/img/items180/electric.pressurepad.png",
+    "displayName": "Pressure Pad",
+    "shortName": "electric.pressurepad",
+    "category": "Electrical"
+  },
+  {
+    "id": "-502177121",
+    "image": "https://wiki.rustclash.com/img/items180/electric.doorcontroller.png",
+    "displayName": "Door Controller",
+    "shortName": "electric.doorcontroller",
+    "category": "Electrical"
+  },
+  {
+    "id": "1171735914",
+    "image": "https://wiki.rustclash.com/img/items180/electric.andswitch.png",
+    "displayName": "AND Switch",
+    "shortName": "electric.andswitch",
+    "category": "Electrical"
+  },
+  {
+    "id": "-690968985",
+    "image": "https://wiki.rustclash.com/img/items180/electric.blocker.png",
+    "displayName": "Blocker",
+    "shortName": "electric.blocker",
+    "category": "Electrical"
+  },
+  {
+    "id": "-1448252298",
+    "image": "https://wiki.rustclash.com/img/items180/electrical.branch.png",
+    "displayName": "Electrical Branch",
+    "shortName": "electrical.branch",
+    "category": "Electrical"
+  },
+  {
+    "id": "-458565393",
+    "image": "https://wiki.rustclash.com/img/items180/electrical.combiner.png",
+    "displayName": "Root Combiner",
+    "shortName": "electrical.combiner",
+    "category": "Electrical"
+  },
+  {
+    "id": "-746647361",
+    "image": "https://wiki.rustclash.com/img/items180/electrical.memorycell.png",
+    "displayName": "Memory Cell",
+    "shortName": "electrical.memorycell",
+    "category": "Electrical"
+  },
+  {
+    "id": "-1286302544",
+    "image": "https://wiki.rustclash.com/img/items180/electric.orswitch.png",
+    "displayName": "OR Switch",
+    "shortName": "electric.orswitch",
+    "category": "Electrical"
+  },
+  {
+    "id": "492357192",
+    "image": "https://wiki.rustclash.com/img/items180/electric.random.switch.png",
+    "displayName": "RAND Switch",
+    "shortName": "electric.random.switch",
+    "category": "Electrical"
+  },
+  {
+    "id": "-1044468317",
+    "image": "https://wiki.rustclash.com/img/items180/electric.rf.broadcaster.png",
+    "displayName": "RF Broadcaster",
+    "shortName": "electric.rf.broadcaster",
+    "category": "Electrical"
+  },
+  {
+    "id": "888415708",
+    "image": "https://wiki.rustclash.com/img/items180/electric.rf.receiver.png",
+    "displayName": "RF Receiver",
+    "shortName": "electric.rf.receiver",
+    "category": "Electrical"
+  },
+  {
+    "id": "1293102274",
+    "image": "https://wiki.rustclash.com/img/items180/electric.xorswitch.png",
+    "displayName": "XOR Switch",
+    "shortName": "electric.xorswitch",
+    "category": "Electrical"
+  },
+  {
+    "id": "1849887541",
+    "image": "https://wiki.rustclash.com/img/items180/electric.fuelgenerator.small.png",
+    "displayName": "Small Generator",
+    "shortName": "electric.fuelgenerator.small",
+    "category": "Electrical"
+  },
+  {
+    "id": "-295829489",
+    "image": "https://wiki.rustclash.com/img/items180/electric.generator.small.png",
+    "displayName": "Test Generator",
+    "shortName": "electric.generator.small",
+    "category": "Electrical"
+  },
+  {
+    "id": "2090395347",
+    "image": "https://wiki.rustclash.com/img/items180/electric.solarpanel.large.png",
+    "displayName": "Large Solar Panel",
+    "shortName": "electric.solarpanel.large",
+    "category": "Electrical"
+  },
+  {
+    "id": "-939424778",
+    "image": "https://wiki.rustclash.com/img/items180/electric.flasherlight.png",
+    "displayName": "Flasher Light",
+    "shortName": "electric.flasherlight",
+    "category": "Electrical"
+  },
+  {
+    "id": "762289806",
+    "image": "https://wiki.rustclash.com/img/items180/electric.sirenlight.png",
+    "displayName": "Siren Light",
+    "shortName": "electric.sirenlight",
+    "category": "Electrical"
+  },
+  {
+    "id": "1951603367",
+    "image": "https://wiki.rustclash.com/img/items180/electric.switch.png",
+    "displayName": "Switch",
+    "shortName": "electric.switch",
+    "category": "Electrical"
+  },
+  {
+    "id": "-563624462",
+    "image": "https://wiki.rustclash.com/img/items180/electric.splitter.png",
+    "displayName": "Splitter",
+    "shortName": "electric.splitter",
+    "category": "Electrical"
+  },
+  {
+    "id": "1371909803",
+    "image": "https://wiki.rustclash.com/img/items180/electric.teslacoil.png",
+    "displayName": "Tesla Coil",
+    "shortName": "electric.teslacoil",
+    "category": "Electrical"
+  },
+  {
+    "id": "665332906",
+    "image": "https://wiki.rustclash.com/img/items180/electric.timer.png",
+    "displayName": "Timer",
+    "shortName": "electric.timer",
+    "category": "Electrical"
+  },
+  {
+    "id": "-1736356576",
+    "image": "https://wiki.rustclash.com/img/items180/target.reactive.png",
+    "displayName": "Reactive Target",
+    "shortName": "target.reactive",
+    "category": "Items"
+  },
+  {
+    "id": "803222026",
+    "image": "https://wiki.rustclash.com/img/items180/box.repair.bench.png",
+    "displayName": "Repair Bench",
+    "shortName": "box.repair.bench",
+    "category": "Items"
+  },
+  {
+    "id": "-1861522751",
+    "image": "https://wiki.rustclash.com/img/items180/research.table.png",
+    "displayName": "Research Table",
+    "shortName": "research.table",
+    "category": "Items"
+  },
+  {
+    "id": "-1104881824",
+    "image": "https://wiki.rustclash.com/img/items180/rug.bear.png",
+    "displayName": "Rug Bear Skin",
+    "shortName": "rug.bear",
+    "category": "Items"
+  },
+  {
+    "id": "-1985799200",
+    "image": "https://wiki.rustclash.com/img/items180/rug.png",
+    "displayName": "Rug",
+    "shortName": "rug",
+    "category": "Items"
+  },
+  {
+    "id": "2087678962",
+    "image": "https://wiki.rustclash.com/img/items180/searchlight.png",
+    "displayName": "Search Light",
+    "shortName": "searchlight",
+    "category": "Items"
+  },
+  {
+    "id": "1950721418",
+    "image": "https://wiki.rustclash.com/img/items180/shelves.png",
+    "displayName": "Salvaged Shelves",
+    "shortName": "shelves",
+    "category": "Items"
+  },
+  {
+    "id": "352499047",
+    "image": "https://wiki.rustclash.com/img/items180/guntrap.png",
+    "displayName": "Shotgun Trap",
+    "shortName": "guntrap",
+    "category": "Traps"
+  },
+  {
+    "id": "-1754948969",
+    "image": "https://wiki.rustclash.com/img/items180/sleepingbag.png",
+    "displayName": "Sleeping Bag",
+    "shortName": "sleepingbag",
+    "category": "Items"
+  },
+  {
+    "id": "-369760990",
+    "image": "https://wiki.rustclash.com/img/items180/stash.small.png",
+    "displayName": "Small Stash",
+    "shortName": "stash.small",
+    "category": "Items"
+  },
+  {
+    "id": "-1100422738",
+    "image": "https://wiki.rustclash.com/img/items180/spinner.wheel.png",
+    "displayName": "Spinning wheel",
+    "shortName": "spinner.wheel",
+    "category": "Items"
+  },
+  {
+    "id": "559147458",
+    "image": "https://wiki.rustclash.com/img/items180/fishtrap.small.png",
+    "displayName": "Survival Fish Trap",
+    "shortName": "fishtrap.small",
+    "category": "Items"
+  },
+  {
+    "id": "593465182",
+    "image": "https://wiki.rustclash.com/img/items180/table.png",
+    "displayName": "Table",
+    "shortName": "table",
+    "category": "Items"
+  },
+  {
+    "id": "1524187186",
+    "image": "https://wiki.rustclash.com/img/items180/workbench1.png",
+    "displayName": "Work Bench Level 1",
+    "shortName": "workbench1",
+    "category": "Items"
+  },
+  {
+    "id": "-41896755",
+    "image": "https://wiki.rustclash.com/img/items180/workbench2.png",
+    "displayName": "Work Bench Level 2",
+    "shortName": "workbench2",
+    "category": "Items"
+  },
+  {
+    "id": "-1607980696",
+    "image": "https://wiki.rustclash.com/img/items180/workbench3.png",
+    "displayName": "Work Bench Level 3",
+    "shortName": "workbench3",
+    "category": "Items"
+  },
+  {
+    "id": "-97956382",
+    "image": "https://wiki.rustclash.com/img/items180/cupboard.tool.png",
+    "displayName": "Tool Cupboard",
+    "shortName": "cupboard.tool",
+    "category": "Construction"
+  },
+  {
+    "id": "-1478445584",
+    "image": "https://wiki.rustclash.com/img/items180/tunalight.png",
+    "displayName": "Tuna Can Lamp",
+    "shortName": "tunalight",
+    "category": "Items"
+  },
+  {
+    "id": "198438816",
+    "image": "https://wiki.rustclash.com/img/items180/vending.machine.png",
+    "displayName": "Vending Machine",
+    "shortName": "vending.machine",
+    "category": "Items"
+  },
+  {
+    "id": "-1100168350",
+    "image": "https://wiki.rustclash.com/img/items180/water.catcher.large.png",
+    "displayName": "Large Water Catcher",
+    "shortName": "water.catcher.large",
+    "category": "Construction"
+  },
+  {
+    "id": "-132247350",
+    "image": "https://wiki.rustclash.com/img/items180/water.catcher.small.png",
+    "displayName": "Small Water Catcher",
+    "shortName": "water.catcher.small",
+    "category": "Construction"
+  },
+  {
+    "id": "2114754781",
+    "image": "https://wiki.rustclash.com/img/items180/water.purifier.png",
+    "displayName": "Water Purifier",
+    "shortName": "water.purifier",
+    "category": "Items"
+  },
+  {
+    "id": "-1819763926",
+    "image": "https://wiki.rustclash.com/img/items180/generator.wind.scrap.png",
+    "displayName": "Wind Turbine",
+    "shortName": "generator.wind.scrap",
+    "category": "Electrical"
+  },
+  {
+    "id": "-180129657",
+    "image": "https://wiki.rustclash.com/img/items180/box.wooden.png",
+    "displayName": "Wood Storage Box",
+    "shortName": "box.wooden",
+    "category": "Items"
+  },
+  {
+    "id": "1548091822",
+    "image": "https://wiki.rustclash.com/img/items180/apple.png",
+    "displayName": "Apple",
+    "shortName": "apple",
+    "category": "Food"
+  },
+  {
+    "id": "1931713481",
+    "image": "https://wiki.rustclash.com/img/items180/black.raspberries.png",
+    "displayName": "Black Raspberries",
+    "shortName": "black.raspberries",
+    "category": "Food"
+  },
+  {
+    "id": "-586342290",
+    "image": "https://wiki.rustclash.com/img/items180/blueberries.png",
+    "displayName": "Blueberries",
+    "shortName": "blueberries",
+    "category": "Food"
+  },
+  {
+    "id": "613961768",
+    "image": "https://wiki.rustclash.com/img/items180/botabag.png",
+    "displayName": "Bota Bag",
+    "shortName": "botabag",
+    "category": "Items"
+  },
+  {
+    "id": "1783512007",
+    "image": "https://wiki.rustclash.com/img/items180/cactusflesh.png",
+    "displayName": "Cactus Flesh",
+    "shortName": "cactusflesh",
+    "category": "Food"
+  },
+  {
+    "id": "-700591459",
+    "image": "https://wiki.rustclash.com/img/items180/can.beans.png",
+    "displayName": "Can of Beans",
+    "shortName": "can.beans",
+    "category": "Food"
+  },
+  {
+    "id": "-1941646328",
+    "image": "https://wiki.rustclash.com/img/items180/can.tuna.png",
+    "displayName": "Can of Tuna",
+    "shortName": "can.tuna",
+    "category": "Food"
+  },
+  {
+    "id": "363467698",
+    "image": "https://wiki.rustclash.com/img/items180/chocholate.png",
+    "displayName": "Chocolate Bar",
+    "shortName": "chocholate",
+    "category": "Food"
+  },
+  {
+    "id": "1668129151",
+    "image": "https://wiki.rustclash.com/img/items180/fish.cooked.png",
+    "displayName": "Cooked Fish",
+    "shortName": "fish.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "989925924",
+    "image": "https://wiki.rustclash.com/img/items180/fish.raw.png",
+    "displayName": "Raw Fish",
+    "shortName": "fish.raw",
+    "category": "Food"
+  },
+  {
+    "id": "-542577259",
+    "image": "https://wiki.rustclash.com/img/items180/fish.minnows.png",
+    "displayName": "Minnows",
+    "shortName": "fish.minnows",
+    "category": "Food"
+  },
+  {
+    "id": "-1878764039",
+    "image": "https://wiki.rustclash.com/img/items180/fish.troutsmall.png",
+    "displayName": "Small Trout",
+    "shortName": "fish.troutsmall",
+    "category": "Food"
+  },
+  {
+    "id": "-746030907",
+    "image": "https://wiki.rustclash.com/img/items180/granolabar.png",
+    "displayName": "Granola Bar",
+    "shortName": "granolabar",
+    "category": "Food"
+  },
+  {
+    "id": "1973684065",
+    "image": "https://wiki.rustclash.com/img/items180/chicken.burned.png",
+    "displayName": "Burnt Chicken",
+    "shortName": "chicken.burned",
+    "category": "Food"
+  },
+  {
+    "id": "-1848736516",
+    "image": "https://wiki.rustclash.com/img/items180/chicken.cooked.png",
+    "displayName": "Cooked Chicken",
+    "shortName": "chicken.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "-1440987069",
+    "image": "https://wiki.rustclash.com/img/items180/chicken.raw.png",
+    "displayName": "Raw Chicken Breast",
+    "shortName": "chicken.raw",
+    "category": "Food"
+  },
+  {
+    "id": "-751151717",
+    "image": "https://wiki.rustclash.com/img/items180/chicken.spoiled.png",
+    "displayName": "Spoiled Chicken",
+    "shortName": "chicken.spoiled",
+    "category": "Food"
+  },
+  {
+    "id": "-78533081",
+    "image": "https://wiki.rustclash.com/img/items180/deermeat.burned.png",
+    "displayName": "Burnt Deer Meat",
+    "shortName": "deermeat.burned",
+    "category": "Food"
+  },
+  {
+    "id": "-1509851560",
+    "image": "https://wiki.rustclash.com/img/items180/deermeat.cooked.png",
+    "displayName": "Cooked Deer Meat",
+    "shortName": "deermeat.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "1422530437",
+    "image": "https://wiki.rustclash.com/img/items180/deermeat.raw.png",
+    "displayName": "Raw Deer Meat",
+    "shortName": "deermeat.raw",
+    "category": "Food"
+  },
+  {
+    "id": "1917703890",
+    "image": "https://wiki.rustclash.com/img/items180/horsemeat.burned.png",
+    "displayName": "Burnt Horse Meat",
+    "shortName": "horsemeat.burned",
+    "category": "Food"
+  },
+  {
+    "id": "-1162759543",
+    "image": "https://wiki.rustclash.com/img/items180/horsemeat.cooked.png",
+    "displayName": "Cooked Horse Meat",
+    "shortName": "horsemeat.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "-1130350864",
+    "image": "https://wiki.rustclash.com/img/items180/horsemeat.raw.png",
+    "displayName": "Raw Horse Meat",
+    "shortName": "horsemeat.raw",
+    "category": "Food"
+  },
+  {
+    "id": "-682687162",
+    "image": "https://wiki.rustclash.com/img/items180/humanmeat.burned.png",
+    "displayName": "Burnt Human Meat",
+    "shortName": "humanmeat.burned",
+    "category": "Food"
+  },
+  {
+    "id": "1536610005",
+    "image": "https://wiki.rustclash.com/img/items180/humanmeat.cooked.png",
+    "displayName": "Cooked Human Meat",
+    "shortName": "humanmeat.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "-1709878924",
+    "image": "https://wiki.rustclash.com/img/items180/humanmeat.raw.png",
+    "displayName": "Raw Human Meat",
+    "shortName": "humanmeat.raw",
+    "category": "Food"
+  },
+  {
+    "id": "1272768630",
+    "image": "https://wiki.rustclash.com/img/items180/humanmeat.spoiled.png",
+    "displayName": "Spoiled Human Meat",
+    "shortName": "humanmeat.spoiled",
+    "category": "Food"
+  },
+  {
+    "id": "-989755543",
+    "image": "https://wiki.rustclash.com/img/items180/bearmeat.burned.png",
+    "displayName": "Burnt Bear Meat",
+    "shortName": "bearmeat.burned",
+    "category": "Food"
+  },
+  {
+    "id": "1873897110",
+    "image": "https://wiki.rustclash.com/img/items180/bearmeat.cooked.png",
+    "displayName": "Cooked Bear Meat",
+    "shortName": "bearmeat.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "-1520560807",
+    "image": "https://wiki.rustclash.com/img/items180/bearmeat.png",
+    "displayName": "Raw Bear Meat",
+    "shortName": "bearmeat",
+    "category": "Food"
+  },
+  {
+    "id": "1827479659",
+    "image": "https://wiki.rustclash.com/img/items180/wolfmeat.burned.png",
+    "displayName": "Burnt Wolf Meat",
+    "shortName": "wolfmeat.burned",
+    "category": "Food"
+  },
+  {
+    "id": "813023040",
+    "image": "https://wiki.rustclash.com/img/items180/wolfmeat.cooked.png",
+    "displayName": "Cooked Wolf Meat",
+    "shortName": "wolfmeat.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "-395377963",
+    "image": "https://wiki.rustclash.com/img/items180/wolfmeat.raw.png",
+    "displayName": "Raw Wolf Meat",
+    "shortName": "wolfmeat.raw",
+    "category": "Food"
+  },
+  {
+    "id": "-1167031859",
+    "image": "https://wiki.rustclash.com/img/items180/wolfmeat.spoiled.png",
+    "displayName": "Spoiled Wolf Meat",
+    "shortName": "wolfmeat.spoiled",
+    "category": "Food"
+  },
+  {
+    "id": "1391703481",
+    "image": "https://wiki.rustclash.com/img/items180/meat.pork.burned.png",
+    "displayName": "Burnt Pork",
+    "shortName": "meat.pork.burned",
+    "category": "Food"
+  },
+  {
+    "id": "-242084766",
+    "image": "https://wiki.rustclash.com/img/items180/meat.pork.cooked.png",
+    "displayName": "Cooked Pork",
+    "shortName": "meat.pork.cooked",
+    "category": "Food"
+  },
+  {
+    "id": "621915341",
+    "image": "https://wiki.rustclash.com/img/items180/meat.boar.png",
+    "displayName": "Raw Pork",
+    "shortName": "meat.boar",
+    "category": "Food"
+  },
+  {
+    "id": "-1962971928",
+    "image": "https://wiki.rustclash.com/img/items180/mushroom.png",
+    "displayName": "Mushroom",
+    "shortName": "mushroom",
+    "category": "Food"
+  },
+  {
+    "id": "286193827",
+    "image": "https://wiki.rustclash.com/img/items180/jar.pickle.png",
+    "displayName": "Pickles",
+    "shortName": "jar.pickle",
+    "category": "Food"
+  },
+  {
+    "id": "-1112793865",
+    "image": "https://wiki.rustclash.com/img/items180/door.key.png",
+    "displayName": "Door Key",
+    "shortName": "door.key",
+    "category": "Misc"
+  },
+  {
+    "id": "-850982208",
+    "image": "https://wiki.rustclash.com/img/items180/lock.key.png",
+    "displayName": "Key Lock",
+    "shortName": "lock.key",
+    "category": "Construction"
+  },
+  {
+    "id": "1159991980",
+    "image": "https://wiki.rustclash.com/img/items180/lock.code.png",
+    "displayName": "Code Lock",
+    "shortName": "lock.code",
+    "category": "Construction"
+  },
+  {
+    "id": "844440409",
+    "image": "https://wiki.rustclash.com/img/items180/easter.bronzeegg.png",
+    "displayName": "Bronze Egg",
+    "shortName": "easter.bronzeegg",
+    "category": "Misc"
+  },
+  {
+    "id": "-1002156085",
+    "image": "https://wiki.rustclash.com/img/items180/easter.goldegg.png",
+    "displayName": "Gold Egg",
+    "shortName": "easter.goldegg",
+    "category": "Misc"
+  },
+  {
+    "id": "-126305173",
+    "image": "https://wiki.rustclash.com/img/items180/easter.paintedeggs.png",
+    "displayName": "Painted Egg",
+    "shortName": "easter.paintedeggs",
+    "category": "Misc"
+  },
+  {
+    "id": "1757265204",
+    "image": "https://wiki.rustclash.com/img/items180/easter.silveregg.png",
+    "displayName": "Silver Egg",
+    "shortName": "easter.silveregg",
+    "category": "Misc"
+  },
+  {
+    "id": "-888153050",
+    "image": "https://wiki.rustclash.com/img/items180/halloween.candy.png",
+    "displayName": "Halloween Candy",
+    "shortName": "halloween.candy",
+    "category": "Misc"
+  },
+  {
+    "id": "573676040",
+    "image": "https://wiki.rustclash.com/img/items180/coffin.storage.png",
+    "displayName": "Coffin",
+    "shortName": "coffin.storage",
+    "category": "Misc"
+  },
+  {
+    "id": "-1679267738",
+    "image": "https://wiki.rustclash.com/img/items180/wall.graveyard.fence.png",
+    "displayName": "Graveyard Fence",
+    "shortName": "wall.graveyard.fence",
+    "category": "Misc"
+  },
+  {
+    "id": "479292118",
+    "image": "https://wiki.rustclash.com/img/items180/halloween.lootbag.large.png",
+    "displayName": "Large Loot Bag",
+    "shortName": "halloween.lootbag.large",
+    "category": "Misc"
+  },
+  {
+    "id": "1899610628",
+    "image": "https://wiki.rustclash.com/img/items180/halloween.lootbag.medium.png",
+    "displayName": "Medium Loot Bag",
+    "shortName": "halloween.lootbag.medium",
+    "category": "Misc"
+  },
+  {
+    "id": "1319617282",
+    "image": "https://wiki.rustclash.com/img/items180/halloween.lootbag.small.png",
+    "displayName": "Small Loot Bag",
+    "shortName": "halloween.lootbag.small",
+    "category": "Misc"
+  },
+  {
+    "id": "1885488976",
+    "image": "https://wiki.rustclash.com/img/items180/spookyspeaker.png",
+    "displayName": "Spooky Speaker",
+    "shortName": "spookyspeaker",
+    "category": "Misc"
+  },
+  {
+    "id": "1414245162",
+    "image": "https://wiki.rustclash.com/img/items180/note.png",
+    "displayName": "Note",
+    "shortName": "note",
+    "category": "Misc"
+  },
+  {
+    "id": "996293980",
+    "image": "https://wiki.rustclash.com/img/items180/skull.human.png",
+    "displayName": "Human Skull",
+    "shortName": "skull.human",
+    "category": "Resources"
+  },
+  {
+    "id": "-1651220691",
+    "image": "https://wiki.rustclash.com/img/items180/pookie.bear.png",
+    "displayName": "Pookie Bear",
+    "shortName": "pookie.bear",
+    "category": "Items"
+  },
+  {
+    "id": "-1622660759",
+    "image": "https://wiki.rustclash.com/img/items180/xmas.present.large.png",
+    "displayName": "Large Present",
+    "shortName": "xmas.present.large",
+    "category": "Misc"
+  },
+  {
+    "id": "756517185",
+    "image": "https://wiki.rustclash.com/img/items180/xmas.present.medium.png",
+    "displayName": "Medium Present",
+    "shortName": "xmas.present.medium",
+    "category": "Misc"
+  },
+  {
+    "id": "-722241321",
+    "image": "https://wiki.rustclash.com/img/items180/xmas.present.small.png",
+    "displayName": "Small Present",
+    "shortName": "xmas.present.small",
+    "category": "Misc"
+  },
+  {
+    "id": "1358643074",
+    "image": "https://wiki.rustclash.com/img/items180/snowmachine.png",
+    "displayName": "Snow Machine",
+    "shortName": "snowmachine",
+    "category": "Misc"
+  },
+  {
+    "id": "-363689972",
+    "image": "https://wiki.rustclash.com/img/items180/snowball.png",
+    "displayName": "Snowball",
+    "shortName": "snowball",
+    "category": "Weapon"
+  },
+  {
+    "id": "1629293099",
+    "image": "https://wiki.rustclash.com/img/items180/snowman.png",
+    "displayName": "Snowman",
+    "shortName": "snowman",
+    "category": "Items"
+  },
+  {
+    "id": "-465682601",
+    "image": "https://wiki.rustclash.com/img/items180/stocking.large.png",
+    "displayName": "SUPER Stocking",
+    "shortName": "stocking.large",
+    "category": "Items"
+  },
+  {
+    "id": "1668858301",
+    "image": "https://wiki.rustclash.com/img/items180/stocking.small.png",
+    "displayName": "Small Stocking",
+    "shortName": "stocking.small",
+    "category": "Items"
+  },
+  {
+    "id": "-2139580305",
+    "image": "https://wiki.rustclash.com/img/items180/autoturret.png",
+    "displayName": "Auto Turret",
+    "shortName": "autoturret",
+    "category": "Electrical"
+  },
+  {
+    "id": "528668503",
+    "image": "https://wiki.rustclash.com/img/items180/flameturret.png",
+    "displayName": "Flame Turret",
+    "shortName": "flameturret",
+    "category": "Traps"
+  },
+  {
+    "id": "1367190888",
+    "image": "https://wiki.rustclash.com/img/items180/corn.png",
+    "displayName": "Corn",
+    "shortName": "corn",
+    "category": "Food"
+  },
+  {
+    "id": "-778875547",
+    "image": "https://wiki.rustclash.com/img/items180/clone.corn.png",
+    "displayName": "Corn Clone",
+    "shortName": "clone.corn",
+    "category": "Food"
+  },
+  {
+    "id": "998894949",
+    "image": "https://wiki.rustclash.com/img/items180/seed.corn.png",
+    "displayName": "Corn Seed",
+    "shortName": "seed.corn",
+    "category": "Food"
+  },
+  {
+    "id": "-886280491",
+    "image": "https://wiki.rustclash.com/img/items180/clone.hemp.png",
+    "displayName": "Hemp Clone",
+    "shortName": "clone.hemp",
+    "category": "Food"
+  },
+  {
+    "id": "-237809779",
+    "image": "https://wiki.rustclash.com/img/items180/seed.hemp.png",
+    "displayName": "Hemp Seed",
+    "shortName": "seed.hemp",
+    "category": "Food"
+  },
+  {
+    "id": "-567909622",
+    "image": "https://wiki.rustclash.com/img/items180/pumpkin.png",
+    "displayName": "Pumpkin",
+    "shortName": "pumpkin",
+    "category": "Food"
+  },
+  {
+    "id": "1898094925",
+    "image": "https://wiki.rustclash.com/img/items180/clone.pumpkin.png",
+    "displayName": "Pumpkin Plant Clone",
+    "shortName": "clone.pumpkin",
+    "category": "Food"
+  },
+  {
+    "id": "-1511285251",
+    "image": "https://wiki.rustclash.com/img/items180/seed.pumpkin.png",
+    "displayName": "Pumpkin Seed",
+    "shortName": "seed.pumpkin",
+    "category": "Food"
+  },
+  {
+    "id": "-1018587433",
+    "image": "https://wiki.rustclash.com/img/items180/fat.animal.png",
+    "displayName": "Animal Fat",
+    "shortName": "fat.animal",
+    "category": "Resources"
+  },
+  {
+    "id": "609049394",
+    "image": "https://wiki.rustclash.com/img/items180/battery.small.png",
+    "displayName": "Battery - Small",
+    "shortName": "battery.small",
+    "category": "Resources"
+  },
+  {
+    "id": "1719978075",
+    "image": "https://wiki.rustclash.com/img/items180/bone.fragments.png",
+    "displayName": "Bone Fragments",
+    "shortName": "bone.fragments",
+    "category": "Resources"
+  },
+  {
+    "id": "634478325",
+    "image": "https://wiki.rustclash.com/img/items180/cctv.camera.png",
+    "displayName": "CCTV Camera",
+    "shortName": "cctv.camera",
+    "category": "Resources"
+  },
+  {
+    "id": "-1938052175",
+    "image": "https://wiki.rustclash.com/img/items180/charcoal.png",
+    "displayName": "Charcoal",
+    "shortName": "charcoal",
+    "category": "Resources"
+  },
+  {
+    "id": "-858312878",
+    "image": "https://wiki.rustclash.com/img/items180/cloth.png",
+    "displayName": "Cloth",
+    "shortName": "cloth",
+    "category": "Resources"
+  },
+  {
+    "id": "-321733511",
+    "image": "https://wiki.rustclash.com/img/items180/crude.oil.png",
+    "displayName": "Crude Oil",
+    "shortName": "crude.oil",
+    "category": "Resources"
+  },
+  {
+    "id": "1568388703",
+    "image": "https://wiki.rustclash.com/img/items180/diesel_barrel.png",
+    "displayName": "Diesel Fuel",
+    "shortName": "diesel_barrel",
+    "category": "Resources"
+  },
+  {
+    "id": "1655979682",
+    "image": "https://wiki.rustclash.com/img/items180/can.beans.empty.png",
+    "displayName": "Empty Can Of Beans",
+    "shortName": "can.beans.empty",
+    "category": "Resources"
+  },
+  {
+    "id": "-1557377697",
+    "image": "https://wiki.rustclash.com/img/items180/can.tuna.empty.png",
+    "displayName": "Empty Tuna Can",
+    "shortName": "can.tuna.empty",
+    "category": "Resources"
+  },
+  {
+    "id": "-592016202",
+    "image": "https://wiki.rustclash.com/img/items180/explosives.png",
+    "displayName": "Explosives",
+    "shortName": "explosives",
+    "category": "Resources"
+  },
+  {
+    "id": "-265876753",
+    "image": "https://wiki.rustclash.com/img/items180/gunpowder.png",
+    "displayName": "Gun Powder",
+    "shortName": "gunpowder",
+    "category": "Resources"
+  },
+  {
+    "id": "-1982036270",
+    "image": "https://wiki.rustclash.com/img/items180/hq.metal.ore.png",
+    "displayName": "High Quality Metal Ore",
+    "shortName": "hq.metal.ore",
+    "category": "Resources"
+  },
+  {
+    "id": "317398316",
+    "image": "https://wiki.rustclash.com/img/items180/metal.refined.png",
+    "displayName": "High Quality Metal",
+    "shortName": "metal.refined",
+    "category": "Resources"
+  },
+  {
+    "id": "1381010055",
+    "image": "https://wiki.rustclash.com/img/items180/leather.png",
+    "displayName": "Leather",
+    "shortName": "leather",
+    "category": "Resources"
+  },
+  {
+    "id": "-946369541",
+    "image": "https://wiki.rustclash.com/img/items180/lowgradefuel.png",
+    "displayName": "Low Grade Fuel",
+    "shortName": "lowgradefuel",
+    "category": "Resources"
+  },
+  {
+    "id": "69511070",
+    "image": "https://wiki.rustclash.com/img/items180/metal.fragments.png",
+    "displayName": "Metal Fragments",
+    "shortName": "metal.fragments",
+    "category": "Resources"
+  },
+  {
+    "id": "-4031221",
+    "image": "https://wiki.rustclash.com/img/items180/metal.ore.png",
+    "displayName": "Metal Ore",
+    "shortName": "metal.ore",
+    "category": "Resources"
+  },
+  {
+    "id": "-932201673",
+    "image": "https://wiki.rustclash.com/img/items180/scrap.png",
+    "displayName": "Scrap",
+    "shortName": "scrap",
+    "category": "Resources"
+  },
+  {
+    "id": "-2099697608",
+    "image": "https://wiki.rustclash.com/img/items180/stones.png",
+    "displayName": "Stones",
+    "shortName": "stones",
+    "category": "Resources"
+  },
+  {
+    "id": "-1157596551",
+    "image": "https://wiki.rustclash.com/img/items180/sulfur.ore.png",
+    "displayName": "Sulfur Ore",
+    "shortName": "sulfur.ore",
+    "category": "Resources"
+  },
+  {
+    "id": "-1581843485",
+    "image": "https://wiki.rustclash.com/img/items180/sulfur.png",
+    "displayName": "Sulfur",
+    "shortName": "sulfur",
+    "category": "Resources"
+  },
+  {
+    "id": "1523195708",
+    "image": "https://wiki.rustclash.com/img/items180/targeting.computer.png",
+    "displayName": "Targeting Computer",
+    "shortName": "targeting.computer",
+    "category": "Resources"
+  },
+  {
+    "id": "-1779180711",
+    "image": "https://wiki.rustclash.com/img/items180/water.png",
+    "displayName": "Water",
+    "shortName": "water",
+    "category": "Resources"
+  },
+  {
+    "id": "2048317869",
+    "image": "https://wiki.rustclash.com/img/items180/skull.wolf.png",
+    "displayName": "Wolf Skull",
+    "shortName": "skull.wolf",
+    "category": "Resources"
+  },
+  {
+    "id": "-151838493",
+    "image": "https://wiki.rustclash.com/img/items180/wood.png",
+    "displayName": "Wood",
+    "shortName": "wood",
+    "category": "Resources"
+  },
+  {
+    "id": "-1432674913",
+    "image": "https://wiki.rustclash.com/img/items180/antiradpills.png",
+    "displayName": "Anti-Radiation Pills",
+    "shortName": "antiradpills",
+    "category": "Medical"
+  },
+  {
+    "id": "-1262185308",
+    "image": "https://wiki.rustclash.com/img/items180/tool.binoculars.png",
+    "displayName": "Binoculars",
+    "shortName": "tool.binoculars",
+    "category": "Tool"
+  },
+  {
+    "id": "1248356124",
+    "image": "https://wiki.rustclash.com/img/items180/explosive.timed.png",
+    "displayName": "Timed Explosive Charge",
+    "shortName": "explosive.timed",
+    "category": "Tool"
+  },
+  {
+    "id": "596469572",
+    "image": "https://wiki.rustclash.com/img/items180/rf.detonator.png",
+    "displayName": "RF Transmitter",
+    "shortName": "rf.detonator",
+    "category": "Tool"
+  },
+  {
+    "id": "1569882109",
+    "image": "https://wiki.rustclash.com/img/items180/fishingrod.handmade.png",
+    "displayName": "Handmade Fishing Rod",
+    "shortName": "fishingrod.handmade",
+    "category": "Weapon"
+  },
+  {
+    "id": "304481038",
+    "image": "https://wiki.rustclash.com/img/items180/flare.png",
+    "displayName": "Flare",
+    "shortName": "flare",
+    "category": "Tool"
+  },
+  {
+    "id": "-196667575",
+    "image": "https://wiki.rustclash.com/img/items180/flashlight.held.png",
+    "displayName": "Flashlight",
+    "shortName": "flashlight.held",
+    "category": "Tool"
+  },
+  {
+    "id": "999690781",
+    "image": "https://wiki.rustclash.com/img/items180/geiger.counter.png",
+    "displayName": "Geiger Counter",
+    "shortName": "geiger.counter",
+    "category": "Tool"
+  },
+  {
+    "id": "1488979457",
+    "image": "https://wiki.rustclash.com/img/items180/jackhammer.png",
+    "displayName": "Jackhammer",
+    "shortName": "jackhammer",
+    "category": "Tool"
+  },
+  {
+    "id": "-484206264",
+    "image": "https://wiki.rustclash.com/img/items180/keycard_blue.png",
+    "displayName": "Blue Keycard",
+    "shortName": "keycard_blue",
+    "category": "Misc"
+  },
+  {
+    "id": "37122747",
+    "image": "https://wiki.rustclash.com/img/items180/keycard_green.png",
+    "displayName": "Green Keycard",
+    "shortName": "keycard_green",
+    "category": "Misc"
+  },
+  {
+    "id": "-1880870149",
+    "image": "https://wiki.rustclash.com/img/items180/keycard_red.png",
+    "displayName": "Red Keycard",
+    "shortName": "keycard_red",
+    "category": "Misc"
+  },
+  {
+    "id": "254522515",
+    "image": "https://wiki.rustclash.com/img/items180/largemedkit.png",
+    "displayName": "Large Medkit",
+    "shortName": "largemedkit",
+    "category": "Medical"
+  },
+  {
+    "id": "1079279582",
+    "image": "https://wiki.rustclash.com/img/items180/syringe.medical.png",
+    "displayName": "Medical Syringe",
+    "shortName": "syringe.medical",
+    "category": "Medical"
+  },
+  {
+    "id": "-566907190",
+    "image": "https://wiki.rustclash.com/img/items180/rf_pager.png",
+    "displayName": "RF Pager",
+    "shortName": "rf_pager",
+    "category": "Electrical"
+  },
+  {
+    "id": "1525520776",
+    "image": "https://wiki.rustclash.com/img/items180/building.planner.png",
+    "displayName": "Building Plan",
+    "shortName": "building.planner",
+    "category": "Construction"
+  },
+  {
+    "id": "1263920163",
+    "image": "https://wiki.rustclash.com/img/items180/grenade.smoke.png",
+    "displayName": "Smoke Grenade",
+    "shortName": "grenade.smoke",
+    "category": "Tool"
+  },
+  {
+    "id": "1397052267",
+    "image": "https://wiki.rustclash.com/img/items180/supply.signal.png",
+    "displayName": "Supply Signal",
+    "shortName": "supply.signal",
+    "category": "Tool"
+  },
+  {
+    "id": "-144417939",
+    "image": "https://wiki.rustclash.com/img/items180/wiretool.png",
+    "displayName": "Wire Tool",
+    "shortName": "wiretool",
+    "category": "Electrical"
+  },
+  {
+    "id": "174866732",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.8x.scope.png",
+    "displayName": "4x Zoom Scope",
+    "shortName": "weapon.mod.small.scope",
+    "category": "Weapon"
+  },
+  {
+    "id": "952603248",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.flashlight.png",
+    "displayName": "Weapon flashlight",
+    "shortName": "weapon.mod.flashlight",
+    "category": "Weapon"
+  },
+  {
+    "id": "442289265",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.holosight.png",
+    "displayName": "Holosight",
+    "shortName": "weapon.mod.holosight",
+    "category": "Weapon"
+  },
+  {
+    "id": "-132516482",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.lasersight.png",
+    "displayName": "Weapon Lasersight",
+    "shortName": "weapon.mod.lasersight",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1405508498",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.muzzleboost.png",
+    "displayName": "Muzzle Boost",
+    "shortName": "weapon.mod.muzzleboost",
+    "category": "Weapon"
+  },
+  {
+    "id": "1478091698",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.muzzlebrake.png",
+    "displayName": "Muzzle Brake",
+    "shortName": "weapon.mod.muzzlebrake",
+    "category": "Weapon"
+  },
+  {
+    "id": "-855748505",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.simplesight.png",
+    "displayName": "Simple Handmade Sight",
+    "shortName": "weapon.mod.simplesight",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1850571427",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.silencer.png",
+    "displayName": "Silencer",
+    "shortName": "weapon.mod.silencer",
+    "category": "Weapon"
+  },
+  {
+    "id": "567235583",
+    "image": "https://wiki.rustclash.com/img/items180/weapon.mod.small.scope.png",
+    "displayName": "8x Zoom Scope",
+    "shortName": "weapon.mod.small.scope",
+    "category": "Weapon"
+  },
+  {
+    "id": "1545779598",
+    "image": "https://wiki.rustclash.com/img/items180/rifle.ak.png",
+    "displayName": "Assault Rifle",
+    "shortName": "rifle.ak",
+    "category": "Weapon"
+  },
+  {
+    "id": "-2072273936",
+    "image": "https://wiki.rustclash.com/img/items180/bandage.png",
+    "displayName": "Bandage",
+    "shortName": "bandage",
+    "category": "Medical"
+  },
+  {
+    "id": "1840822026",
+    "image": "https://wiki.rustclash.com/img/items180/grenade.beancan.png",
+    "displayName": "Beancan Grenade",
+    "shortName": "grenade.beancan",
+    "category": "Weapon"
+  },
+  {
+    "id": "1588298435",
+    "image": "https://wiki.rustclash.com/img/items180/rifle.bolt.png",
+    "displayName": "Bolt Action Rifle",
+    "shortName": "rifle.bolt",
+    "category": "Weapon"
+  },
+  {
+    "id": "1711033574",
+    "image": "https://wiki.rustclash.com/img/items180/bone.club.png",
+    "displayName": "Bone Club",
+    "shortName": "bone.club",
+    "category": "Weapon"
+  },
+  {
+    "id": "1814288539",
+    "image": "https://wiki.rustclash.com/img/items180/knife.bone.png",
+    "displayName": "Bone Knife",
+    "shortName": "knife.bone",
+    "category": "Weapon"
+  },
+  {
+    "id": "1443579727",
+    "image": "https://wiki.rustclash.com/img/items180/bow.hunting.png",
+    "displayName": "Hunting Bow",
+    "shortName": "bow.hunting",
+    "category": "Weapon"
+  },
+  {
+    "id": "1973165031",
+    "image": "https://wiki.rustclash.com/img/items180/cakefiveyear.png",
+    "displayName": "Birthday Cake",
+    "shortName": "cakefiveyear",
+    "category": "Tool"
+  },
+  {
+    "id": "1104520648",
+    "image": "https://wiki.rustclash.com/img/items180/chainsaw.png",
+    "displayName": "Chainsaw",
+    "shortName": "chainsaw",
+    "category": "Tool"
+  },
+  {
+    "id": "-1978999529",
+    "image": "https://wiki.rustclash.com/img/items180/salvaged.cleaver.png",
+    "displayName": "Salvaged Cleaver",
+    "shortName": "salvaged.cleaver",
+    "category": "Weapon"
+  },
+  {
+    "id": "884424049",
+    "image": "https://wiki.rustclash.com/img/items180/bow.compound.png",
+    "displayName": "Compound Bow",
+    "shortName": "bow.compound",
+    "category": "Weapon"
+  },
+  {
+    "id": "1965232394",
+    "image": "https://wiki.rustclash.com/img/items180/crossbow.png",
+    "displayName": "Crossbow",
+    "shortName": "crossbow",
+    "category": "Weapon"
+  },
+  {
+    "id": "-765183617",
+    "image": "https://wiki.rustclash.com/img/items180/shotgun.double.png",
+    "displayName": "Double Barrel Shotgun",
+    "shortName": "shotgun.double",
+    "category": "Weapon"
+  },
+  {
+    "id": "-75944661",
+    "image": "https://wiki.rustclash.com/img/items180/pistol.eoka.png",
+    "displayName": "Eoka Pistol",
+    "shortName": "pistol.eoka",
+    "category": "Weapon"
+  },
+  {
+    "id": "143803535",
+    "image": "https://wiki.rustclash.com/img/items180/grenade.f1.png",
+    "displayName": "F1 Grenade",
+    "shortName": "grenade.f1",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1215753368",
+    "image": "https://wiki.rustclash.com/img/items180/flamethrower.png",
+    "displayName": "Flame Thrower",
+    "shortName": "flamethrower",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1123473824",
+    "image": "https://wiki.rustclash.com/img/items180/multiplegrenadelauncher.png",
+    "displayName": "Multiple Grenade Launcher",
+    "shortName": "multiplegrenadelauncher",
+    "category": "Weapon"
+  },
+  {
+    "id": "200773292",
+    "image": "https://wiki.rustclash.com/img/items180/hammer.png",
+    "displayName": "Hammer",
+    "shortName": "hammer",
+    "category": "Tool"
+  },
+  {
+    "id": "-1252059217",
+    "image": "https://wiki.rustclash.com/img/items180/hatchet.png",
+    "displayName": "Hatchet",
+    "shortName": "hatchet",
+    "category": "Tool"
+  },
+  {
+    "id": "2040726127",
+    "image": "https://wiki.rustclash.com/img/items180/knife.combat.png",
+    "displayName": "Combat Knife",
+    "shortName": "knife.combat",
+    "category": "Weapon"
+  },
+  {
+    "id": "-778367295",
+    "image": "https://wiki.rustclash.com/img/items180/rifle.l96.png",
+    "displayName": "L96 Rifle",
+    "shortName": "rifle.l96",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1812555177",
+    "image": "https://wiki.rustclash.com/img/items180/rifle.lr300.png",
+    "displayName": "LR-300 Assault Rifle",
+    "shortName": "rifle.lr300",
+    "category": "Weapon"
+  },
+  {
+    "id": "-2069578888",
+    "image": "https://wiki.rustclash.com/img/items180/lmg.m249.png",
+    "displayName": "M249",
+    "shortName": "lmg.m249",
+    "category": "Weapon"
+  },
+  {
+    "id": "28201841",
+    "image": "https://wiki.rustclash.com/img/items180/rifle.m39.png",
+    "displayName": "M39 Rifle",
+    "shortName": "rifle.m39",
+    "category": "Weapon"
+  },
+  {
+    "id": "-852563019",
+    "image": "https://wiki.rustclash.com/img/items180/pistol.m92.png",
+    "displayName": "M92 Pistol",
+    "shortName": "pistol.m92",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1966748496",
+    "image": "https://wiki.rustclash.com/img/items180/mace.png",
+    "displayName": "Mace",
+    "shortName": "mace",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1137865085",
+    "image": "https://wiki.rustclash.com/img/items180/machete.png",
+    "displayName": "Machete",
+    "shortName": "machete",
+    "category": "Weapon"
+  },
+  {
+    "id": "1318558775",
+    "image": "https://wiki.rustclash.com/img/items180/smg.mp5.png",
+    "displayName": "MP5A4",
+    "shortName": "smg.mp5",
+    "category": "Weapon"
+  },
+  {
+    "id": "1953903201",
+    "image": "https://wiki.rustclash.com/img/items180/pistol.nailgun.png",
+    "displayName": "Nailgun",
+    "shortName": "pistol.nailgun",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1302129395",
+    "image": "https://wiki.rustclash.com/img/items180/pickaxe.png",
+    "displayName": "Pickaxe",
+    "shortName": "pickaxe",
+    "category": "Tool"
+  },
+  {
+    "id": "-1367281941",
+    "image": "https://wiki.rustclash.com/img/items180/shotgun.waterpipe.png",
+    "displayName": "Waterpipe Shotgun",
+    "shortName": "shotgun.waterpipe",
+    "category": "Weapon"
+  },
+  {
+    "id": "1373971859",
+    "image": "https://wiki.rustclash.com/img/items180/pistol.python.png",
+    "displayName": "Python Revolver",
+    "shortName": "pistol.python",
+    "category": "Weapon"
+  },
+  {
+    "id": "649912614",
+    "image": "https://wiki.rustclash.com/img/items180/pistol.revolver.png",
+    "displayName": "Revolver",
+    "shortName": "pistol.revolver",
+    "category": "Weapon"
+  },
+  {
+    "id": "963906841",
+    "image": "https://wiki.rustclash.com/img/items180/rock.png",
+    "displayName": "Rock",
+    "shortName": "rock",
+    "category": "Tool"
+  },
+  {
+    "id": "442886268",
+    "image": "https://wiki.rustclash.com/img/items180/rocket.launcher.png",
+    "displayName": "Rocket Launcher",
+    "shortName": "rocket.launcher",
+    "category": "Weapon"
+  },
+  {
+    "id": "-262590403",
+    "image": "https://wiki.rustclash.com/img/items180/axe.salvaged.png",
+    "displayName": "Salvaged Axe",
+    "shortName": "axe.salvaged",
+    "category": "Tool"
+  },
+  {
+    "id": "-1506397857",
+    "image": "https://wiki.rustclash.com/img/items180/hammer.salvaged.png",
+    "displayName": "Salvaged Hammer",
+    "shortName": "hammer.salvaged",
+    "category": "Tool"
+  },
+  {
+    "id": "-1780802565",
+    "image": "https://wiki.rustclash.com/img/items180/icepick.salvaged.png",
+    "displayName": "Salvaged Icepick",
+    "shortName": "icepick.salvaged",
+    "category": "Tool"
+  },
+  {
+    "id": "-1878475007",
+    "image": "https://wiki.rustclash.com/img/items180/explosive.satchel.png",
+    "displayName": "Satchel Charge",
+    "shortName": "explosive.satchel",
+    "category": "Tool"
+  },
+  {
+    "id": "795371088",
+    "image": "https://wiki.rustclash.com/img/items180/shotgun.pump.png",
+    "displayName": "Pump Shotgun",
+    "shortName": "shotgun.pump",
+    "category": "Weapon"
+  },
+  {
+    "id": "818877484",
+    "image": "https://wiki.rustclash.com/img/items180/pistol.semiauto.png",
+    "displayName": "Semi-Automatic Pistol",
+    "shortName": "pistol.semiauto",
+    "category": "Weapon"
+  },
+  {
+    "id": "-904863145",
+    "image": "https://wiki.rustclash.com/img/items180/rifle.semiauto.png",
+    "displayName": "Semi-Automatic Rifle",
+    "shortName": "rifle.semiauto",
+    "category": "Weapon"
+  },
+  {
+    "id": "1796682209",
+    "image": "https://wiki.rustclash.com/img/items180/smg.2.png",
+    "displayName": "Custom SMG",
+    "shortName": "smg.2",
+    "category": "Weapon"
+  },
+  {
+    "id": "-41440462",
+    "image": "https://wiki.rustclash.com/img/items180/shotgun.spas12.png",
+    "displayName": "Spas-12 Shotgun",
+    "shortName": "shotgun.spas12",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1583967946",
+    "image": "https://wiki.rustclash.com/img/items180/stonehatchet.png",
+    "displayName": "Stone Hatchet",
+    "shortName": "stonehatchet",
+    "category": "Tool"
+  },
+  {
+    "id": "171931394",
+    "image": "https://wiki.rustclash.com/img/items180/stone.pickaxe.png",
+    "displayName": "Stone Pickaxe",
+    "shortName": "stone.pickaxe",
+    "category": "Tool"
+  },
+  {
+    "id": "1602646136",
+    "image": "https://wiki.rustclash.com/img/items180/spear.stone.png",
+    "displayName": "Stone Spear",
+    "shortName": "spear.stone",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1469578201",
+    "image": "https://wiki.rustclash.com/img/items180/longsword.png",
+    "displayName": "Longsword",
+    "shortName": "longsword",
+    "category": "Weapon"
+  },
+  {
+    "id": "1326180354",
+    "image": "https://wiki.rustclash.com/img/items180/salvaged.sword.png",
+    "displayName": "Salvaged Sword",
+    "shortName": "salvaged.sword",
+    "category": "Weapon"
+  },
+  {
+    "id": "-1758372725",
+    "image": "https://wiki.rustclash.com/img/items180/smg.thompson.png",
+    "displayName": "Thompson",
+    "shortName": "smg.thompson",
+    "category": "Weapon"
+  },
+  {
+    "id": "795236088",
+    "image": "https://wiki.rustclash.com/img/items180/torch.png",
+    "displayName": "Torch",
+    "shortName": "torch",
+    "category": "Tool"
+  },
+  {
+    "id": "1424075905",
+    "image": "https://wiki.rustclash.com/img/items180/bucket.water.png",
+    "displayName": "Water Bucket",
+    "shortName": "bucket.water",
+    "category": "Tool"
+  },
+  {
+    "id": "1540934679",
+    "image": "https://wiki.rustclash.com/img/items180/spear.wooden.png",
+    "displayName": "Wooden Spear",
+    "shortName": "spear.wooden",
+    "category": "Weapon"
+  },
+  {
+    "id": "60528587",
+    "image": "https://wiki.rustclash.com/img/items180/horse.armor.roadsign.png",
+    "displayName": "Roadsign Horse Armor",
+    "shortName": "horse.armor.roadsign",
+    "category": "Attire"
+  },
+  {
+    "id": "1659447559",
+    "image": "https://wiki.rustclash.com/img/items180/horse.armor.wood.png",
+    "displayName": "Wooden Horse Armor",
+    "shortName": "horse.armor.wood",
+    "category": "Attire"
+  },
+  {
+    "id": "1400460850",
+    "image": "https://wiki.rustclash.com/img/items180/horse.saddlebag.png",
+    "displayName": "Saddle bag",
+    "shortName": "horse.saddlebag",
+    "category": "Attire"
+  },
+  {
+    "id": "1989785143",
+    "image": "https://wiki.rustclash.com/img/items180/horse.shoes.advanced.png",
+    "displayName": "High Quality Horse Shoes",
+    "shortName": "horse.shoes.advanced",
+    "category": "Attire"
+  },
+  {
+    "id": "-1211268013",
+    "image": "https://wiki.rustclash.com/img/items180/horse.shoes.basic.png",
+    "displayName": "Basic Horse Shoes",
+    "shortName": "horse.shoes.basic",
+    "category": "Attire"
+  }
+]

@@ -9,7 +9,7 @@ module.exports = {
     // Asynchronous function to execute when a player joins the server
     async execute(data, rce, client) {
         // Log an informational message indicating that a player has joined the server
-        const leftMessage = `[${data.server.identifier}] [PLAYER LEFT] ${data.ign} Left The Server!`;
+        const leftMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[PLAYER LEFT]\x1b[0m \x1b[32;1m${data.ign}\x1b[0m Left The Server!`;
 
         // Utilize the logging function from the client to log the join event
         await client.functions.log("info", leftMessage);

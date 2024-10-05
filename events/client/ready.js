@@ -9,7 +9,7 @@ module.exports = {
             await client.rce.init();
 
             // Log a message indicating successful login
-            await client.functions.log("info", `Logged In As ${client.user.tag}!`);
+            await client.functions.log("info", `\x1b[34;1m[BOT]\x1b[0m Logged In As ${client.user.tag}!`);
 
             await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -49,7 +49,7 @@ module.exports = {
                         };
 
                         // Log a message indicating successful connection to the server
-                        await client.functions.log("success", `Successfully Connected To ${client.server_information[identifier].Hostname}`);
+                        await client.functions.log("success", `\x1b[32;1m[${identifier}]\x1b[0m Successfully Connected To ${client.server_information[identifier].Hostname}`);
 
                         // Mark that a message has been shown for this server
                         shown_message[identifier] = true; // No need to await here, it's a simple assignment
@@ -57,12 +57,30 @@ module.exports = {
 
                 } catch (error) {
                     // Log an error message if there is an issue with parsing the server data
-                    await client.functions.log("error", `Failed To Parse Server Data for ${identifier}: ${error.message}`);
+                    await client.functions.log("error", `\x1b[32;1m[${identifier}]\x1b[0m Failed To Parse Server Data: ${error.message}`);
                 }
             }
+            const players = await client.functions.get_count(client, 'SELECT COUNT(*) as count FROM players');
+            await client.user.setPresence({
+                activities: [
+                    {
+                        name: 'Rust: Console Edition', // Game name
+                        type: 0, // ActivityType (0 - Playing, 1 - Streaming, 2 - Listening, 3 - Watching)
+                        state: `Watching Over ${servers.size} Servers With ${players} Players`, // The current state of the game
+                        largeImage: 'rce', // Key for the large image (must be uploaded on Discord Developer Portal)
+                        smallImage: 'rce', // Key for the small image (must be uploaded on Discord Developer Portal)
+                        buttons: [
+                            { label: 'Github', url: 'https://github.com/KyleFardy/RCE-Discord-Bot-V2' },
+                            { label: 'Discord', url: 'https://discord.void-dev.co/' },
+                        ],
+                    },
+                ],
+                status: 'online', // Status of the user
+            });
+            
         } catch (error) {
             // Log an error message if initialization fails
-            await client.functions.log("error", `Failed To Initialize: ${error.message}`);
+            await client.functions.log("error", `\x1b[34;1m[BOT]\x1b[0m Failed To Initialize: ${error.message}`, error);
 
             // Exit the process with a non-zero status to indicate failure
             process.exit(1);

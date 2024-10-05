@@ -1,5 +1,6 @@
 {
-  "auto_messages": [
+  "enabled": true,
+  "messages": [
     "For <color=#3498eb><b>Info</b></color>, <color=#3498eb><b>Rules</b></color>, <color=purple><b>Events</b></color>, <color=orange><b>Giveaways</b></color>, <color=#3498eb><b>Link</b></color>, <color=#3498eb><b>Stats</b></color>, <color=#3498eb><b>Teleporting</b></color>, And <b>More</b>, Join Our Discord @<color=green>discord.gg/XFx6XXHnDA</color>",
     "Use Gesture <color=#3498eb><b>I Need Wood</b></color> To Claim Your Hourly Kit!",
     "Use Gesture <color=#3498eb><b>I Need Metal Fragments</b></color> To Claim Your 2 Hourly VIP Kit!",

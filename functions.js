@@ -1,6 +1,8 @@
 // Import the required modules and components
 const client = require("./core"); // Import the bot instance
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js"); 
+const fs = require('fs');
+const path = require('path');
 
 // Function to log messages with various types and formatting
 // Define log levels without success
@@ -65,48 +67,76 @@ function format_date(date, locale = "en-GB") {
     };
     return new Intl.DateTimeFormat(locale, options).format(date); // Format date using Intl API
 }
+const is_json = str => { try { return !!JSON.parse(str); } catch { return false; } };
 
 // Asynchronous function to send a message to a Discord channel
-async function discord_log(message, channel) {
-    await client.channels.cache.get(channel).send({ content: message }); // Send message to the specified channel
+async function discord_log(client, message, channelId) {
+    try {
+        // Get the channel using the provided channelId
+        const channel = await client.channels.fetch(channelId);
+        if (!channel) {
+            throw new Error("Channel Not Found");
+        }
+
+        // Send the message to the specified channel
+        await channel.send({ content: message });
+    } catch (error) {
+        await client.functions.log("error", "Failed To Send Message To Channel:", error);
+    }
 }
 
+
+async function get_item_image(display_name) {
+    const itemsPath = path.join(__dirname, 'items.json');
+    const items = JSON.parse(fs.readFileSync(itemsPath, 'utf8'));
+    const item = items.find(item => item.displayName.toLowerCase() === display_name.toLowerCase());
+    if (item) {
+        return `https://void-dev.co/proxy?image=${item.shortName}`;
+    } else {
+        return "https://cdn.void-dev.co/rce.png"; // Return an error message if not found
+    }
+}
 // Asynchronous function to send an embedded message to a Discord channel
-async function send_embed(channel, title, description, fields = [], thumbnailUrl = null, imageUrl = null) {
-    const embed = new MessageEmbed()
+async function send_embed(client, channel, title, description, fields = [], thumbnailUrl = null, imageUrl = null) {
+    // Create a new embed
+    const embed = new EmbedBuilder()
         .setTitle(title) // Set the title of the embed
         .setColor("#e6361d"); // Set the color of the embed
 
+    // Set the description if provided
     if (description.length > 0) {
-        embed.setDescription(description); // Set the description if provided
+        embed.setDescription(description);
     }
 
     // Add fields if provided
     if (fields.length > 0) {
         fields.forEach(field => {
-            // Check if field value is a non-empty string
             if (typeof field.value === 'string' && field.value.trim() !== '') {
                 embed.addFields(field); // Add each field to the embed
             }
         });
     }
 
-    // Add thumbnail if thumbnailUrl is not null
+    // Add thumbnail if provided
     if (thumbnailUrl !== null) {
-        embed.setThumbnail(thumbnailUrl); // Set the thumbnail URL
+        embed.setThumbnail(thumbnailUrl);
     }
 
-    // Add image if imageUrl is not null
+    // Add image if provided
     if (imageUrl !== null) {
-        embed.setImage(imageUrl); // Set the image URL
+        embed.setImage(imageUrl);
     }
 
+    // Attempt to send the embed
     try {
-        await client.channels.cache.get(channel).send({ embeds: [embed] }); // Send the embed to the specified channel
+        const channelToSend = await client.channels.fetch(channel); // Fetch the channel
+        await channelToSend.send({ embeds: [embed] }); // Send the embed
     } catch (error) {
-        client.functions.log("error", "Error Sending Embed:", error); // Log error if sending fails
+        // Log detailed error information for debugging
+        await client.functions.log("error", `Error Sending Embed to Channel ${channel}:`, error);
     }
 }
+
 // Function to format a hostname with color codes based on the provided color
 function format_hostname(hostname) {
     const colorCodes = {
@@ -276,7 +306,15 @@ async function get_player_by_discord(discord_id, server) {
         throw err;
     }
 }
-const get_count = async (condition, params) => (await client.database_connection.execute(condition, params))[0][0].count;
+const get_count = async (client, condition, params) => {
+    if (!client.database_connection) {
+        throw new Error('Database connection is not initialized');
+    }
+
+    const [results] = await client.database_connection.execute(condition, params);
+    return results[0]?.count || 0; // Use optional chaining to avoid errors
+};
+
 const events = Object.freeze({
 
     //rce
@@ -369,5 +407,7 @@ module.exports = {
     get_player_currency,
     get_player_by_discord,
     get_count,
-    get_event_name
+    get_event_name,
+    get_item_image,
+    is_json
 };
