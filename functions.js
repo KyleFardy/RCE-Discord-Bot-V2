@@ -107,7 +107,6 @@ async function send_embed(channel, title, description, fields = [], thumbnailUrl
         client.functions.log("error", "Error Sending Embed:", error); // Log error if sending fails
     }
 }
-
 // Function to format a hostname with color codes based on the provided color
 function format_hostname(hostname) {
     const colorCodes = {
@@ -205,46 +204,6 @@ function format_hostname(hostname) {
         return `${ansiColor}${text}\x1b[0m`; // Append reset code after the text
     });
 }
-function edit_config(action, key, value) {
-    if (!client.config.hasOwnProperty(key)) {
-        return client.functions.log("error", `Key '${key}' Not Found!`);
-    }
-
-    const is_auto_messages = key === "auto_messages" && Array.isArray(client.config[key]);
-
-    switch (action) {
-        case "add_message":
-            if (is_auto_messages) {
-                client.config[key].push(value);
-                client.functions.log("info", `Auto Message Added: ${value}`);
-            } else {
-                client.functions.log("error", `'auto_messages' Must Be An Array!`);
-            }
-            break;
-
-        case "remove_message":
-            if (is_auto_messages) {
-                const index = client.config[key].indexOf(value);
-                if (index > -1) {
-                    client.config[key].splice(index, 1);
-                    client.functions.log("info", `Auto Message Removed: ${value}`);
-                } else {
-                    client.functions.log("error", `Message Not Found!`);
-                }
-            } else {
-                client.functions.log("error", `'auto_messages' Must Be An Array!`);
-            }
-            break;
-
-        case "update":
-            client.config[key] = value;
-            client.functions.log("info", `Config Updated: ${key} = ${value}`);
-            break;
-
-        default:
-            client.functions.log("error", `Invalid Action: '${action}'.`);
-    }
-}
 function edit_servers(action, identifier, data) {
     const index = client.servers.findIndex(server => server.identifier === identifier);
 
@@ -300,7 +259,6 @@ async function get_player_currency(discord_id, server) {
         throw err;
     }
 }
-
 async function get_player_by_discord(discord_id, server) {
     try {
         const [discordIdRows] = await client.database_connection.execute(
@@ -407,7 +365,6 @@ module.exports = {
     send_embed,
     is_empty,
     format_hostname,
-    edit_config,
     edit_servers,
     get_player_currency,
     get_player_by_discord,

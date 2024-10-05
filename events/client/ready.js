@@ -57,7 +57,7 @@ module.exports = {
 
                 } catch (error) {
                     // Log an error message if there is an issue with parsing the server data
-                    await client.functions.log("error", `Failed To Parse Server Data for ${servidentifierer}: ${error.message}`);
+                    await client.functions.log("error", `Failed To Parse Server Data for ${identifier}: ${error.message}`);
                 }
             }
         } catch (error) {

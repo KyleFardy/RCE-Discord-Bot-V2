@@ -138,10 +138,10 @@ class STATS {
             try {
                 const [result, fields] = await this.client.database_connection.execute(`INSERT INTO bans (id, display_name, reason, server, region) VALUES (DEFAULT, '${display_name}', DEFAULT, '${server_identifier.serverId}', '${server_identifier.region}')`);
             } catch (error) {
-                await this.client.functions.log("error", "Error During Insert:", error);
+                await this.client.functions.log("error", "Error During Ban Insert:", error);
             }
         } catch (error) {
-            await this.client.functions.log("error", `Error In insert_ban: ${error.message}`);
+            await this.client.functions.log("error", `Error In Insert Ban: ${error.message}`);
         }
     }
     async safe_stringify(obj) {
@@ -155,11 +155,11 @@ class STATS {
                 try {
                     const [result, fields] = await this.client.database_connection.execute(`INSERT INTO players (id, display_name, discord_id, home, currency, server, region) VALUES (DEFAULT, '${display_name}', DEFAULT, DEFAULT, DEFAULT, '${server_identifier.serverId}', '${server_identifier.region}')`);
                 } catch (error) {
-                    await this.client.functions.log("error", "Error During Insert:", error);
+                    await this.client.functions.log("error", "Error During Player Insert:", error);
                 }
             }
         } catch (error) {
-            this.client.functions.log("error", `Error In insert_player: ${error.message}`);
+            this.client.functions.log("error", `Error In Insert Player: ${error.message}`);
         }
 
     }
@@ -170,11 +170,11 @@ class STATS {
                 try {
                     const [result, fields] = await this.client.database_connection.execute(`INSERT INTO chat_blacklist (id, display_name, reason, server, region) VALUES (DEFAULT, '${display_name}', '${reason}', '${server_identifier.serverId}', '${server_identifier.region}')`);
                 } catch (error) {
-                    await this.client.functions.log("error", "Error during insert:", error);
+                    await this.client.functions.log("error", "Error During Chat Ban Insert:", error);
                 }
             }
         } catch (error) {
-            this.client.functions.log("error", `Error In chat_ban: ${error.message}`);
+            this.client.functions.log("error", `Error In Chat Ban: ${error.message}`);
         }
     }
     async check_link(discord_id, server_identifier) {
@@ -182,24 +182,27 @@ class STATS {
             const [row] = await this.client.database_connection.execute("SELECT * FROM players WHERE discord_id = ? AND server = ? AND region = ?", [discord_id, server_identifier.serverId, server_identifier.region]);
             return row.length > 0;
         } catch (error) {
-            await this.client.functions.log("error", `Error In check_link: ${error.message}`);
+            await this.client.functions.log("error", `Error In Checking Link: ${error.message}`);
             return false;
         }
-    }
+    } 
     async insert_kill(server_identifier, display_name, victim, killType) {
-        await this.client.database_connection.execute("INSERT INTO kills (display_name, victim, type, server, region) VALUES (?, ?, ?, ?, ?)", [display_name, victim, killType, server_identifier.serverId, server_identifier.region],
-            async (err, results) => {
-                if (err) {
-                    await this.client.functions.log("error", `Error In insert_kill: ${err.message}`);
-                }
-            }
-        );
+        try {
+            const [results] = await this.client.database_connection.execute(
+                "INSERT INTO kills (display_name, victim, type, server, region) VALUES (?, ?, ?, ?, ?)",
+                [display_name, victim, killType, server_identifier.serverId, server_identifier.region]
+            );
+        } catch (err) {
+            await this.client.functions.log("error", `Error In Inserting Kill: ${err.message}`);
+            throw err; // Rethrow to let the caller handle it
+        }
     }
+
     async update_player(server_identifier, player_name, statColumn) {
         return new Promise(async (resolve, reject) => {
             await this.client.database_connection.execute(`UPDATE players SET ${statColumn} = ${statColumn} + 1 WHERE display_name = ? AND server = ? AND region = ?`, [player_name, server_identifier.serverId, server_identifier.region], async (err) => {
                 if (err) {
-                    await this.client.functions.log("error", `update_player ERROR: ${err.message}`);
+                    await this.client.functions.log("error", `Error In Update Player: ${err.message}`);
                     reject(err);
                 } else {
                     resolve();
@@ -208,34 +211,33 @@ class STATS {
         });
     }
     async add_points(server_identifier, player_name, amount) {
-        return new Promise(async (resolve, reject) => {
-            await this.client.database_connection.execute(`UPDATE players SET currency = currency + ${amount} WHERE display_name = ? AND server = ? AND region = ?`, [player_name, server_identifier.serverId, server_identifier.region], async (err) => {
-                if (err) {
-                    await this.client.functions.log("error", `add_points ERROR: ${err.message}`);
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        try {
+            const [result] = await this.client.database_connection.execute(
+                `UPDATE players SET currency = currency + ? WHERE display_name = ? AND server = ? AND region = ?`,
+                [amount, player_name, server_identifier.serverId, server_identifier.region]
+            );
+        } catch (err) {
+            await this.client.functions.log("error", `Error In Add Points: ${err.message}`);
+            throw err; // Rethrow to let the caller handle it
+        }
     }
     async remove_points(server_identifier, player_name, amount) {
-        return new Promise(async (resolve, reject) => {
-            await this.client.database_connection.execute(`UPDATE players SET currency = currency - ${amount} WHERE display_name = ? AND server = ? AND region = ?`, [player_name, server_identifier.serverId, server_identifier.region], async (err) => {
-                if (err) {
-                    await this.client.functions.log("error", `remove_points ERROR: ${err.message}`);
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        try {
+            const [result] = await this.client.database_connection.execute(
+                `UPDATE players SET currency = currency - ? WHERE display_name = ? AND server = ? AND region = ?`,
+                [amount, player_name, server_identifier.serverId, server_identifier.region]
+            );
+        } catch (err) {
+            await this.client.functions.log("error", `Error In Remove Points: ${err.message}`);
+            throw err; // Rethrow to let the caller handle it
+        }
     }
+
     async get_points(server_identifier, player_name) {
         return new Promise(async (resolve, reject) => {
             await this.client.database_connection.execute(`SELECT currency FROM players WHERE display_name = ? AND server = ? AND region = ?`, [player_name, server_identifier.serverId, server_identifier.region], async (err, results) => {
                 if (err) {
-                    await this.client.functions.log("error", `remove_points ERROR: ${err.message}`);
+                    await this.client.functions.log("error", `Error In Get Points: ${err.message}`);
                     reject(err);
                 } else {
                     resolve(results.length > 0 ? results[0].currency : 0);

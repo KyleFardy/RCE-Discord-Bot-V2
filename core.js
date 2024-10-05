@@ -35,7 +35,7 @@ class RCE_BOT {
             logLevel: LogLevel.None, // Set log level for RCE actions (adjust as needed)
             logFile: "rce.log" // Specify the log file for RCE actions
         });
-        this.client.config = require("./config.json");
+        this.client.auto_messages = require("./auto_messages.json");
         this.client.commands = new Collection(); // Map to store command functions
         this.client.server_information = new Map(); // Map to store server information
         this.client.events = new Collection();
