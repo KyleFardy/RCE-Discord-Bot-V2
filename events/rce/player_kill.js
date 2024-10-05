@@ -20,7 +20,7 @@ module.exports = {
 
                 if (process.env.LOG_NPC_KILLS === 'true') {
                     try {
-                        await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, "New NPC Kill", "", [
+                        await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, `${data.server.identifier} - New NPC Kill`, "", [
                             { name: 'Killer', value: `👤 ${killer.name}`, inline: true },
                             { name: 'Victim', value: `👤 A Scientist`, inline: true },
                             { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
@@ -37,7 +37,7 @@ module.exports = {
                 await client.player_stats.remove_points(server, victim.name, process.env.NPC_DEATH_POINTS);
                 if (process.env.LOG_NPC_KILLS === 'true') {
                     try {
-                        await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, "New NPC Death", "", [
+                        await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, `${data.server.identifier} - New NPC Death`, "", [
                             { name: 'Killer', value: `👤 A Scientist`, inline: true },
                             { name: 'Victim', value: `👤 ${victim.name}`, inline: true },
                             { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
@@ -49,6 +49,11 @@ module.exports = {
                 }
                 return; // No further processing for NPC death
             }
+
+            if (client.functions.ignored_attacker.includes(killer.name.toLowerCase()) || client.functions.ignored_attacker.includes(victim.name.toLowerCase())){
+                return;
+            }
+
             // Fetch kill and death counts for the killer
             const [killer_kill_count, killer_death_count] = await Promise.all([
                 client.functions.get_count(client, 'SELECT COUNT(*) as count FROM kills WHERE display_name = ? AND victim != "Scientist"', [killer.name]),
@@ -85,14 +90,13 @@ module.exports = {
             // Send a kill feed message if logging is enabled
             if (process.env.LOG_PLAYER_KILLS === 'true' && !client.functions.is_empty(process.env.PLAYER_KILLS_CHANNEL)) {
                 try {
-                    await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, "New Kill", "", [
+                    await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, `${data.server.identifier} - New Kill`, "", [
                         { name: 'Killer', value: `👤 ${killer.name}`, inline: true },
                         { name: 'Victim', value: `👤 ${victim.name}`, inline: true },
                         { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
                     ], "https://cdn.void-dev.co/death.png");
                     const kill_message = kill_feeds[Math.floor(Math.random() * kill_feeds.length)];
                     await rce.sendCommand(server.identifier, `say <color=green><b>[KILL]</b></color> ${kill_message}<br><color=green><color=white>(</color>Kills: <color=white>${killer_kill_count}</color> <color=red>|</color> Deaths: <color=white>${killer_death_count}</color> <color=red>|</color> K/D Ratio: <color=white>${kd_ratio.toFixed(1)}</color><color=white>)</color></color>`);
-                    await client.functions.send_embed(client, process.env.PLAYER_KILLS_CHANNEL, discordtitle, discordMessage, [], discordImage);
                 } catch (error) {
                     client.functions.log("error", 'Failed To Send Event Embed:', error);
                 }

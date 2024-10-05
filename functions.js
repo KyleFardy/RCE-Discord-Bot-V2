@@ -2,7 +2,9 @@
 const client = require("./core"); // Import the bot instance
 const { EmbedBuilder } = require("discord.js"); 
 const fs = require('fs');
+const fsp = require('fs/promises'); // Import fs/promises for promise-based fs methods
 const path = require('path');
+require('dotenv').config();
 
 // Function to log messages with various types and formatting
 // Define log levels without success
@@ -96,6 +98,68 @@ async function get_item_image(display_name) {
         return "https://cdn.void-dev.co/rce.png"; // Return an error message if not found
     }
 }
+const ignored_attacker = [
+    "scientist",
+    "thirst",
+    "hunger",
+    "heat",
+    "guntrap.deployed",
+    "pee pee 9000",
+    "barricade.wood",
+    "wall.external.high.stone",
+    "wall.external.high",
+    "gates.external.high.wood",
+    "gates.external.high.wood (entity)",
+    "gates.external.high.stone",
+    "gates.external.high.stone (entity)",
+    "bear",
+    "autoturret_deployed",
+    "cold",
+    "bleeding",
+    "boar",
+    "wolf",
+    "fall",
+    "drowned",
+    "radiation",
+    "autoturret_deployed (entity)",
+    "bear (bear)",
+    "boar (boar)",
+    "wolf (wolf)",
+    "guntrap.deployed (entity)",
+    "fall!",
+    "lock.code (entity)",
+    "bradleyapc (entity)",
+    "wall.external.high.stone (entity)",
+    "barricade.metal (entity)",
+    "spikes.floor (entity)",
+    "sentry.bandit.static (entity)",
+    "cactus-7 (entity)",
+    "cactus-6 (entity)",
+    "cactus-5 (entity)",
+    "cactus-4 (entity)",
+    "cactus-3 (entity)",
+    "cactus-2 (entity)",
+    "cactus-1 (entity)",
+    "landmine (entity)",
+    "wall.external.high.wood (entity)",
+    "sentry.scientist.static (entity)",
+    "patrolhelicopter (entity)",
+    "flameturret.deployed (entity)",
+    "oilfireballsmall (entity)",
+    "napalm (entity)",
+    "cargoshipdynamic2 (entity)",
+    "barricade.wood (entity)",
+    "beartrap (entity)",
+    "landmine (entity)",
+    "cargoshipdynamic1 (entity)",
+    "campfire (entity)",
+    "barricade.woodwire (entity)",
+    "rocket_crane_lift_trigger (entity)",
+    "lock.code (entity)",
+    "rowboat (entity)",
+    "fireball (entity)",
+    "teslacoil.deployed (entity)"
+];
 // Asynchronous function to send an embedded message to a Discord channel
 async function send_embed(client, channel, title, description, fields = [], thumbnailUrl = null, imageUrl = null) {
     // Create a new embed
@@ -140,6 +204,9 @@ async function send_embed(client, channel, title, description, fields = [], thum
 // Function to format a hostname with color codes based on the provided color
 function format_hostname(hostname) {
     const colorCodes = {
+        //custom
+        'purple': '\x1b[35m', // Add purple as magenta
+
         // Basic colors
         '#000000': '\x1b[30m', // Black
         '#ff0000': '\x1b[31m', // Red
@@ -228,9 +295,9 @@ function format_hostname(hostname) {
         '#7b68ee': '\x1b[34m', // MediumSlateBlue
     };
     // Use a regular expression to find the color tags and their contents
-    return hostname.replace(/<color=([^>]+)>(.*?)<\/color>/g, (match, hexColor, text) => {
+    return hostname.replace(/<color=([^>]+)>(.*?)<\/color>/g, (match, color, text) => {
         // Use the corresponding ANSI code or default to reset if the color is not defined
-        const ansiColor = colorCodes[hexColor] || '\x1b[0m'; // Reset to default if color not found
+        const ansiColor = colorCodes[color] || '\x1b[0m'; // Reset to default if color not found
         return `${ansiColor}${text}\x1b[0m`; // Append reset code after the text
     });
 }
@@ -396,6 +463,361 @@ function get_event_name(event){
     }
     return event; // Return event if the event string is not found
 }
+async function get_random_item(client) {
+    // Check if items array is empty
+    if (!client.items || client.items.length === 0) {
+        throw new Error("The items array is empty or not loaded");
+    }
+    const randomIndex = Math.floor(Math.random() * client.items.length);
+    return client.items[randomIndex];
+}
+
+function random_int(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+async function load_items() {
+    const filePath = path.join(__dirname, 'items.json');
+    try {
+        const data = await fsp.readFile(filePath, 'utf-8'); // Specify encoding for text files
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error loading items:', error);
+        return [];
+    }
+}
+async function trigger_random_item(client, server, players) {
+    // Exit early if RANDOM_ITEMS is disabled
+    if (process.env.RANDOM_ITEMS === "false") return;
+
+    // Retrieve the multiplier from the environment variable, defaulting to 1
+    const multiplier = parseInt(process.env.LOOT_SCALE) || 1;
+
+    // Create a helper function to determine the quantity based on item category or shortName
+    const get_item_quantity = (item) => {
+        let base_quantity;
+        switch (item.category) {
+            case 'Resources':
+                base_quantity = 1000 * multiplier;
+                break;
+            case 'Component':
+            case 'Food':
+                base_quantity = random_int(10, 40) * multiplier;
+                break;
+            case 'ammo.rifle':
+            case 'ammo.rifle.incendiary':
+            case 'ammo.rifle.explosive':
+            case 'ammo.rifle.hv':
+            case 'ammo.pistol':
+            case 'ammo.pistol.fire':
+            case 'ammo.pistol.hv':
+            case 'ammo.shotgun':
+            case 'ammo.shotgun.fire':
+            case 'ammo.shotgun.slug':
+                base_quantity = 128 * multiplier;
+                break;
+            case 'ammo.rocket.basic':
+            case 'ammo.rocket.fire':
+            case 'ammo.rocket.hv':
+                base_quantity = 3 * multiplier;
+                break;
+            case 'lowgradefuel':
+                base_quantity = 500 * multiplier;
+                break;
+            default:
+                base_quantity = 1; // Default quantity
+        }
+        return Math.floor(base_quantity); // Apply multiplier and round down
+    };
+
+    // Iterate over players and give random items
+    await Promise.all(players.map(async (player) => {
+        const item = await get_random_item(client);
+        const quantity = get_item_quantity(item);
+
+        // Send command to give item to user
+        await client.rce.sendCommand(server, `giveto "${player}" "${item.shortName}" "${quantity}"`);
+        await client.functions.log("info", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS] Giving ${player} ${quantity}x ${item.displayName}`);
+    }));
+}
+async function get_server(identifier) {
+    // Read the servers.json file
+    const data = fs.readFileSync('servers.json', 'utf8');
+
+    // Parse the JSON data
+    const servers = JSON.parse(data);
+
+    // Search for the server with the specified identifier
+    const server = servers.find(server => server.identifier === identifier);
+
+    // Return the server or a message if not found
+    return server || `Server with identifier "${identifier}" not found.`;
+}
+const handle_teleport = async (client, player_name, coords, location, server) => {
+    await client.functions.log("info", `\x1b[32;1m[TELEPORT]\x1b[0m \x1b[38;5;208m${player_name}\x1b[0m Teleporting To \x1b[38;5;208m${location}\x1b[0m`);
+    await client.rce.sendCommand(server.identifier, await client.functions.format_teleport_pos(player_name, coords));
+    await client.functions.send_embed(process.env.TELEPORT_LOGS_CHANNEL, "New Teleport", "", [
+        { name: 'Player', value: `👤 ${player_name}`, inline: true },
+        { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
+        { name: 'Teleported To', value: location, inline: true },
+        { name: 'Coords', value: ` \`\`\`${coords}\`\`\``, inline: true },
+    ], "");
+};
+const format_teleport_pos = (player_name, coordinates) => {
+    return `teleportpos "${coordinates}" "${player_name}"`;
+};
+const get_player_info = async (client, player_name, server) => {
+    try {
+        // Fetch player info
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM players WHERE server = ? AND region = ? AND display_name = ?',
+            [server.serverId, server.region, player_name]
+        );
+
+        if (rows.length === 0) return;  // Exit if no player found
+
+        const playerInfo = rows[0];
+        const { display_name: name, currency } = playerInfo;
+
+        // Helper function to get the last record
+        const get_last_record = async (query, params) => {
+            const [rows] = await client.database_connection.query(query, params);
+            return rows.length > 0 ? rows[0] : null;
+        };
+
+        // Get kills and deaths count
+        const kills_count = await get_count(client,
+            'SELECT COUNT(*) as count FROM kills WHERE display_name = ? AND victim != "A Scientist"',
+            [name]
+        );
+        const deaths_count = await get_count(client, 
+            'SELECT COUNT(*) as count FROM kills WHERE victim = ? AND display_name != "A Scientist"',
+            [name]
+        );
+
+        // Get the last kill, last death, and worst enemy details
+        const [last_kill, last_death, worst_enemy] = await Promise.all([
+            get_last_record(
+                "SELECT victim FROM kills WHERE type = 'Kill' AND display_name = ? ORDER BY id DESC LIMIT 1",
+                [name]
+            ),
+            get_last_record(
+                "SELECT display_name FROM kills WHERE type = 'Kill' AND victim = ? ORDER BY id DESC LIMIT 1",
+                [name]
+            ),
+            get_last_record(
+                "SELECT display_name, COUNT(*) AS count FROM kills WHERE type = 'Kill' AND victim = ? GROUP BY display_name ORDER BY count DESC LIMIT 1",
+                [name]
+            ),
+        ]);
+
+        // Compute K/D ratio
+        const kd_ratio = deaths_count === 0 ? kills_count : (kills_count / deaths_count).toFixed(2);
+
+        // Handle default values
+        const last_killer_name = last_kill ? last_kill.victim : 'Not Killed Anyone';
+        const last_death_name = last_death ? last_death.display_name : 'Not Been Killed';
+        const worst_enemy_name = worst_enemy
+            ? `${worst_enemy.display_name} (Deaths: ${worst_enemy.count})`
+            : 'Not Found';
+
+        // Construct the message
+        const message = `
+            <br><color=orange><size=50>Stats For ${name}</size></color>
+            <size=25>Currency: <b><color=yellow>${currency}</color></b></size>
+            <size=25>Last Killed : <b><color=orange>${last_killer_name}</color></b></size>
+            <size=25>Last Killer : <b><color=orange>${last_death_name}</color></b></size>
+            <size=25>Worst Enemy : <b><color=orange>${worst_enemy_name}</color></b></size>
+            <size=25>Kills : <b><color=orange>${kills_count}</color></b></size>
+            <size=25>Deaths : <b><color=orange>${deaths_count}</color></b></size>
+            <size=25>K/D Ratio : <b><color=orange>${kd_ratio}</color></b></size>
+        `;
+        await client.rce.sendCommand(server.identifier, `global.say ${message}`);
+    } catch (err) {
+        client.functions.log("error", 'Error Fetching Player Info:', err);
+        throw err;
+    }
+};
+// Function to get a kit record from the MySQL database
+async function get_record(client, player_name, type, server) {
+    try {
+        const [rows] = await client.database_connection.query(
+            'SELECT last_redeemed FROM kit_redemptions WHERE display_name = ? AND type = ? AND server = ? AND region = ?',
+            [player_name, type, server.serverId, server.region]
+        );
+        if (rows.length > 0) {
+            return rows[0].last_redeemed; // Return last redeemed time
+        } else {
+            return null; // No record found
+        }
+    } catch (err) {
+        console.error('Error fetching record:', err);
+        throw err;
+    }
+}
+
+// Function to set a kit record in the MySQL database
+async function set_record(client, player_name, type, server, last_redeemed) {
+    try {
+        // Check if the player already has a record for this kit on this server and region
+        const [existingRows] = await client.database_connection.query(
+            'SELECT id FROM kit_redemptions WHERE display_name = ? AND type = ? AND server = ? AND region = ?',
+            [player_name, type, server.serverId, server.region]
+        );
+
+        if (existingRows.length > 0) {
+            // Update existing record
+            await client.database_connection.query(
+                'UPDATE kit_redemptions SET last_redeemed = ? WHERE display_name = ? AND type = ? AND server = ? AND region = ?',
+                [last_redeemed, player_name, type, server.serverId, server.region]
+            );
+        } else {
+            // Insert new record
+            await client.database_connection.query(
+                'INSERT INTO kit_redemptions (display_name, type, server, region, last_redeemed) VALUES (?, ?, ?, ?, ?)',
+                [player_name, type, server.serverId, server.region, last_redeemed]
+            );
+        }
+    } catch (err) {
+        console.error('Error setting record:', err);
+        throw err;
+    }
+}
+function get_kit_time(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return { hours, minutes };
+}
+
+const SECONDS_IN_A_MINUTE = 60;
+const SECONDS_IN_AN_HOUR = 3600;
+const SECONDS_IN_A_DAY = 24 * SECONDS_IN_AN_HOUR;
+const AN_HOUR = 1 * SECONDS_IN_AN_HOUR;
+const TWO_HOURS = 2 * SECONDS_IN_AN_HOUR;
+
+const handle_kit = async (client, player_name, server) => {
+    try {
+        const last_redeemed = await get_record(client, player_name, 'hourly', server);
+        const current_timestamp = Math.floor(Date.now() / 1000);
+        const timeDiff = current_timestamp - (last_redeemed || 0);
+
+        // Function to log and send messages for cooldown or successful claim
+        const notify = async (log_message, embed_title, embed_fields, chat_message, server) => {
+            await client.functions.log("info", log_message);
+            if (process.env.KIT_REDEMPTION_LOGS === 'true' && !client.functions.is_empty(process.env.KIT_REDEMPTION_CHANNEL)) {
+                await client.functions.send_embed(client, process.env.KIT_REDEMPTION_CHANNEL, `${server.identifier} - ${embed_title}`, "", embed_fields, "https://cdn.void-dev.co/ak.png");
+            }
+            await client.rce.sendCommand(server.identifier, chat_message);
+        };
+
+        if (timeDiff < AN_HOUR) {
+            const remaining_time = get_kit_time(AN_HOUR - timeDiff);
+            const log_message = `[KITS] ${player_name} On Cooldown For ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`;
+
+            const embed_fields = [
+                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
+                { name: 'Kit Type', value: `Hourly Kit`, inline: true },
+                { name: 'Reason', value: `Kit Can Be Claimed In ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`, inline: true },
+            ];
+
+            const chat_message = `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color>: <color=orange><b>You Can Claim The Hourly Kit In ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!</b></color>`;
+
+            notify(log_message, "Kit Not Redeemed", embed_fields, chat_message, server);
+        } else {
+            await set_record(client, player_name, 'hourly', server, current_timestamp);
+            const log_message = `[KITS] ${player_name} Claimed Hourly Kit!`;
+
+            const embed_fields = [
+                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
+                { name: 'Kit Type', value: `Hourly Kit`, inline: true },
+            ];
+
+            const chat_message = `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color>: <color=green><b>Claimed Their Hourly Kit!</b></color>`;
+
+            // Give the player the kit
+            await client.rce.sendCommand(server.identifier, `kit givetoplayer "${process.env.HOURLY_KIT_NAME}" "${player_name}"`);
+
+            notify(log_message, "Kit Redeemed", embed_fields, chat_message, server);
+        }
+    } catch (error) {
+        console.error('Error handling hourly kit:', error);
+    }
+}
+async function check_link(client, discord_id) {
+    try {
+        const [row] = await client.database_connection.execute("SELECT * FROM players WHERE discord_id = ?", [discord_id]);
+        return row.length > 0;
+    } catch (error) {
+        await client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Checking Link: ${error.message}`);
+        return false;
+    }
+}
+const handle_vip_kit = async (client, player_name, server) => {
+    const member = client.guilds.cache.get(process.env.GUILD_ID).members.cache.find(
+        member => member.nickname === player_name || member.user.username === player_name
+    );
+
+    if (!member) {
+        await client.functions.log("info", `[KITS] Member ${player_name} Not Found In The Discord Server!`);
+        await client.rce.sendCommand(server.identifier, `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color> : <color=red><b>Could Not Find Your Discord Account, Are You Linked?</b></color>`);
+        return;
+    }
+    if (!member.roles.cache.has(process.env.VIP_ROLE_ID)) {
+        await client.functions.log("info", `[KITS] Member ${player_name} Does Not Have The VIP Role!`);
+        await client.rce.sendCommand(server.identifier, `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color> : <color=red><b>You Do Not Have The VIP Role To Claim This Kit!</b></color>`);
+        return;
+    }
+    try {
+        const last_redeemed = await get_record(client, player_name, 'vip', server);
+        const current_timestamp = Math.floor(Date.now() / 1000);
+        const timeDiff = current_timestamp - (last_redeemed || 0);
+
+        // Function to log and send messages for cooldown or successful claim
+        const notify = async (log_message, embed_title, embed_fields, chat_message, server) => {
+            await client.functions.log("info", log_message);
+            if (process.env.KIT_REDEMPTION_LOGS === 'true' && !client.functions.is_empty(process.env.KIT_REDEMPTION_CHANNEL)) {
+                await client.functions.send_embed(client, process.env.KIT_REDEMPTION_CHANNEL, `${server.identifier} - ${embed_title}`, "", embed_fields, "https://cdn.void-dev.co/ak.png");
+            }
+            await client.rce.sendCommand(server.identifier, chat_message);
+        };
+
+        if (timeDiff < TWO_HOURS) {
+            const remaining_time = get_kit_time(TWO_HOURS - timeDiff);
+            const log_message = `[KITS] ${player_name} On Cooldown For ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`;
+
+            const embed_fields = [
+                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
+                { name: 'Kit Type', value: `VIP Kit`, inline: true },
+                { name: 'Reason', value: `VIP Kit Can Be Claimed In ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`, inline: true },
+            ];
+
+            const chat_message = `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color>: <color=orange><b>You Can Claim The Hourly Kit In ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!</b></color>`;
+
+            notify(log_message, "Kit Not Redeemed", embed_fields, chat_message, server);
+        } else {
+            await set_record(client, player_name, 'vip', server, current_timestamp);
+            const log_message = `[KITS] ${player_name} Claimed Hourly Kit!`;
+
+            const embed_fields = [
+                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
+                { name: 'Kit Type', value: `VIP Kit`, inline: true },
+            ];
+
+            const chat_message = `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color>: <color=green><b>Claimed Their VIP Kit!</b></color>`;
+
+            // Give the player the kit
+            await client.rce.sendCommand(server.identifier, `kit givetoplayer "${process.env.VIP_KIT_NAME}" "${player_name}"`);
+
+            notify(log_message, "Kit Redeemed", embed_fields, chat_message, server);
+        }
+    } catch (error) {
+        console.error('Error handling hourly kit:', error);
+    }
+}
+
 module.exports = {
     log,
     format_date,
@@ -409,5 +831,17 @@ module.exports = {
     get_count,
     get_event_name,
     get_item_image,
-    is_json
+    is_json,
+    ignored_attacker,
+    trigger_random_item,
+    load_items,
+    get_server,
+    handle_teleport,
+    format_teleport_pos,
+    get_player_info,
+    get_record,
+    set_record,
+    handle_kit,
+    handle_vip_kit,
+    check_link
 };

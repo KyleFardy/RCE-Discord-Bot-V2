@@ -1,5 +1,6 @@
 // Import necessary components from the rce.js library
 const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
+require('dotenv').config(); // Load environment variables from .env file
 
 // Define structured messages for various events
 const eventMessages = {
@@ -78,10 +79,10 @@ module.exports = {
 
         // Check if a message exists for the event
         if (eventDetails) {
-            const { formatted, discord, console: consoleMessage } = eventDetails;
+            const { formatted, discord, console } = eventDetails;
 
             // Construct the log message
-            const eventStartedMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32m\x1b[1m[EVENT]\x1b[0m ${consoleMessage}`;
+            const eventStartedMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32m\x1b[1m[EVENT]\x1b[0m ${console}`;
 
             // Log the event start message
             await client.functions.log("info", eventStartedMessage);
@@ -90,9 +91,9 @@ module.exports = {
             await rce.sendCommand(data.server.identifier, `global.say ${formatted}`);
 
             // Check if logging to Discord is enabled
-            if (process.env.EVENTS_LOG === 'true' && !client.functions.is_empty(process.env.EVENTS_CHANNEL)) {
+            if (process.env.EVENTS_LOG === 'true' && !client.functions.is_empty(process.env.EVENTS_LOG_CHANNEL)) {
                 try {
-                    await client.functions.send_embed(client, process.env.EVENTS_CHANNEL, discord.title, discord.message, [], discord.image);
+                    await client.functions.send_embed(client, process.env.EVENTS_LOG_CHANNEL, `${data.server.identifier} - ${discord.title}`, discord.message, [], discord.image);
                 } catch (error) {
                     await client.functions.log("error", 'Failed To Send Event Embed:', error);
                 }

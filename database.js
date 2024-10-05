@@ -9,52 +9,60 @@ class STATS {
             {
                 name: 'players',
                 query: `
-            CREATE TABLE IF NOT EXISTS players (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                display_name VARCHAR(255),
-                discord_id VARCHAR(255) NULL,
-                home VARCHAR(255) NULL,
-                server VARCHAR(255) NULL,
-                region VARCHAR(255) NULL,
-                currency INT DEFAULT 0
-            )
-        `,
+                    CREATE TABLE IF NOT EXISTS players (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        display_name VARCHAR(255),
+                        discord_id VARCHAR(255) NULL,
+                        home VARCHAR(255) NULL,
+                        server VARCHAR(255) NULL,
+                        region VARCHAR(255) NULL,
+                        currency INT DEFAULT 0
+                    )`,
             },
             {
                 name: 'kills',
                 query: `
-            CREATE TABLE IF NOT EXISTS kills (
-                id INT(11) NOT NULL,
-                display_name TEXT DEFAULT NULL,
-                victim TEXT DEFAULT NULL,
-                type TEXT DEFAULT NULL,
-                server VARCHAR(255) NULL,
-                region VARCHAR(255) NULL,
-                time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        `,
+                    CREATE TABLE IF NOT EXISTS kills (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        display_name TEXT DEFAULT NULL,
+                        victim TEXT DEFAULT NULL,
+                        type TEXT DEFAULT NULL,
+                        server VARCHAR(255) NULL,
+                        region VARCHAR(255) NULL,
+                        time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;`,
             },
             {
                 name: 'bans',
                 query: `
-            CREATE TABLE IF NOT EXISTS bans (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                display_name VARCHAR(255),
-                server VARCHAR(255) NULL,
-                region VARCHAR(255) NULL,
-                reason VARCHAR(255) NULL
-            )
-        `,
+                    CREATE TABLE IF NOT EXISTS bans (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        display_name VARCHAR(255),
+                        server VARCHAR(255) NULL,
+                        region VARCHAR(255) NULL,
+                        reason VARCHAR(255) NULL
+                    )`,
             },
             {
                 name: 'chat_blacklist',
                 query: `
-            CREATE TABLE IF NOT EXISTS chat_blacklist (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                display_name VARCHAR(255),
-                reason VARCHAR(255) NULL
-            )
-        `,
+                    CREATE TABLE IF NOT EXISTS chat_blacklist (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        display_name VARCHAR(255),
+                        reason VARCHAR(255) NULL
+                    )`,
+            },
+            {
+                name: 'kit_redemptions',
+                query: `
+                    CREATE TABLE kit_redemptions (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        display_name VARCHAR(255) NOT NULL,
+                        type VARCHAR(255) NOT NULL,
+                        server VARCHAR(255) NOT NULL,
+                        region VARCHAR(255) NOT NULL,
+                        last_redeemed INT NOT NULL
+                    );`,
             },
         ];
 
@@ -79,10 +87,10 @@ class STATS {
             try {
                 const exists = await checkTableExists(name);
                 if (exists) {
-                    await this.client.functions.log("info", `\x1b[34;1m[DATABASE]\x1b[0m ${name.charAt(0) + name.slice(1)} Table Already Exists!`);
+                    await this.client.functions.log("debug", `\x1b[34;1m[DATABASE]\x1b[0m ${name.charAt(0) + name.slice(1)} Table Already Exists!`);
                 } else {
                     await this.client.database_connection.execute(query);
-                    await this.client.functions.log("info", `\x1b[34;1m[DATABASE]\x1b[0m ${name.charAt(0) + name.slice(1)} Table Created!`);
+                    await this.client.functions.log("debug", `\x1b[34;1m[DATABASE]\x1b[0m ${name.charAt(0) + name.slice(1)} Table Created!`);
                 }
             } catch (err) {
                 await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m MySQL Create ${name.charAt(0) + name.slice(1)} Table Error: ${err.message}`);
@@ -175,15 +183,6 @@ class STATS {
             this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Chat Ban: ${error.message}`);
         }
     }
-    async check_link(discord_id, server_identifier) {
-        try {
-            const [row] = await this.client.database_connection.execute("SELECT * FROM players WHERE discord_id = ? AND server = ? AND region = ?", [discord_id, server_identifier.serverId, server_identifier.region]);
-            return row.length > 0;
-        } catch (error) {
-            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Checking Link: ${error.message}`);
-            return false;
-        }
-    } 
     async insert_kill(server_identifier, display_name, victim, killType) {
         try {
             const [results] = await this.client.database_connection.execute(

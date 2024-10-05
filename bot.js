@@ -21,6 +21,5 @@ process.on('unhandledRejection', (reason, promise) => {
     // Optionally exit or handle accordingly
 });
 
-
 // Export the `client` object from the instantiated bot for use in other files
 module.exports = bot; 

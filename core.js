@@ -30,9 +30,9 @@ class RCE_BOT {
             password: process.env.GPORTAL_PASSWORD,
             servers: this.client.servers,
         }, {
-            logLevel: LogLevel.None,
-            logFile: "rce.log"
+            logLevel: LogLevel.None
         });
+        this.load_items();
         this.client.auto_messages = require("./auto_messages.json");
         this.client.commands = new Collection();
         this.client.server_information = new Map();
@@ -40,7 +40,9 @@ class RCE_BOT {
         this.init_database();
         this.client.player_stats = new STATS(this.client);
     }
-
+    async load_items(){
+        this.client.items = await this.client.functions.load_items(this.client);
+    }
     async init_database() {
         try {
             this.client.database_connection = createPool({
@@ -49,7 +51,7 @@ class RCE_BOT {
                 password: process.env.DATABASE_PASSWORD,
                 database: process.env.DATABASE_NAME,
             });
-            this.client.functions.log("info", "\x1b[32;1m[DATABASE]\x1b[0m Connection Established!");
+            this.client.functions.log("debug", "\x1b[32;1m[DATABASE]\x1b[0m Connection Established!");
         } catch (err) {
             this.client.functions.log("error", "\x1b[32;1m[DATABASE]\x1b[0m Connection Failed!", err);
         }
@@ -61,7 +63,7 @@ class RCE_BOT {
                 const command = require(`./commands/${folder}/${file}`);
                 if (command.data.name) {
                     this.client.commands.set(command.data.name, command);
-                    this.client.functions.log("info", `\x1b[32;1m[COMMANDS]\x1b[0m ${command.data.name} Command Loaded!`);
+                    this.client.functions.log("debug", `\x1b[32;1m[COMMANDS]\x1b[0m ${command.data.name} Command Loaded!`);
                 } else {
                     this.client.functions.log("error", `\x1b[32;1m[COMMANDS]\x1b[0m ${file} Command Failed To Load!`);
                     continue;
@@ -82,7 +84,7 @@ class RCE_BOT {
             for (const file of fs.readdirSync(`./events/${folder}`).filter(file => file.endsWith('.js'))) {
                 try {
                     const event = require(`./events/${folder}/${file}`);
-                    this.client.functions.log("info", `\x1b[32;1m[${logType}]\x1b[0m ${this.client.functions.get_event_name(event.name)} Event Loaded!`);
+                    this.client.functions.log("debug", `\x1b[32;1m[${logType}]\x1b[0m ${this.client.functions.get_event_name(event.name)} Event Loaded!`);
 
                     if (event.once) {
                         emitter.once(event.name, (...args) => event.execute(...args, emitter, this.client));
@@ -103,7 +105,7 @@ class RCE_BOT {
             await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), {
                 body: Array.from(this.client.commands.values()).map(cmd => cmd.data.toJSON())
             });
-            this.client.functions.log("info", "\x1b[32;1m[COMMANDS]\x1b[0m Successfully Registered!");
+            this.client.functions.log("debug", "\x1b[32;1m[COMMANDS]\x1b[0m Successfully Registered!");
         } catch (error) {
             this.client.functions.log("error", "\x1b[34;1m[BOT]\x1b[0m Error Registering Commands: " + error);
         }
@@ -113,7 +115,6 @@ class RCE_BOT {
         this.client.functions.log("info", "\x1b[34;1m[BOT]\x1b[0m Starting The Bot...");
         this.load_commands();
         await this.load_events(); // Ensure events are loaded before registration
-
         try {
             await this.register_commands();
             await this.client.login(process.env.TOKEN);

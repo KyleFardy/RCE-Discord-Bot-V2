@@ -9,9 +9,6 @@ module.exports = {
     // Asynchronous function to execute when a log event occurs
     async execute(data, rce, client) {
         // Construct the log message using the level and content from the data
-        const logMessage = `\x1b[38;5;208m[${data.level}]\x1b[0m \x1b[32;1m[LOG]\x1b[0m ${data.content}`;
-
-        // Log the message
-        await client.functions.log("info", logMessage);
+        await client.functions.log("info", `\x1b[38;5;208m[${data.level}]\x1b[0m \x1b[32;1m[LOG]\x1b[0m ${data.content}`);
     }
 };

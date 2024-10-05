@@ -22,8 +22,7 @@ module.exports = {
         }
 
 
-        // Log the message at the "info" level using the client's logging function
-        const logMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[MESSAGE]\x1b[0m ${data.message}`;
-        //await client.functions.log("info", logMessage);
+        // Log the message
+        //await client.functions.log("info", `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[MESSAGE]\x1b[0m ${data.message}`);
     }
 };

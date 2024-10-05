@@ -3,12 +3,21 @@
     "identifier": "MM1",
     "region": "EU",
     "serverId": 6479404,
-    "refreshPlayers": 2
+    "refreshPlayers": 2,
+    "random_items": false
   },
   {
     "identifier": "MM2",
     "region": "EU",
     "serverId": 6831535,
-    "refreshPlayers": 2
+    "refreshPlayers": 2,
+    "random_items": true
+  },
+  {
+    "identifier": "Rust Official",
+    "region": "EU",
+    "serverId": 6878431,
+    "refreshPlayers": 2,
+    "random_items": false
   }
 ]

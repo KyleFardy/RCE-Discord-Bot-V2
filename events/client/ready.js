@@ -14,6 +14,8 @@ module.exports = {
             await new Promise(resolve => setTimeout(resolve, 2000));
 
             const servers = await client.rce.getServers();
+
+
             for (const [identifier, server] of servers) {
                 try {
                     const serverResponse = await client.rce.sendCommand(identifier, "serverinfo", true);
@@ -60,6 +62,23 @@ module.exports = {
                     await client.functions.log("error", `\x1b[32;1m[${identifier}]\x1b[0m Failed To Parse Server Data: ${error.message}`);
                 }
             }
+
+            if (process.env.RANDOM_ITEMS === "true") {
+                setInterval(async () => {
+                    const servers = await client.rce.getServers();
+                    servers.forEach(async server => {
+                        if (!server.ready) return;
+
+                        const is_enabled = await client.functions.get_server(server.identifier);
+
+                        if (!is_enabled.random_items) return;
+
+                        await client.functions.trigger_random_item(client, server.identifier, server.players)
+                    });
+                }, 1 * (process.env.RANDOM_ITEM_COOLDOWN || "30") * 1000);
+            }
+
+
             const players = await client.functions.get_count(client, 'SELECT COUNT(*) as count FROM players');
             await client.user.setPresence({
                 activities: [
@@ -77,7 +96,6 @@ module.exports = {
                 ],
                 status: 'online', // Status of the user
             });
-            
         } catch (error) {
             // Log an error message if initialization fails
             await client.functions.log("error", `\x1b[34;1m[BOT]\x1b[0m Failed To Initialize: ${error.message}`, error);
