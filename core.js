@@ -4,10 +4,10 @@ const { Routes } = require('discord-api-types/v9');
 require('dotenv').config();
 const fs = require('fs');
 const { RCEManager, LogLevel } = require("rce.js");
-const STATS = require("./database.js");
+const stats = require("./database.js");
 const { createPool } = require('mysql2/promise');
 
-class RCE_BOT {
+class rce_bot {
     constructor() {
         this.client = new Client({
             messageCacheLifetime: 60000,
@@ -38,11 +38,13 @@ class RCE_BOT {
         this.client.server_information = new Map();
         this.client.events = new Collection();
         this.init_database();
-        this.client.player_stats = new STATS(this.client);
+        this.client.player_stats = new stats(this.client);
     }
-    async load_items(){
+
+    async load_items() {
         this.client.items = await this.client.functions.load_items(this.client);
     }
+
     async init_database() {
         try {
             this.client.database_connection = createPool({
@@ -51,7 +53,7 @@ class RCE_BOT {
                 password: process.env.DATABASE_PASSWORD,
                 database: process.env.DATABASE_NAME,
             });
-            this.client.functions.log("debug", "\x1b[32;1m[DATABASE]\x1b[0m Connection Established!");
+            this.client.functions.log("success", "\x1b[32;1m[DATABASE]\x1b[0m Connection Established!");
         } catch (err) {
             this.client.functions.log("error", "\x1b[32;1m[DATABASE]\x1b[0m Connection Failed!", err);
         }
@@ -98,6 +100,30 @@ class RCE_BOT {
         }
     }
 
+    async fetch_servers() {
+        try {
+            const [rows] = await this.client.database_connection.execute("SELECT * FROM servers");
+
+            this.client.servers = await Promise.all(rows.map(async row => {
+                return {
+                    identifier: row.identifier,
+                    serverId: row.server_id,
+                    region: row.region,
+                    refreshPlayers: row.refresh_players,
+                    rfBroadcasting: row.rf_broadcasting,
+                    bradFeeds: row.bradley_feeds,
+                    heliFeeds: row.heli_feeds,
+                    random_items: row.random_items,
+                    owner: row.guild_owner,
+                    guild: row.guild_id
+                };
+            }));
+            this.client.functions.log("info", `\x1b[34;1m[BOT]\x1b[0m ${this.client.servers.length} Servers Successfully Fetched From The Database!`);
+        } catch (error) {
+            this.client.functions.log("error", "\x1b[34;1m[DATABASE]\x1b[0m Failed To Fetch Servers: " + error.message);
+        }
+    }
+
     async register_commands() {
         const rest = new REST().setToken(process.env.TOKEN);
         this.client.functions.log("info", "\x1b[34;1m[BOT]\x1b[0m Registering Commands...");
@@ -115,13 +141,29 @@ class RCE_BOT {
         this.client.functions.log("info", "\x1b[34;1m[BOT]\x1b[0m Starting The Bot...");
         this.load_commands();
         await this.load_events(); // Ensure events are loaded before registration
+
         try {
-            await this.register_commands();
             await this.client.login(process.env.TOKEN);
+
+            // Fetch servers after logging in
+            await this.fetch_servers();
+
+            // Initialize RCEManager after fetching servers
+            this.client.rce = new RCEManager({
+                email: process.env.GPORTAL_EMAIL,
+                password: process.env.GPORTAL_PASSWORD,
+                servers: this.client.servers,
+            }, {
+                logLevel: LogLevel.None
+            });
+            await this.client.rce.init();
+
+            await this.register_commands();
         } catch (error) {
             this.client.functions.log("error", "\x1b[34;1m[BOT]\x1b[0m Error During Start: " + error);
         }
     }
+
 }
 
-module.exports = RCE_BOT;
+module.exports = rce_bot;

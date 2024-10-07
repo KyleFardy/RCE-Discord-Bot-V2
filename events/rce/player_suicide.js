@@ -3,15 +3,18 @@ const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
 
 // Export the event handler module
 module.exports = {
-    // Set the name of the event this handler listens for
     name: RCEEvent.PlayerSuicide,
 
-    // Asynchronous function to execute when a player kills themself
+    // Asynchronous function to execute when a player kills themselves
     async execute(data, rce, client) {
-        // Log an informational message indicating that a player has killed themself
-        await client.functions.log("info", `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[PLAYER SUICIDE]\x1b[0m \x1b[32;1m${data.ign}\x1b[0m Killed Themself!`);
+        await log_player_suicide(client, data.server.identifier, data.ign);
 
-        //remove the points
+        // Remove the points for the player who committed suicide
         await client.player_stats.remove_points(data.server, data.ign, process.env.SUICIDE_POINTS);
-    }
+    },
 };
+
+// Helper function to log player suicide
+async function log_player_suicide(client, server_id, ign) {
+    await client.functions.log("info", `\x1b[38;5;208m[${server_id}]\x1b[0m \x1b[32;1m[PLAYER SUICIDE]\x1b[0m \x1b[32;1m${ign}\x1b[0m Killed Themselves!`);
+}

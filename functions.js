@@ -69,6 +69,7 @@ function format_date(date, locale = "en-GB") {
     };
     return new Intl.DateTimeFormat(locale, options).format(date); // Format date using Intl API
 }
+
 const is_json = str => { try { return !!JSON.parse(str); } catch { return false; } };
 
 // Asynchronous function to send a message to a Discord channel
@@ -79,14 +80,23 @@ async function discord_log(client, message, channelId) {
         if (!channel) {
             throw new Error("Channel Not Found");
         }
+        const maxMessageLength = 1999;
+        if (message.length > maxMessageLength) {
+            // Split the message into chunks of maxMessageLength
+            const chunks = message.match(new RegExp(`.{1,${maxMessageLength}}`, 'g'));
 
-        // Send the message to the specified channel
-        await channel.send({ content: message });
+            // Send each chunk as a separate message
+            for (const chunk of chunks) {
+                await channel.send({ content: chunk });
+            }
+        } else {
+            // Send the message to the specified channel
+            await channel.send({ content: message });
+        }
     } catch (error) {
         await client.functions.log("error", "Failed To Send Message To Channel:", error);
     }
 }
-
 
 async function get_item_image(display_name) {
     const itemsPath = path.join(__dirname, 'items.json');
@@ -98,6 +108,7 @@ async function get_item_image(display_name) {
         return "https://cdn.void-dev.co/rce.png"; // Return an error message if not found
     }
 }
+
 const ignored_attacker = [
     "scientist",
     "thirst",
@@ -158,8 +169,79 @@ const ignored_attacker = [
     "lock.code (entity)",
     "rowboat (entity)",
     "fireball (entity)",
-    "teslacoil.deployed (entity)"
+    "teslacoil.deployed (entity)",
+    "Scientist Sentry",
+    "Shotgun Trap",
+    "Metal Barricade",
+    "Auto Turret",
 ];
+
+const event_messages = {
+    "Airdrop": {
+        formatted: "<color=green>[EVENT]</color> An <b>Air Drop</b> Is Falling From The Sky, Can You Find It?",
+        discord: {
+            title: "An Airdrop Is Inbound",
+            message: "An **Air Drop** Is Falling From The Sky, Can You Find It?",
+            image: "https://i.ibb.co/dKVrgmj/supply-drop.png"
+        },
+        console: "An Air Drop Is Falling From The Sky, Can You Find It?"
+    },
+    "Cargo Ship": {
+        formatted: "<color=green>[EVENT]</color> <b>Cargo Ship</b> Is Sailing The Seas Around The Island, Ready To Board?",
+        discord: {
+            title: "Cargo Ship Is Sailing",
+            message: "The **Cargo Ship** Is Sailing The Seas Around The Island!",
+            image: "https://i.ibb.co/zFjhDd7/cargo-ship-scientist.png"
+        },
+        console: "Cargo Ship Is Sailing The Seas Around The Island, Ready To Board?"
+    },
+    "Chinook": {
+        formatted: "<color=green>[EVENT]</color> Chinook Is Looking For A Monument To Drop A Crate!",
+        discord: {
+            title: "Locked Crate Incoming",
+            message: "**Chinook** Is Looking For A Monument To Drop A Crate!",
+            image: "https://i.ibb.co/jyN7nht/codelockedhackablecrate.png"
+        },
+        console: "Chinook Is Looking For A Monument To Drop A Crate!"
+    },
+    "Patrol Helicopter": {
+        formatted: "<color=green>[EVENT]</color> A <b>Patrol Helicopter</b> Is Circling The Map, Ready To Take It Down?",
+        discord: {
+            title: "Get That L9",
+            message: "A **Patrol Helicopter** Is Circling The Map, Ready To Take It Down?",
+            image: "https://i.ibb.co/z84qH5G/helicopter.png"
+        },
+        console: "A Patrol Helicopter Is Circling The Map, Ready To Take It Down?"
+    },
+    "Halloween": {
+        formatted: "<color=green>[SPECIAL EVENT]</color> A Halloween Event Has Started!",
+        discord: {
+            title: "Spooky Spooky",
+            message: "A **Halloween** Event Has Started!",
+            image: "https://i.ibb.co/pr609gm/halloween.png"
+        },
+        console: "A Halloween Event Has Started!"
+    },
+    "Christmas": {
+        formatted: "<color=green>[SPECIAL EVENT]</color> A Christmas Event Has Started!",
+        discord: {
+            title: "Merry Christmas",
+            message: "A **Christmas** Event Has Started!",
+            image: "https://i.ibb.co/xLDqqst/christmas.png"
+        },
+        console: "A Christmas Event Has Started!"
+    },
+    "Easter": {
+        formatted: "<color=green>[SPECIAL EVENT]</color> An Easter Event Has Started!",
+        discord: {
+            title: "Eggs Incoming",
+            message: "An **Easter** Event Has Started!",
+            image: "https://i.ibb.co/zf27jLd/easter.png"
+        },
+        console: "An Easter Event Has Started!"
+    },
+};
+
 // Asynchronous function to send an embedded message to a Discord channel
 async function send_embed(client, channel, title, description, fields = [], thumbnailUrl = null, imageUrl = null) {
     // Create a new embed
@@ -196,7 +278,6 @@ async function send_embed(client, channel, title, description, fields = [], thum
         const channelToSend = await client.channels.fetch(channel); // Fetch the channel
         await channelToSend.send({ embeds: [embed] }); // Send the embed
     } catch (error) {
-        // Log detailed error information for debugging
         await client.functions.log("error", `Error Sending Embed to Channel ${channel}:`, error);
     }
 }
@@ -293,49 +374,35 @@ function format_hostname(hostname) {
         '#4169e1': '\x1b[34m', // RoyalBlue
         '#a0522d': '\x1b[33m', // Sienna
         '#7b68ee': '\x1b[34m', // MediumSlateBlue
+        'purple': '\x1b[35m', // Purple
+        'orange': '\x1b[33m', // Orange
+        'green': '\x1b[32m', // Green
+        'red': '\x1b[31m', // Red
+        'blue': '\x1b[34m', // Blue
+        // Specific Hex Colors
+        '#3498eb': '\x1b[36m', // Light Blue
+        '#000000': '\x1b[30m', // Black
+        '#ff0000': '\x1b[31m', // Red
+        '#00ff00': '\x1b[32m', // Green
+        '#0000ff': '\x1b[34m', // Blue
+        '#fcba03': '\x1b[33m', // Yellow
+        '#ffff00': '\x1b[33m', // Yellow
+        '#ff00ff': '\x1b[35m', // Magenta
+        '#00ffff': '\x1b[36m', // Cyan
+        '#ffffff': '\x1b[37m', // White
+        '#808080': '\x1b[90m', // Gray
     };
     // Use a regular expression to find the color tags and their contents
+
     return hostname.replace(/<color=([^>]+)>(.*?)<\/color>/g, (match, color, text) => {
         // Use the corresponding ANSI code or default to reset if the color is not defined
         const ansiColor = colorCodes[color] || '\x1b[0m'; // Reset to default if color not found
         return `${ansiColor}${text}\x1b[0m`; // Append reset code after the text
-    });
+    })
+        .replace(/<b>(.*?)<\/b>/g, '\x1b[1m$1\x1b[22m') // Handle bold text
+        .replace(/<i>(.*?)<\/i>/g, '\x1b[3m$1\x1b[23m'); // Handle italic text
 }
-function edit_servers(action, identifier, data) {
-    const index = client.servers.findIndex(server => server.identifier === identifier);
 
-    switch (action) {
-        case "add_server":
-            if (index === -1) {
-                client.servers.push(data);
-                client.functions.log("info", `Server Added: ${JSON.stringify(data)}`);
-            } else {
-                client.functions.log("error", `Server With Identifier '${identifier}' Already Exists!`);
-            }
-            break;
-
-        case "remove_server":
-            if (index > -1) {
-                const removed = client.servers.splice(index, 1);
-                client.functions.log("info", `Server Removed: ${JSON.stringify(removed[0])}`);
-            } else {
-                client.functions.log("error", `Server With Identifier '${identifier}' Not Found!`);
-            }
-            break;
-
-        case "update":
-            if (index > -1) {
-                client.servers[index] = { ...client.servers[index], ...data };
-                client.functions.log("info", `Server Updated: ${JSON.stringify(client.servers[index])}`);
-            } else {
-                client.functions.log("error", `Server With Identifier '${identifier}' Not Found!`);
-            }
-            break;
-
-        default:
-            client.functions.log("error", `Invalid Action: '${action}'`);
-    }
-}
 async function get_player_currency(discord_id, server) {
     console.log(discord_id);
     console.log(server.serverId);
@@ -356,6 +423,7 @@ async function get_player_currency(discord_id, server) {
         throw err;
     }
 }
+
 async function get_player_by_discord(discord_id, server) {
     try {
         const [discordIdRows] = await client.database_connection.execute(
@@ -373,6 +441,7 @@ async function get_player_by_discord(discord_id, server) {
         throw err;
     }
 }
+
 const get_count = async (client, condition, params) => {
     if (!client.database_connection) {
         throw new Error('Database connection is not initialized');
@@ -455,6 +524,7 @@ const events = Object.freeze({
     VoiceStateUpdate: "voiceStateUpdate",                 // Triggered when a user's voice state changes
     WebhookUpdate: "webhookUpdate",                       // Triggered when a webhook is updated
 });
+
 function get_event_name(event){
     for (const [key, value] of Object.entries(events)) {
         if (value === event) {
@@ -463,6 +533,7 @@ function get_event_name(event){
     }
     return event; // Return event if the event string is not found
 }
+
 async function get_random_item(client) {
     // Check if items array is empty
     if (!client.items || client.items.length === 0) {
@@ -475,6 +546,7 @@ async function get_random_item(client) {
 function random_int(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
 async function load_items() {
     const filePath = path.join(__dirname, 'items.json');
     try {
@@ -485,6 +557,7 @@ async function load_items() {
         return [];
     }
 }
+
 async function trigger_random_item(client, server, players) {
     // Exit early if RANDOM_ITEMS is disabled
     if (process.env.RANDOM_ITEMS === "false") return;
@@ -536,9 +609,10 @@ async function trigger_random_item(client, server, players) {
 
         // Send command to give item to user
         await client.rce.sendCommand(server, `giveto "${player}" "${item.shortName}" "${quantity}"`);
-        await client.functions.log("info", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS] Giving ${player} ${quantity}x ${item.displayName}`);
+        await client.functions.log("info", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m Giving ${player} ${quantity}x ${item.displayName}`);
     }));
 }
+
 async function get_server(identifier) {
     // Read the servers.json file
     const data = fs.readFileSync('servers.json', 'utf8');
@@ -552,19 +626,25 @@ async function get_server(identifier) {
     // Return the server or a message if not found
     return server || `Server with identifier "${identifier}" not found.`;
 }
+
 const handle_teleport = async (client, player_name, coords, location, server) => {
     await client.functions.log("info", `\x1b[32;1m[TELEPORT]\x1b[0m \x1b[38;5;208m${player_name}\x1b[0m Teleporting To \x1b[38;5;208m${location}\x1b[0m`);
     await client.rce.sendCommand(server.identifier, await client.functions.format_teleport_pos(player_name, coords));
-    await client.functions.send_embed(process.env.TELEPORT_LOGS_CHANNEL, "New Teleport", "", [
-        { name: 'Player', value: `👤 ${player_name}`, inline: true },
-        { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
-        { name: 'Teleported To', value: location, inline: true },
-        { name: 'Coords', value: ` \`\`\`${coords}\`\`\``, inline: true },
-    ], "");
+    if (process.env.TELEPORT_LOGS === 'true' && !client.functions.is_empty(process.env.TELEPORT_LOGS_CHANNEL)) {
+        await send_embed(client, process.env.TELEPORT_LOGS_CHANNEL, `${server.identifier} - New Teleport`, "", [
+            { name: 'Player', value: `👤 ${player_name}`, inline: true },
+            { name: 'Teleported To', value: `\`${location}\``, inline: true },
+            { name: 'Coords', value: ` \`\`\`${coords}\`\`\` `, inline: true },
+            { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
+        ], "https://cdn.void-dev.co/rust_map.png");
+    }
+    
 };
+
 const format_teleport_pos = (player_name, coordinates) => {
     return `teleportpos "${coordinates}" "${player_name}"`;
 };
+
 const get_player_info = async (client, player_name, server) => {
     try {
         // Fetch player info
@@ -637,6 +717,7 @@ const get_player_info = async (client, player_name, server) => {
         throw err;
     }
 };
+
 // Function to get a kit record from the MySQL database
 async function get_record(client, player_name, type, server) {
     try {
@@ -682,6 +763,7 @@ async function set_record(client, player_name, type, server, last_redeemed) {
         throw err;
     }
 }
+
 function get_kit_time(seconds) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -712,9 +794,9 @@ const handle_kit = async (client, player_name, server) => {
         if (timeDiff < AN_HOUR) {
             const remaining_time = get_kit_time(AN_HOUR - timeDiff);
             const log_message = `[KITS] ${player_name} On Cooldown For ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`;
-
+            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
-                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
                 { name: 'Kit Type', value: `Hourly Kit`, inline: true },
                 { name: 'Reason', value: `Kit Can Be Claimed In ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`, inline: true },
@@ -727,8 +809,9 @@ const handle_kit = async (client, player_name, server) => {
             await set_record(client, player_name, 'hourly', server, current_timestamp);
             const log_message = `[KITS] ${player_name} Claimed Hourly Kit!`;
 
+            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
-                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
                 { name: 'Kit Type', value: `Hourly Kit`, inline: true },
             ];
@@ -744,6 +827,31 @@ const handle_kit = async (client, player_name, server) => {
         console.error('Error handling hourly kit:', error);
     }
 }
+async function send_auto_messages(client, server) {
+    let last_auto_message_index = -1;
+    async function send_message() {
+        let message_index;
+        do {
+            message_index = Math.floor(Math.random() * client.auto_messages.messages.length); // Corrected variable name
+        } while (message_index === last_auto_message_index && client.auto_messages.messages.length > 1); // Ensure there's more than one message to avoid an infinite loop
+
+        // Fetch the message using the correct index
+        const message = client.auto_messages.messages[message_index];
+
+        // Check if message is defined
+        if (message) {
+            await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[AUTO MESSAGE]\x1b[0m :`, client.functions.format_hostname(message));
+            await client.rce.sendCommand(server.identifier, `global.say <color=green><b>[AUTO MESSAGE]</b></color> <b>${message}</b>`);
+            last_auto_message_index = message_index; // Update the last message index
+        } else {
+            await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[AUTO MESSAGE]\x1b[0m : No message found at index ${message_index}`);
+        }
+    }
+
+    send_message(); // Send the initial message
+    setInterval(send_message, 2 * 60 * 1000); // Check every 2 minutes
+}
+
 async function check_link(client, discord_id) {
     try {
         const [row] = await client.database_connection.execute("SELECT * FROM players WHERE discord_id = ?", [discord_id]);
@@ -753,6 +861,7 @@ async function check_link(client, discord_id) {
         return false;
     }
 }
+
 const handle_vip_kit = async (client, player_name, server) => {
     const member = client.guilds.cache.get(process.env.GUILD_ID).members.cache.find(
         member => member.nickname === player_name || member.user.username === player_name
@@ -786,8 +895,9 @@ const handle_vip_kit = async (client, player_name, server) => {
             const remaining_time = get_kit_time(TWO_HOURS - timeDiff);
             const log_message = `[KITS] ${player_name} On Cooldown For ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`;
 
+            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
-                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
                 { name: 'Kit Type', value: `VIP Kit`, inline: true },
                 { name: 'Reason', value: `VIP Kit Can Be Claimed In ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`, inline: true },
@@ -800,8 +910,9 @@ const handle_vip_kit = async (client, player_name, server) => {
             await set_record(client, player_name, 'vip', server, current_timestamp);
             const log_message = `[KITS] ${player_name} Claimed Hourly Kit!`;
 
+            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
-                { name: 'Player', value: `👤 ${player_name}`, inline: true },
+                { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
                 { name: 'Kit Type', value: `VIP Kit`, inline: true },
             ];
@@ -818,6 +929,16 @@ const handle_vip_kit = async (client, player_name, server) => {
     }
 }
 
+const server_state_messages = {
+    "STOPPING": "The Server Is Stopping!",
+    "MAINTENANCE": "The Server Is Under Maintenance!",
+    "UPDATING": "The Server Is Updating!",
+    "STOPPED": "The Server Has Stopped!",
+    "STARTING": "The Server Is Starting!",
+    "RUNNING": "The Server Is Running!",
+    "SUSPENDED": "The Server Has Been Suspended!",
+};
+
 module.exports = {
     log,
     format_date,
@@ -825,7 +946,6 @@ module.exports = {
     send_embed,
     is_empty,
     format_hostname,
-    edit_servers,
     get_player_currency,
     get_player_by_discord,
     get_count,
@@ -843,5 +963,8 @@ module.exports = {
     set_record,
     handle_kit,
     handle_vip_kit,
-    check_link
+    check_link,
+    send_auto_messages,
+    event_messages,
+    server_state_messages
 };

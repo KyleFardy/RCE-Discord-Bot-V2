@@ -3,15 +3,18 @@ const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
 
 // Export the event handler module
 module.exports = {
-    // Set the name of the event this handler listens for
     name: RCEEvent.PlayerLeft,
 
-    // Asynchronous function to execute when a player joins the server
+    // Asynchronous function to execute when a player leaves the server
     async execute(data, rce, client) {
-        // Log an informational message indicating that a player has joined the server
-        const leftMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[PLAYER LEFT]\x1b[0m \x1b[32;1m${data.ign}\x1b[0m Left The Server!`;
-
-        // Utilize the logging function from the client to log the join event
-        await client.functions.log("info", leftMessage);
-    }
+        await log_player_left(client, data.server.identifier, data.ign);
+    },
 };
+
+// Helper function to log player leaving
+async function log_player_left(client, server_id, ign) {
+    const left_message = `\x1b[38;5;208m[${server_id}]\x1b[0m \x1b[32;1m[PLAYER LEFT]\x1b[0m \x1b[32;1m${ign}\x1b[0m Left The Server!`;
+
+    // Utilize the logging function from the client to log the leave event
+    await client.functions.log("info", left_message);
+}

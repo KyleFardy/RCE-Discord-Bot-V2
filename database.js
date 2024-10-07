@@ -64,6 +64,23 @@ class STATS {
                         last_redeemed INT NOT NULL
                     );`,
             },
+            {
+                name: 'servers',
+                query: `
+                    CREATE TABLE IF NOT EXISTS servers (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    identifier VARCHAR(255) NOT NULL,
+                    region VARCHAR(50) NOT NULL,
+                    server_id BIGINT NOT NULL,
+                    refresh_players INT DEFAULT 2,
+                    rf_broadcasting FLOAT DEFAULT 0.5,
+                    bradley_feeds FLOAT DEFAULT 0.5,
+                    heli_feeds FLOAT DEFAULT 0.5,
+                    random_items BOOLEAN DEFAULT FALSE,
+                    guild_owner VARCHAR(255) NOT NULL,
+                    guild_id VARCHAR(255) NOT NULL
+                );`,
+            },
         ];
 
         const checkTableExists = async (tableName) => {
@@ -277,5 +294,59 @@ class STATS {
     async add_npc_death(player_name, server_identifier) {
         return await this.update_player(server_identifier, player_name, 'NPCDeaths');
     }
+    async add_server(identifier, region, server_id, refresh_players, rf_broadcasting, random_items, guild_owner, guild_id) {
+        try {
+            const [existingServer] = await this.client.database_connection.execute(
+                `SELECT * FROM servers WHERE identifier = ? AND region = ?`,
+                [identifier, region]
+            );
+
+            if (!existingServer.length) {
+                // Insert new server if it does not exist
+                await this.client.database_connection.execute(
+                    `INSERT INTO servers (identifier, region, server_id, refresh_players, rf_broadcasting, random_items, guild_owner, guild_id) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [identifier, region, server_id, refresh_players, rf_broadcasting, random_items, guild_owner, guild_id]
+                );
+                const success_message = `Server ${identifier} Added Successfully!`;
+                await this.client.functions.log("info", `\x1b[34;1m[DATABASE]\x1b[0m ${success_message}`);
+                return { success: true, message: success_message }; // Return success message
+            } else {
+                const not_found_message = `Server ${identifier} Already Exists!`;
+                await this.client.functions.log("info", `\x1b[34;1m[DATABASE]\x1b[0m ${not_found_message}`);
+                return { success: false, message: not_found_message }; // Return already exists message
+            }
+        } catch (err) {
+            const error_message = `Error Adding Server: ${err.message}`;
+            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m ${error_message}`);
+            throw new Error(error_message); // Rethrow the error for further handling if necessary
+        }
+    }
+
+    async remove_server(identifier, region, discord_id, guild_id) {
+        try {
+            const [result] = await this.client.database_connection.execute(
+                `DELETE FROM servers WHERE identifier = ? AND region = ? AND guild_owner = ? AND guild_id = ?`,
+                [identifier, region, discord_id, guild_id]
+            );
+
+            if (result.affectedRows > 0) {
+                const success_message = `Server ${identifier} Removed Successfully!`;
+                await this.client.functions.log("info", `\x1b[34;1m[DATABASE]\x1b[0m ${success_message}`);
+                return { success: true, message: success_message };
+            } else {
+                const not_found_message = `Server ${identifier} Not Found In Region ${region}!`;
+                await this.client.functions.log("info", `\x1b[34;1m[DATABASE]\x1b[0m ${not_found_message}`);
+                return { success: false, message: not_found_message };
+            }
+        } catch (err) {
+            const error_message = `Error Removing Server: ${err.message}`;
+            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m ${error_message}`);
+            throw new Error(error_message);
+        }
+    }
+
+
+
 }
 module.exports = STATS;

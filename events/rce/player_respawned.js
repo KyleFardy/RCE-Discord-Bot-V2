@@ -3,15 +3,18 @@ const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
 
 // Export the event handler module
 module.exports = {
-    // Set the name of the event this handler listens for
     name: RCEEvent.PlayerRespawned,
 
-    // Asynchronous function to execute when a player spawns
+    // Asynchronous function to execute when a player respawns
     async execute(data, rce, client) {
-        // Log an informational message indicating that a player has respawned
-        const playerRespawnedMessage = `\x1b[38;5;208m[${data.server.identifier}]\x1b[0m \x1b[32;1m[PLAYER RESPAWNED]\x1b[0m \x1b[32;1m${data.ign}\x1b[0m Has Respawned!`;
-
-        // Utilize the logging function from the client to log the join event
-        await client.functions.log("info", playerRespawnedMessage);
-    }
+        await log_player_respawn(client, data.server.identifier, data.ign);
+    },
 };
+
+// Helper function to log player respawn
+async function log_player_respawn(client, server_id, ign) {
+    const player_respawned_message = `\x1b[38;5;208m[${server_id}]\x1b[0m \x1b[32;1m[PLAYER RESPAWNED]\x1b[0m \x1b[32;1m${ign}\x1b[0m Has Respawned!`;
+
+    // Utilize the logging function from the client to log the respawn event
+    await client.functions.log("info", player_respawned_message);
+}
