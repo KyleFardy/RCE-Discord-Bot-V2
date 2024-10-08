@@ -19,7 +19,7 @@ function start_random_items_interval(client) {
         servers.forEach(async server => {
             if (!server.ready) return;
 
-            const is_enabled = await client.functions.get_server(server.identifier);
+            const is_enabled = await client.functions.get_server(client, server.identifier);
 
             if (!is_enabled.random_items) return;
 

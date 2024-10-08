@@ -631,7 +631,7 @@ async function trigger_random_item(client, server, players) {
     }));
 }
 
-async function get_server(identifier) {
+async function get_server(client, identifier) {
     try {
         const [rows] = await client.database_connection.query(
             'SELECT * FROM servers WHERE identifier = ?',
