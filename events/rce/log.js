@@ -8,7 +8,7 @@ module.exports = {
     // Asynchronous function to execute when a log event occurs
     async execute(data, rce, client) {
         // Construct the log message using the level and content from the data
-        await client.functions.log("info", format_log_message(data));
+        //await client.functions.log("info", format_log_message(data));
     }
 };
 

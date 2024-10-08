@@ -7,6 +7,7 @@ module.exports = {
 
     // Asynchronous function to execute when a message event occurs
     async execute(data, rce, client) {
+
         // Check if console logging is enabled and the log channel is specified
         if (process.env.CONSOLE_LOG === 'true' && !client.functions.is_empty(process.env.CONSOLE_LOG_CHANNEL)) {
             data.message = data.message.trim().replace(/\\n/g, "").replace(/\\/g, "");

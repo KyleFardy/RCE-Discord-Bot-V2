@@ -10,7 +10,12 @@ module.exports = {
             await new Promise(resolve => setTimeout(resolve, 2000));
             await initialize_servers(client);
             await update_auto_messages(client);
-            await update_presence(client);
+            setInterval(() => {
+                update_presence(client).catch(console.error); // Log any errors
+            }, 60000);
+
+            // Initial call to set the presence immediately
+            update_presence(client).catch(console.error);
         } catch (error) {
             await log_initialization_error(client, error);
         }
@@ -99,7 +104,7 @@ async function update_presence(client) {
             {
                 name: 'Rust: Console Edition',
                 type: 0, // ActivityType
-                state: `Watching Over ${servers.size} Servers With ${players} Players`,
+                state: `Watching ${servers.size} Servers With ${players} Players`,
                 largeImage: 'rce',
                 smallImage: 'rce',
                 buttons: [

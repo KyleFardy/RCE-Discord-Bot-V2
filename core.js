@@ -24,14 +24,6 @@ class rce_bot {
             intents: 32767,
         });
         this.client.functions = require("./functions.js");
-        this.client.servers = require("./servers.json");
-        this.client.rce = new RCEManager({
-            email: process.env.GPORTAL_EMAIL,
-            password: process.env.GPORTAL_PASSWORD,
-            servers: this.client.servers,
-        }, {
-            logLevel: LogLevel.None
-        });
         this.load_items();
         this.client.auto_messages = require("./auto_messages.json");
         this.client.commands = new Collection();
@@ -77,6 +69,30 @@ class rce_bot {
     async load_events() {
         const event_types = {
             client: this.client,
+        };
+        for (const folder of fs.readdirSync("./events")) {
+            if (!event_types[folder]) continue;
+            const emitter = event_types[folder];
+            const logType = folder === 'rce' ? 'RCE EVENT' : 'DISCORD EVENT';
+            for (const file of fs.readdirSync(`./events/${folder}`).filter(file => file.endsWith('.js'))) {
+                try {
+                    const event = require(`./events/${folder}/${file}`);
+                    this.client.functions.log("debug", `\x1b[32;1m[${logType}]\x1b[0m ${this.client.functions.get_event_name(event.name)} Event Loaded!`);
+
+                    if (event.once) {
+                        emitter.once(event.name, (...args) => event.execute(...args, emitter, this.client));
+                    } else {
+                        emitter.on(event.name, (...args) => event.execute(...args, emitter, this.client));
+                    }
+                } catch (error) {
+                    this.client.functions.log("error", `\x1b[32;1m[${logType}]\x1b[0m Failed To Load Event ${file} From Folder ${folder}: ${error.message}`);
+                }
+            }
+        }
+    }
+
+    async load_rce_events() {
+        const event_types = {
             rce: this.client.rce,
         };
         for (const folder of fs.readdirSync("./events")) {
@@ -104,7 +120,8 @@ class rce_bot {
         try {
             const [rows] = await this.client.database_connection.execute("SELECT * FROM servers");
 
-            this.client.servers = await Promise.all(rows.map(async row => {
+            this.client.servers = (await Promise.all(rows.map(async row => {
+                if (!row.enabled) return null;  // Return null for disabled servers
                 return {
                     identifier: row.identifier,
                     serverId: row.server_id,
@@ -117,12 +134,14 @@ class rce_bot {
                     owner: row.guild_owner,
                     guild: row.guild_id
                 };
-            }));
+            }))).filter(server => server !== null);  // Filter out null results
+
             this.client.functions.log("info", `\x1b[34;1m[BOT]\x1b[0m ${this.client.servers.length} Servers Successfully Fetched From The Database!`);
         } catch (error) {
-            this.client.functions.log("error", "\x1b[34;1m[DATABASE]\x1b[0m Failed To Fetch Servers: " + error.message);
+            this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Failed To Fetch Servers: ${error.message}`);
         }
     }
+
 
     async register_commands() {
         const rest = new REST().setToken(process.env.TOKEN);
@@ -154,10 +173,10 @@ class rce_bot {
                 password: process.env.GPORTAL_PASSWORD,
                 servers: this.client.servers,
             }, {
-                logLevel: LogLevel.None
+                logLevel: LogLevel.Info
             });
             await this.client.rce.init();
-
+            await this.load_rce_events();
             await this.register_commands();
         } catch (error) {
             this.client.functions.log("error", "\x1b[34;1m[BOT]\x1b[0m Error During Start: " + error);

@@ -209,7 +209,7 @@ const event_messages = {
         discord: {
             title: "Get That L9",
             message: "A **Patrol Helicopter** Is Circling The Map, Ready To Take It Down?",
-            image: "https://i.ibb.co/z84qH5G/helicopter.png"
+            image: "https://cdn.void-dev.co/patrol_helicopter.png"
         },
         console: "A Patrol Helicopter Is Circling The Map, Ready To Take It Down?"
     },
@@ -239,6 +239,24 @@ const event_messages = {
             image: "https://i.ibb.co/zf27jLd/easter.png"
         },
         console: "An Easter Event Has Started!"
+    },
+    "Bradley APC Debris": {
+        formatted: "<color=green>[EVENT]</color> Somebody Has Just Destroyed <b><color=orange>Bradley APC</color!",
+        discord: {
+            title: "Bradley APC Taken",
+            message: "Somebody Just Took **Brad**, Ready To Counter?",
+            image: "https://cdn.void-dev.co/bradleyapc.png"
+        },
+        console: "Brad Has Just Been Downed!"
+    },
+    "Patrol Helicopter Debris": {
+        formatted: "<color=green>[EVENT]</color> Somebody Has Just Downed <b><color=orange>Patrol Helicopter</color!",
+        discord: {
+            title: "Patrol Helicopter Dropped",
+            message: "Somebody Has Just Dropped The **Patrol Helicopter**!",
+            image: "https://cdn.void-dev.co/patrol_helicopter.png"
+        },
+        console: "The Patrol Helicopter Has Just Been Downed!"
     },
 };
 
@@ -614,19 +632,20 @@ async function trigger_random_item(client, server, players) {
 }
 
 async function get_server(identifier) {
-    // Read the servers.json file
-    const data = fs.readFileSync('servers.json', 'utf8');
-
-    // Parse the JSON data
-    const servers = JSON.parse(data);
-
-    // Search for the server with the specified identifier
-    const server = servers.find(server => server.identifier === identifier);
-
-    // Return the server or a message if not found
-    return server || `Server with identifier "${identifier}" not found.`;
+    try {
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM servers WHERE identifier = ?',
+            [identifier]
+        );
+        return rows[0] || `Server With Identifier "${identifier}" Not Found!`;
+    } catch (err) {
+        console.error('Error fetching record:', err);
+        throw err;
+    }
 }
-
+function get_member_name(client, ign) {
+    return client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === ign || member.user.username === ign)?.toString() || ign;
+}
 const handle_teleport = async (client, player_name, coords, location, server) => {
     await client.functions.log("info", `\x1b[32;1m[TELEPORT]\x1b[0m \x1b[38;5;208m${player_name}\x1b[0m Teleporting To \x1b[38;5;208m${location}\x1b[0m`);
     await client.rce.sendCommand(server.identifier, await client.functions.format_teleport_pos(player_name, coords));
@@ -966,5 +985,6 @@ module.exports = {
     check_link,
     send_auto_messages,
     event_messages,
-    server_state_messages
+    server_state_messages,
+    get_member_name
 };

@@ -7,7 +7,7 @@ module.exports = {
 
     // Asynchronous function to execute when a player leaves the server
     async execute(data, rce, client) {
-        await log_player_left(client, data.server.identifier, data.ign);
+        //await log_player_left(client, data.server.identifier, data.ign);
     },
 };
 

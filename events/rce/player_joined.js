@@ -10,8 +10,8 @@ module.exports = {
     // Asynchronous function to execute when a player joins the server
     async execute(data, rce, client) {
         await log_player_joined(client, data);
-        await send_welcome_message(rce, data);
-        await insert_or_update_player(client, data);
+        //await send_welcome_message(rce, data);
+        //await insert_or_update_player(client, data);
     },
 };
 
