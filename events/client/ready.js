@@ -30,44 +30,52 @@ async function initialize_servers(client) {
     const servers = await client.rce.getServers();
 
     for (const [identifier, server] of servers) {
+        if (!server.ready) continue; // Skip if server is not ready and continue to the next one
+
         try {
-            const serverResponse = await client.rce.sendCommand(identifier, "serverinfo", true);
+            const server_response = await client.rce.sendCommand(identifier, "serverinfo", true);
+            let server_data;
+
+            // Try parsing the server response with basic and fallback methods
+            try {
+                server_data = JSON.parse(server_response.trim());
+            } catch (error) {
+                // Handle escaped newlines and backslashes in the server response
+                server_data = JSON.parse(server_response.trim().replace(/\\n/g, "").replace(/\\/g, ""));
+            }
+
             if (!shown_message[identifier]) {
-                let serverData;
-
-                try {
-                    serverData = JSON.parse(serverResponse.trim());
-                } catch (error) {
-                    serverData = JSON.parse(serverResponse.trim().replace(/\\n/g, "").replace(/\\/g, ""));
-                }
-
+                // Store the server information
                 client.server_information[identifier] = {
-                    Hostname: await client.functions.format_hostname(serverData.Hostname),
-                    MaxPlayers: serverData.MaxPlayers,
-                    Players: serverData.Players,
-                    Queued: serverData.Queued,
-                    Joining: serverData.Joining,
-                    EntityCount: serverData.EntityCount,
-                    GameTime: serverData.GameTime,
-                    Uptime: serverData.Uptime,
-                    Map: serverData.Map,
-                    Framerate: serverData.Framerate,
-                    Memory: serverData.Memory,
-                    Collections: serverData.Collections,
-                    NetworkIn: serverData.NetworkIn,
-                    NetworkOut: serverData.NetworkOut,
-                    Restarting: serverData.Restarting,
-                    SaveCreatedTime: serverData.SaveCreatedTime,
+                    Hostname: await client.functions.format_hostname(server_data.Hostname),
+                    MaxPlayers: server_data.MaxPlayers,
+                    Players: server_data.Players,
+                    Queued: server_data.Queued,
+                    Joining: server_data.Joining,
+                    EntityCount: server_data.EntityCount,
+                    GameTime: server_data.GameTime,
+                    Uptime: server_data.Uptime,
+                    Map: server_data.Map,
+                    Framerate: server_data.Framerate,
+                    Memory: server_data.Memory,
+                    Collections: server_data.Collections,
+                    NetworkIn: server_data.NetworkIn,
+                    NetworkOut: server_data.NetworkOut,
+                    Restarting: server_data.Restarting,
+                    SaveCreatedTime: server_data.SaveCreatedTime,
                 };
 
+                // Log a success message once per server
                 await client.functions.log("success", `\x1b[32;1m[${identifier}]\x1b[0m Successfully Connected To ${client.server_information[identifier].Hostname}`);
-                shown_message[identifier] = true; // Simple assignment
+                shown_message[identifier] = true;
             }
         } catch (error) {
+            // Log an error message if parsing or command execution fails
             await client.functions.log("error", `\x1b[32;1m[${identifier}]\x1b[0m Failed To Parse Server Data: ${error.message}`);
         }
     }
 }
+
 
 async function initialize_feeds(client) {
     try {
