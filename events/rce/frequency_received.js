@@ -7,7 +7,7 @@ module.exports = {
     // Asynchronous function to execute when frequency data is received
     async execute(data, rce, client) {
         const { server, frequency, coordinates, range } = data; // Destructure data for clarity
-
+        if (frequency === 4765 || frequency === 4768) return;
         await log_frequency_received(client, server.identifier, frequency, coordinates, range);
     },
 };

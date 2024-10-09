@@ -241,7 +241,7 @@ const event_messages = {
         console: "An Easter Event Has Started!"
     },
     "Bradley APC Debris": {
-        formatted: "<color=green>[EVENT]</color> Somebody Has Just Destroyed <b><color=orange>Bradley APC</color!",
+        formatted: "<color=green>[EVENT]</color> Somebody Has Just Destroyed <b><color=orange>Bradley APC</color>!",
         discord: {
             title: "Bradley APC Taken",
             message: "Somebody Just Took **Brad**, Ready To Counter?",
@@ -250,13 +250,31 @@ const event_messages = {
         console: "Brad Has Just Been Downed!"
     },
     "Patrol Helicopter Debris": {
-        formatted: "<color=green>[EVENT]</color> Somebody Has Just Downed <b><color=orange>Patrol Helicopter</color!",
+        formatted: "<color=green>[EVENT]</color> Somebody Has Just Downed <b><color=orange>Patrol Helicopter</color>!",
         discord: {
             title: "Patrol Helicopter Dropped",
             message: "Somebody Has Just Dropped The **Patrol Helicopter**!",
             image: "https://cdn.void-dev.co/patrol_helicopter.png"
         },
         console: "The Patrol Helicopter Has Just Been Downed!"
+    },
+    "Small Oil Rig": {
+        formatted: "<color=green>[EVENT]</color> Somebody Just Called In Heavy Scientists At <b><color=orange>Small Oil Rig</color>!",
+        discord: {
+            title: "Small Oil Rig",
+            message: "Heavy Scientists Called In At **Small Oil Rig**!",
+            image: "https://cdn.void-dev.co/oil_rig.png"
+        },
+        console: "Heavy Scientists Called In At Small Oil Rig!"
+    },
+    "Oil Rig": {
+        formatted: "<color=green>[EVENT]</color> Somebody Just Called In Heavy Scientists At <b><color=orange>Large Oil Rig</color>!",
+        discord: {
+            title: "Large Oil Rig",
+            message: "Heavy Scientists Called In At **Large Oil Rig**!",
+            image: "https://cdn.void-dev.co/oil_rig.png"
+        },
+        console: "Heavy Scientists Called In At Large Oil Rig!"
     },
 };
 
@@ -577,58 +595,63 @@ async function load_items() {
 }
 
 async function trigger_random_item(client, server, players) {
-    // Exit early if RANDOM_ITEMS is disabled
-    if (process.env.RANDOM_ITEMS === "false") return;
+    try{
+        // Exit early if RANDOM_ITEMS is disabled
+        if (process.env.RANDOM_ITEMS === "false") return;
 
-    // Retrieve the multiplier from the environment variable, defaulting to 1
-    const multiplier = parseInt(process.env.LOOT_SCALE) || 1;
+        // Retrieve the multiplier from the environment variable, defaulting to 1
+        const multiplier = parseInt(process.env.LOOT_SCALE) || 1;
 
-    // Create a helper function to determine the quantity based on item category or shortName
-    const get_item_quantity = (item) => {
-        let base_quantity;
-        switch (item.category) {
-            case 'Resources':
-                base_quantity = 1000 * multiplier;
-                break;
-            case 'Component':
-            case 'Food':
-                base_quantity = random_int(10, 40) * multiplier;
-                break;
-            case 'ammo.rifle':
-            case 'ammo.rifle.incendiary':
-            case 'ammo.rifle.explosive':
-            case 'ammo.rifle.hv':
-            case 'ammo.pistol':
-            case 'ammo.pistol.fire':
-            case 'ammo.pistol.hv':
-            case 'ammo.shotgun':
-            case 'ammo.shotgun.fire':
-            case 'ammo.shotgun.slug':
-                base_quantity = 128 * multiplier;
-                break;
-            case 'ammo.rocket.basic':
-            case 'ammo.rocket.fire':
-            case 'ammo.rocket.hv':
-                base_quantity = 3 * multiplier;
-                break;
-            case 'lowgradefuel':
-                base_quantity = 500 * multiplier;
-                break;
-            default:
-                base_quantity = 1; // Default quantity
-        }
-        return Math.floor(base_quantity); // Apply multiplier and round down
-    };
+        // Create a helper function to determine the quantity based on item category or shortName
+        const get_item_quantity = (item) => {
+            let base_quantity;
+            switch (item.category) {
+                case 'Resources':
+                    base_quantity = 1000 * multiplier;
+                    break;
+                case 'Component':
+                case 'Food':
+                    base_quantity = random_int(10, 40) * multiplier;
+                    break;
+                case 'ammo.rifle':
+                case 'ammo.rifle.incendiary':
+                case 'ammo.rifle.explosive':
+                case 'ammo.rifle.hv':
+                case 'ammo.pistol':
+                case 'ammo.pistol.fire':
+                case 'ammo.pistol.hv':
+                case 'ammo.shotgun':
+                case 'ammo.shotgun.fire':
+                case 'ammo.shotgun.slug':
+                    base_quantity = 128 * multiplier;
+                    break;
+                case 'ammo.rocket.basic':
+                case 'ammo.rocket.fire':
+                case 'ammo.rocket.hv':
+                    base_quantity = 3 * multiplier;
+                    break;
+                case 'lowgradefuel':
+                    base_quantity = 500 * multiplier;
+                    break;
+                default:
+                    base_quantity = 1; // Default quantity
+            }
+            return Math.floor(base_quantity); // Apply multiplier and round down
+        };
 
-    // Iterate over players and give random items
-    await Promise.all(players.map(async (player) => {
-        const item = await get_random_item(client);
-        const quantity = get_item_quantity(item);
+        // Iterate over players and give random items
+        await Promise.all(players.map(async (player) => {
+            const item = await get_random_item(client);
+            const quantity = get_item_quantity(item);
 
-        // Send command to give item to user
-        await client.rce.sendCommand(server, `giveto "${player}" "${item.shortName}" "${quantity}"`);
-        await client.functions.log("info", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m Giving ${player} ${quantity}x ${item.displayName}`);
-    }));
+            // Send command to give item to user
+            await client.rce.sendCommand(server, `giveto "${player}" "${item.shortName}" "${quantity}"`);
+            await client.functions.log("info", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m Giving ${player} ${quantity}x ${item.displayName}`);
+        }));
+    }
+    catch (err) {
+        await client.functions.log("error", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m ${err.message}`);
+    }
 }
 
 async function get_server(client, identifier) {
@@ -643,9 +666,24 @@ async function get_server(client, identifier) {
         throw err;
     }
 }
-function get_member_name(client, ign) {
-    return client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === ign || member.user.username === ign)?.toString() || ign;
+async function get_member_name(client, ign) {
+    try {
+        const guild = client.guilds.cache.get(process.env.GUILD_ID);
+        if (!guild) {
+            return ign; // Return the IGN if the guild is not found
+        }
+
+        // Fetch the member by username or nickname
+        const members = await guild.members.fetch(); // Fetch all members
+        const member = members.find(member => member.nickname === ign || member.user.username === ign);
+
+        return member ? member.toString() : ign; // Return member mention or IGN
+    } catch (error) {
+        console.error(`Error fetching member: ${error.message}`);
+        return ign; // Return the IGN in case of an error
+    }
 }
+
 const handle_teleport = async (client, player_name, coords, location, server) => {
     await client.functions.log("info", `\x1b[32;1m[TELEPORT]\x1b[0m \x1b[38;5;208m${player_name}\x1b[0m Teleporting To \x1b[38;5;208m${location}\x1b[0m`);
     await client.rce.sendCommand(server.identifier, await client.functions.format_teleport_pos(player_name, coords));

@@ -156,53 +156,82 @@ class STATS {
             return `Error Occurred While Wiping Banned Chatters: ${error.message}`;
         }
     }
+    // Insert a ban record for the player if they exist
     async insert_ban(display_name, server_identifier) {
         try {
-            try {
-                const [result, fields] = await this.client.database_connection.execute(`INSERT INTO bans (id, display_name, reason, server, region) VALUES (DEFAULT, '${display_name}', DEFAULT, '${server_identifier.serverId}', '${server_identifier.region}')`);
-            } catch (error) {
-                await this.client.functions.log("error", "\x1b[34;1m[DATABASE]\x1b[0m Error During Ban Insert:", error);
+            // Check if the player exists
+            const exists = await this.player_exists(server_identifier, display_name);
+
+            if (exists) {
+                // Player exists, proceed to insert the ban
+                await this.client.database_connection.execute(
+                    `INSERT INTO bans (id, display_name, reason, server, region) VALUES (DEFAULT, ?, DEFAULT, ?, ?)`,
+                    [display_name, server_identifier.serverId, server_identifier.region]
+                );
+            } else {
+                await this.client.functions.log("info", `\x1b[33;1m[DATABASE]\x1b[0m Player '${display_name}' does not exist, ban not inserted.`);
             }
         } catch (error) {
             await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Insert Ban: ${error.message}`);
         }
     }
-    async safe_stringify(obj) {
-        return JSON.stringify(obj, null, 2)
-    }
+
+    // Insert a player if they don't exist
     async insert_player(display_name, server_identifier) {
         try {
-            const [existingPlayer] = await this.client.database_connection.execute(`SELECT * FROM players WHERE server = ? AND region = ? AND display_name = ?`, [server_identifier.serverId, server_identifier.region, display_name]);
-            if (!existingPlayer.length) {
+            const exists = await this.player_exists(server_identifier, display_name);
+            if (!exists) {
                 // Player does not exist, so insert them into the database
-                try {
-                    const [result, fields] = await this.client.database_connection.execute(`INSERT INTO players (id, display_name, discord_id, home, currency, server, region) VALUES (DEFAULT, '${display_name}', DEFAULT, DEFAULT, DEFAULT, '${server_identifier.serverId}', '${server_identifier.region}')`);
-                } catch (error) {
-                    await this.client.functions.log("error", "\x1b[34;1m[DATABASE]\x1b[0m Error During Player Insert:", error);
-                }
+                await this.client.database_connection.execute(
+                    `INSERT INTO players (id, display_name, discord_id, home, currency, server, region) VALUES (DEFAULT, ?, DEFAULT, DEFAULT, DEFAULT, ?, ?)`,
+                    [display_name, server_identifier.serverId, server_identifier.region]
+                );
             }
         } catch (error) {
-            this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Insert Player: ${error.message}`);
+            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Insert Player: ${error.message}`);
+            throw error; // Rethrow to let the caller handle the error
         }
-
     }
+    // Ban a player in chat, insert into blacklist if they don't exist
     async chat_ban(display_name, reason, server_identifier) {
         try {
-            const [existingPlayer] = await this.client.database_connection.execute("SELECT * FROM players WHERE display_name = ? AND server = ? AND region = ?", [display_name, server_identifier.serverId, server_identifier.region]);
-            if (!existingPlayer.length) {
-                try {
-                    const [result, fields] = await this.client.database_connection.execute(`INSERT INTO chat_blacklist (id, display_name, reason, server, region) VALUES (DEFAULT, '${display_name}', '${reason}', '${server_identifier.serverId}', '${server_identifier.region}')`);
-                } catch (error) {
-                    await this.client.functions.log("error", "\x1b[34;1m[DATABASE]\x1b[0m Error During Chat Ban Insert:", error);
-                }
+            const exists = await this.player_exists(server_identifier, display_name);
+
+            if (!exists) {
+                // Player does not exist, create them before banning
+                await this.insert_player(display_name, server_identifier);
+            }
+
+            const [existingBan] = await this.client.database_connection.execute(
+                "SELECT * FROM chat_blacklist WHERE display_name = ? AND server = ? AND region = ?",
+                [display_name, server_identifier.serverId, server_identifier.region]
+            );
+
+            if (!existingBan.length) {
+                // Player is not banned, insert into chat_blacklist
+                await this.client.database_connection.execute(
+                    "INSERT INTO chat_blacklist (id, display_name, reason, server, region) VALUES (DEFAULT, ?, ?, ?, ?)",
+                    [display_name, reason, server_identifier.serverId, server_identifier.region]
+                );
             }
         } catch (error) {
-            this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Chat Ban: ${error.message}`);
+            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Chat Ban: ${error.message}`);
+            throw error; // Rethrow to let the caller handle the error
         }
     }
+
+    // Insert a kill record for the player
     async insert_kill(server_identifier, display_name, victim, killType) {
         try {
-            const [results] = await this.client.database_connection.execute(
+            const exists = await this.player_exists(server_identifier, display_name);
+
+            if (!exists) {
+                // Player does not exist, create them
+                await this.insert_player(display_name, server_identifier);
+            }
+
+            // Insert the kill record
+            await this.client.database_connection.execute(
                 "INSERT INTO kills (display_name, victim, type, server, region) VALUES (?, ?, ?, ?, ?)",
                 [display_name, victim, killType, server_identifier.serverId, server_identifier.region]
             );
@@ -211,51 +240,93 @@ class STATS {
             throw err; // Rethrow to let the caller handle it
         }
     }
+
+    // Function to update a player's stat column, creating the player if they don't exist
     async update_player(server_identifier, player_name, statColumn) {
-        return new Promise(async (resolve, reject) => {
-            await this.client.database_connection.execute(`UPDATE players SET ${statColumn} = ${statColumn} + 1 WHERE display_name = ? AND server = ? AND region = ?`, [player_name, server_identifier.serverId, server_identifier.region], async (err) => {
-                if (err) {
-                    await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Update Player: ${err.message}`);
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        try {
+            // Ensure the player exists or create them if they don't
+            const exists = await this.player_exists(server_identifier, player_name, 0);
+            if (exists) {
+                // Update the player's stat column
+                await this.client.database_connection.execute(
+                    `UPDATE players SET ${statColumn} = ${statColumn} + 1 WHERE display_name = ? AND server = ? AND region = ?`,
+                    [player_name, server_identifier.serverId, server_identifier.region]
+                );
+            }
+        } catch (err) {
+            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Update Player: ${err.message}`);
+            throw err; // Rethrow the error for the caller to handle
+        }
+    }
+
+    async player_exists(server, player_name) {
+        // Check if the player exists
+        const [result] = await this.client.database_connection.execute(
+            `SELECT COUNT(*) as count FROM players WHERE display_name = ? AND server = ? AND region = ?`,
+            [player_name, server.serverId, server.region]
+        );
+
+        if (result[0].count > 0) {
+            return true; // Player exists
+        } else {
+            // Player does not exist, insert a new record
+            await this.client.database_connection.execute(
+                `INSERT INTO players (display_name, server, region, currency) VALUES (?, ?, ?, ?)`,
+                [player_name, server.serverId, server.region, 0]
+            );
+            await this.client.functions.log("info", `\x1b[33;1m[DATABASE]\x1b[0m Created A New Player ${player_name} In Server ${server.serverId}, Region ${server.region}`);
+            return false; // Player was just created
+        }
     }
     async add_points(server_identifier, player_name, amount) {
         try {
-            const [result] = await this.client.database_connection.execute(
-                `UPDATE players SET currency = currency + ? WHERE display_name = ? AND server = ? AND region = ?`,
-                [amount, player_name, server_identifier.serverId, server_identifier.region]
-            );
+            // Call player_exists to check or create the player
+            const exists = await this.player_exists(server_identifier, player_name, amount);
+
+            if (exists) {
+                // If the player already existed, update the points
+                await this.client.database_connection.execute(
+                    `UPDATE players SET currency = currency + ? WHERE display_name = ? AND server = ? AND region = ?`,
+                    [amount, player_name, server_identifier.serverId, server_identifier.region]
+                );
+            }
         } catch (err) {
             await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Add Points: ${err.message}`);
             throw err; // Rethrow to let the caller handle it
         }
     }
-    async remove_points(server_identifier, player_name, amount) {
+    async remove_points(server, player_name, amount) {
         try {
-            const [result] = await this.client.database_connection.execute(
-                `UPDATE players SET currency = currency - ? WHERE display_name = ? AND server = ? AND region = ?`,
-                [amount, player_name, server_identifier.serverId, server_identifier.region]
-            );
+            // Call player_exists to check or create the player
+            const exists = await this.player_exists(server, player_name, amount);
+            if (exists) {
+            // If the player already existed, update the points
+                const [result] = await this.client.database_connection.execute(
+                    `UPDATE players SET currency = currency - ? WHERE display_name = ? AND server = ? AND region = ?`,
+                    [amount, player_name, server.serverId, server.region]
+                );
+            }
         } catch (err) {
             await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Remove Points: ${err.message}`);
             throw err; // Rethrow to let the caller handle it
         }
     }
-    async get_points(server_identifier, player_name) {
-        return new Promise(async (resolve, reject) => {
-            await this.client.database_connection.execute(`SELECT currency FROM players WHERE display_name = ? AND server = ? AND region = ?`, [player_name, server_identifier.serverId, server_identifier.region], async (err, results) => {
-                if (err) {
-                    await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Get Points: ${err.message}`);
-                    reject(err);
-                } else {
-                    resolve(results.length > 0 ? results[0].currency : 0);
-                }
-            });
-        });
+    async get_points(server, player_name) {
+        try {
+            // Check if the player exists, and create them with 0 points if they don't
+            const exists = await this.player_exists(server, player_name, 0);
+
+            // Retrieve the player's points (whether they existed or were just created)
+            const [results] = await this.client.database_connection.execute(
+                `SELECT currency FROM players WHERE display_name = ? AND server = ? AND region = ?`,
+                [player_name, server.serverId, server.region]
+            );
+
+            return results.length > 0 ? results[0].currency : 0;
+        } catch (err) {
+            await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Get Points: ${err.message}`);
+            throw err; // Rethrow the error so it can be handled by the caller
+        }
     }
     async link_discord(server_identifier, player_name, discord_id) {
         return new Promise(async (resolve, reject) => {

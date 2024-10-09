@@ -119,19 +119,22 @@ class rce_bot {
         try {
             const [rows] = await this.client.database_connection.execute("SELECT * FROM servers");  // Get all servers
 
-            // Map the database rows to server properties
-            this.client.servers = await Promise.all(rows.map(async row => ({
-                identifier: row.identifier,
-                serverId: row.server_id,
-                region: row.region,
-                refreshPlayers: row.refresh_players,
-                rfBroadcasting: row.rf_broadcasting,
-                bradFeeds: row.bradley_feeds,
-                heliFeeds: row.heli_feeds,
-                random_items: row.random_items,
-                owner: row.guild_owner,
-                guild: row.guild_id,
-            })));
+            this.client.servers = (await Promise.all(rows.map(async row => {
+                if (!row.enabled) return null;  // Return null for disabled servers
+                return {
+                    identifier: row.identifier,
+                    serverId: row.server_id,
+                    region: row.region,
+                    refreshPlayers: row.refresh_players,
+                    rfBroadcasting: row.rf_broadcasting,
+                    bradFeeds: row.bradley_feeds,
+                    heliFeeds: row.heli_feeds,
+                    random_items: row.random_items,
+                    owner: row.guild_owner,
+                    guild: row.guild_id,
+                    enabled: row.enabled
+                };
+            }))).filter(server => server !== null);  // Filter out null results
 
             this.client.functions.log("info", `\x1b[34;1m[BOT]\x1b[0m ${this.client.servers.length} Servers Successfully Fetched From The Database!`);
         } catch (error) {

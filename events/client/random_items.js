@@ -13,16 +13,12 @@ module.exports = {
     },
 };
 
-function start_random_items_interval(client) {
+async function start_random_items_interval(client) {
     setInterval(async () => {
         const servers = await client.rce.getServers();
         servers.forEach(async server => {
-            if (!server.ready) return;
-
             const is_enabled = await client.functions.get_server(client, server.identifier);
-
-            if (!is_enabled.random_items) return;
-
+            if (is_enabled.random_items === 0) return;
             await client.functions.trigger_random_item(client, server.identifier, server.players);
         });
     }, 1 * (process.env.RANDOM_ITEM_COOLDOWN || "30") * 1000);

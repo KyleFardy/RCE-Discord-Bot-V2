@@ -1,14 +1,15 @@
 // Import necessary components from the rce.js library
 const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
+// Load environment variables from the .env file
+require('dotenv').config();
 
-// Export the player list update event handler module
+// Export the event handler module
 module.exports = {
-    // Set the name of the event this handler listens for
     name: RCEEvent.PlayerListUpdate,
 
-    // Asynchronous function to execute when the player list is updated
+    // Asynchronous function to execute when a player joins the server
     async execute(data, rce, client) {
-        // Send a command to retrieve server information
-        
-    }
+        const { server, players, joined, left } = data; // Destructure data for clarity
+
+    },
 };

@@ -13,7 +13,7 @@ module.exports = {
             const { server, killer, victim } = data; // Destructure data for clarity
 
             // Log kill event
-            await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[KILL]\x1b[0m \x1b[32;1m${(killer.type === "npc" ? "A Scientist" : killer.name)}\x1b[0m killed \x1b[38;5;214m${(victim.type === "npc" ? "A Scientist" : victim.name)}\x1b[0m!`);
+            await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[KILL]\x1b[0m \x1b[32;1m${(killer.type === "npc" ? "A Scientist" : killer.name)}\x1b[0m Killed \x1b[38;5;214m${(victim.type === "npc" ? "A Scientist" : victim.name)}\x1b[0m!`);
 
             // Handle NPC kills
             if (victim.type === "npc") {
@@ -151,6 +151,6 @@ async function send_kill_feed(client, rce, server, killer, victim, kill_feeds, k
 }
 
 // Helper function to get member name
-function get_member_name(client, player_name) {
-    return client.functions.get_member_name(player_name) || player_name; // Fallback to original name if not found
+async function get_member_name(client, player_name) {
+    return await client.functions.get_member_name(client, player_name) || player_name; // Fallback to original name if not found
 }
