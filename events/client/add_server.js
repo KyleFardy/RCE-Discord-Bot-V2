@@ -109,7 +109,7 @@ async function add_server(interaction, client, server) {
     // Create the LINKED role if it doesn't exist
     let linked_role = guild.roles.cache.find(role => role.name === 'LINKED');
     if (!linked_role) {
-        letlinked_role = await guild.roles.create({
+        linked_role = await guild.roles.create({
             name: 'LINKED',
             reason: 'Created For Account Linking',
             permissions: [], // No specific permissions for the linked role
