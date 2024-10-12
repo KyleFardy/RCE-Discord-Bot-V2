@@ -10,12 +10,12 @@ RCE Discord Bot V2 is a Rust Console Discord Bot Designed To Interact With Rust 
 
 - 🎮 **Real-Time Event Handling For Player Actions**
 - 📊 **Logging Of Server Events**
-- 👋 **Customized Welcome Messages**
-- 📬 **Automated Messages**
+- 👋 **Welcome Messages (Configurable)**
+- 📬 **Automated Messages (Configurable)**
 - 🌐 **Support For Multiple Events Like Airdrops, Cargo, Brad/Heli Downed, Raid Alarm And More**
-- 🔄 **Automated Events**
-- 📍 **Teleporting**
-- ⚔️ **Kill Feeds**
+- 🔄 **Automated Events (Configurable)**
+- 📍 **Teleporting To Base/Outpost/Bandit Camp**
+- ⚔️ **Kill Feeds (Configurable)**
 - 📈 **Player Statistics (Via SQLite Or MySQL)**
 - 🎁 **Random Items Every x Seconds (Configurable)**
 
@@ -24,13 +24,13 @@ RCE Discord Bot V2 is a Rust Console Discord Bot Designed To Interact With Rust 
 ## 📝 TODO
 
 - 🔒 Offline Raid Protection
-- 🛒 Discord/In Game Shop
+- 🛒 Discord/In Game Shop (Configurable)
 
 ---
 
 ## ⚙️ Installation
 
-Follow these steps to set up the bot:
+Follow These Steps To Set Up The Bot:
 
 1. **Clone The Repository:**
     ```bash
