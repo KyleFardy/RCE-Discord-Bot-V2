@@ -66,6 +66,22 @@ async function process_link(interaction, client, gamertag) {
 }
 
 async function link_account(interaction, client, gamertag) {
+    // Fetch linked_role_id from the database
+    const [rows] = await client.database_connection.query(
+        "SELECT linked_role_id FROM servers WHERE guild_id = ?",
+        [interaction.guild.id]
+    );
+
+    if (rows.length === 0) {
+        return await interaction.reply({
+            content: "No linked role found for this server.",
+            ephemeral: true,
+        });
+    }
+
+    const linkedRoleId = rows[0].linked_role_id; // Get the linked role ID
+
+    // Update the player's discord ID in the database
     await client.database_connection.query(
         "UPDATE players SET discord_id = ? WHERE display_name = ?",
         [interaction.user.id, gamertag]
@@ -74,7 +90,7 @@ async function link_account(interaction, client, gamertag) {
     const member = interaction.guild.members.cache.get(interaction.user.id);
     try {
         await member.setNickname(gamertag);
-        await member.roles.add(process.env.LINKED_ROLE);
+        await member.roles.add(linkedRoleId); // Add the linked role using the fetched ID
     } catch (error) {
         console.error("Failed to update nickname or add role:", error);
     }

@@ -2,7 +2,7 @@
 const { RCEManager, LogLevel, RCEEvent } = require("rce.js");
 
 module.exports = {
-    name: RCEEvent.FrequencyReceived,
+    name: RCEEvent.FrequencyGained,
 
     // Asynchronous function to execute when frequency data is received
     async execute(data, rce, client) {
@@ -14,5 +14,5 @@ module.exports = {
 
 // Helper function to log the frequency received
 async function log_frequency_received(client, server_id, frequency, coordinates, range) {
-    await client.functions.log("info", `[${server_id}] Raid Alarm: Frequency ${frequency}, Coordinates: ${coordinates}, Range: ${range}`);
+    await client.functions.log("info", `\x1b[38;5;208m[${server_id}]\x1b[0m \x1b[32;1m[FREQUENCY RECEIVED]\x1b[0m Frequency ${frequency}, Coordinates: ${coordinates}, Range: ${range}\x1b[0m`);
 }

@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { RCEManager, LogLevel } = require("rce.js");
 
 const shown_message = {};
@@ -8,7 +8,6 @@ module.exports = {
     async execute(client) {
         try {
             await log_successful_login(client);
-            await new Promise(resolve => setTimeout(resolve, 2000));
             await initialize_servers(client);
             await update_auto_messages(client);
             setInterval(() => {
@@ -28,38 +27,72 @@ async function log_successful_login(client) {
 }
 
 async function initialize_servers(client) {
-    const servers = await client.rce.getServers();
-
-    for (const [identifier, server] of servers) {
-        if (!server.ready) continue; // Skip if server is not ready and continue to the next one
+    const servers = await client.rce.servers.getAll();
+    servers.forEach(async (server) => {
+        if (server.flags.indexOf('READY') === -1) return;
 
         try {
-            const server_response = await client.rce.sendCommand(identifier, "serverinfo", true);
-            let server_data;
+            const db_server = await client.functions.get_server(client, server.identifier);
+            const server_response = await client.rce.servers.info(db_server.identifier, true);
+            const guild = await client.guilds.cache.get(db_server.guild_id); // Assuming you store guild_id in the server object
+            const settingsChannelId = db_server.settings_channel_id; // Assuming this is stored in your server object
 
-            // Try parsing the server response with basic and fallback methods
-            try {
-                server_data = JSON.parse(server_response.trim());
-            } catch (error) {
-                // Handle escaped newlines and backslashes in the server response
-                server_data = JSON.parse(server_response.trim().replace(/\\n/g, "").replace(/\\/g, ""));
+            if (!shown_message[db_server.identifier]) {
+                await client.functions.log("success", `\x1b[32;1m[${db_server.identifier}]\x1b[0m Successfully Connected To ${await client.functions.format_hostname(server_response.Hostname)}`);
+                shown_message[db_server.identifier] = true;
             }
 
-            if (!shown_message[identifier]) {
-                await client.functions.log("success", `\x1b[32;1m[${identifier}]\x1b[0m Successfully Connected To ${await client.functions.format_hostname(server_data.Hostname) }`);
-                shown_message[identifier] = true;
+            // Fetch the settings channel
+            try {
+                const settingsChannel = await guild.channels.cache.get(settingsChannelId);
+                if (!settingsChannel) {
+                    await client.functions.log("warning", `\x1b[33;1m[${db_server.identifier}]\x1b[0m Settings channel not found with ID: ${settingsChannelId}`);
+                    return; // Exit early if the channel is not found
+                }
+
+                await client.functions.log("debug", `\x1b[34;1m[${db_server.identifier}]\x1b[0m Fetching settings channel with ID: ${settingsChannelId}`);
+
+                const settingsEmbed = await client.functions.create_settings_embed(client, db_server.identifier);
+                const actionRow = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`edit_settings_${db_server.identifier}`)
+                            .setLabel('Edit')
+                            .setStyle(ButtonStyle.Primary),
+                        new ButtonBuilder()
+                            .setCustomId(`refresh_settings_${db_server.identifier}`)
+                            .setLabel('Refresh')
+                            .setStyle(ButtonStyle.Primary)
+                    );
+
+                const messages = await settingsChannel.messages.fetch();
+                const lastMessage = messages.find(msg => msg.embeds.length > 0);
+
+                if (lastMessage) {
+                    await client.functions.log("debug", `\x1b[34;1m[${db_server.identifier}]\x1b[0m Updating existing settings embed message`);
+                    await lastMessage.edit({ embeds: [settingsEmbed], components: [actionRow] });
+                } else {
+                    await client.functions.log("debug", `\x1b[34;1m[${db_server.identifier}]\x1b[0m Sending new settings embed message`);
+                    await settingsChannel.send({ embeds: [settingsEmbed], components: [actionRow] });
+                }
+            } catch (error) {
+                await client.functions.log("error", `\x1b[31;1m[${db_server.identifier}]\x1b[0m Error handling the settings channel: ${error.message}`);
+                console.error("Settings Channel Error:", error);  // Detailed error for further debugging
             }
         } catch (error) {
             // Log an error message if parsing or command execution fails
-            await client.functions.log("error", `\x1b[32;1m[${identifier}]\x1b[0m Failed To Parse Server Data: ${error.message}`);
+            await client.functions.log("error", `\x1b[31;1m[${server.identifier}]\x1b[0m Failed To Parse Server Data: ${error.message}`);
         }
-    }
+    });
 }
+
+
+
 
 
 async function update_auto_messages(client) {
     if (client.auto_messages.enabled) {
-        const servers = await client.rce.getServers();
+        const servers = await client.rce.servers.getAll();
         servers.forEach(async server => {
             if (!server.ready) return;
 
@@ -70,14 +103,12 @@ async function update_auto_messages(client) {
 
 async function update_presence(client) {
     const players = await client.functions.get_count(client, 'SELECT COUNT(*) as count FROM players');
-    const servers = await client.rce.getServers();
-
     await client.user.setPresence({
         activities: [
             {
                 name: 'Rust: Console Edition',
                 type: 0, // ActivityType
-                state: `Watching ${servers.size} Servers With ${players} Players`,
+                state: `Watching ${client.rce.servers.size} Servers With ${players} Players`,
                 largeImage: 'rce',
                 smallImage: 'rce',
                 buttons: [

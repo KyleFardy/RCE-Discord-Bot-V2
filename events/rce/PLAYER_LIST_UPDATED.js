@@ -5,7 +5,7 @@ require('dotenv').config();
 
 // Export the event handler module
 module.exports = {
-    name: RCEEvent.PlayerListUpdate,
+    name: RCEEvent.PlayerListUpdated,
 
     // Asynchronous function to execute when a player joins the server
     async execute(data, rce, client) {

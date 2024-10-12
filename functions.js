@@ -42,14 +42,8 @@ function log(type = "info", ...args) {
 
     // Always log success messages, and check if the current log type is above the minimum log level
     if (type === "success" || logLevels.indexOf(type) <= logLevels.indexOf(minLogLevel)) {
-        // Calculate padding based on the length of the prefix
-        const padding = ' '.repeat(Math.max(0, 15 - prefix.length)); // Adjust 15 as needed for your layout
-
-        // Create the formatted log message with the timestamp, prefix, emoji, and color
-        const formattedMessage = `\x1b[90m[${timestamp}]\x1b[0m ${color}${prefix}${padding}${emoji}\x1b[0m`;
-
         // Output the formatted log message followed by the additional arguments
-        console.log(formattedMessage, ...args);
+        console.log(`\x1b[90m[${timestamp}]\x1b[0m ${color}${prefix}${' '.repeat(Math.max(0, 15 - prefix.length)) }${emoji}\x1b[0m`, ...args);
     }
 }
 
@@ -110,70 +104,45 @@ async function get_item_image(display_name) {
 }
 
 const ignored_attacker = [
-    "scientist",
-    "thirst",
-    "hunger",
-    "heat",
-    "guntrap.deployed",
-    "pee pee 9000",
-    "barricade.wood",
-    "wall.external.high.stone",
-    "wall.external.high",
-    "gates.external.high.wood",
-    "gates.external.high.wood (entity)",
-    "gates.external.high.stone",
-    "gates.external.high.stone (entity)",
-    "bear",
-    "autoturret_deployed",
-    "cold",
-    "bleeding",
-    "boar",
-    "wolf",
-    "fall",
-    "drowned",
-    "radiation",
-    "autoturret_deployed (entity)",
-    "bear (bear)",
-    "boar (boar)",
-    "wolf (wolf)",
-    "guntrap.deployed (entity)",
-    "fall!",
-    "lock.code (entity)",
-    "bradleyapc (entity)",
-    "wall.external.high.stone (entity)",
-    "barricade.metal (entity)",
-    "spikes.floor (entity)",
-    "sentry.bandit.static (entity)",
-    "cactus-7 (entity)",
-    "cactus-6 (entity)",
-    "cactus-5 (entity)",
-    "cactus-4 (entity)",
-    "cactus-3 (entity)",
-    "cactus-2 (entity)",
-    "cactus-1 (entity)",
-    "landmine (entity)",
-    "wall.external.high.wood (entity)",
-    "sentry.scientist.static (entity)",
-    "patrolhelicopter (entity)",
-    "flameturret.deployed (entity)",
-    "oilfireballsmall (entity)",
-    "napalm (entity)",
-    "cargoshipdynamic2 (entity)",
-    "barricade.wood (entity)",
-    "beartrap (entity)",
-    "landmine (entity)",
-    "cargoshipdynamic1 (entity)",
-    "campfire (entity)",
-    "barricade.woodwire (entity)",
-    "rocket_crane_lift_trigger (entity)",
-    "lock.code (entity)",
-    "rowboat (entity)",
-    "fireball (entity)",
-    "teslacoil.deployed (entity)",
-    "Scientist Sentry",
+    "Thirst",
+    "Hunger",
     "Shotgun Trap",
-    "Metal Barricade",
+    "Pee Pee 9000",
+    "Wooden Barricade",
+    "High External Stone Wall",
+    "High External Wooden Wall",
+    "High External Wooden Gate",
+    "High External Stone Gate",
+    "Bear",
     "Auto Turret",
+    "Cold",
+    "Bleeding",
+    "Boar",
+    "Wolf",
+    "Fall",
+    "Drowned",
+    "Radiation",
+    "Fall",
+    "Code Lock",
+    "Bradley APC",
+    "Metal Barricade",
+    "Floor Spikes",
+    "Bandit Sentry",
+    "Cactus",
+    "Landmine",
+    "Scientist Sentry",
+    "Patrol Helicopter",
+    "Flame Turret",
+    "Small Oil Fire",
+    "Napalm",
+    "Cargo Ship",
+    "Wooden Barricade",
+    "Bear Trap",
+    "Campfire",
+    "Crane Lift",
+    "Rowboat",
+    "Fireball",
+    "Tesla Coil"
 ];
 
 const event_messages = {
@@ -283,7 +252,9 @@ async function send_embed(client, channel, title, description, fields = [], thum
     // Create a new embed
     const embed = new EmbedBuilder()
         .setTitle(title) // Set the title of the embed
-        .setColor("#e6361d"); // Set the color of the embed
+        .setTimestamp()
+        .setColor("#e6361d") // Set the color of the embed
+        .setFooter({ text: process.env.EMBED_FOOTER_TEXT, iconURL: process.env.EMBED_LOGO });
 
     // Set the description if provided
     if (description.length > 0) {
@@ -320,7 +291,7 @@ async function send_embed(client, channel, title, description, fields = [], thum
 
 // Function to format a hostname with color codes based on the provided color
 function format_hostname(hostname) {
-    const colorCodes = {
+    const color_codes = {
         //custom
         'purple': '\x1b[35m', // Add purple as magenta
 
@@ -428,25 +399,22 @@ function format_hostname(hostname) {
         '#ffffff': '\x1b[37m', // White
         '#808080': '\x1b[90m', // Gray
     };
+    
     // Use a regular expression to find the color tags and their contents
-
     return hostname.replace(/<color=([^>]+)>(.*?)<\/color>/g, (match, color, text) => {
         // Use the corresponding ANSI code or default to reset if the color is not defined
-        const ansiColor = colorCodes[color] || '\x1b[0m'; // Reset to default if color not found
-        return `${ansiColor}${text}\x1b[0m`; // Append reset code after the text
+        const ansi_color = color_codes[color] || '\x1b[0m'; // Reset to default if color not found
+        return `${ansi_color}${text}\x1b[0m`; // Append reset code after the text
     })
-        .replace(/<b>(.*?)<\/b>/g, '\x1b[1m$1\x1b[22m') // Handle bold text
-        .replace(/<i>(.*?)<\/i>/g, '\x1b[3m$1\x1b[23m'); // Handle italic text
+    .replace(/<b>(.*?)<\/b>/g, '\x1b[1m$1\x1b[22m') // Handle bold text
+    .replace(/<i>(.*?)<\/i>/g, '\x1b[3m$1\x1b[23m'); // Handle italic text
 }
 
 async function get_player_currency(discord_id, server) {
-    console.log(discord_id);
-    console.log(server.serverId);
-    console.log(server.region);
     try {
         const [discordIdRows] = await client.database_connection.execute(
             'SELECT currency FROM players WHERE discord_id = ? AND server = ? AND region = ?',
-            [discord_id, server.serverId, server.region]
+            [discord_id, server.serverId[0], server.region]
         );
 
         if (discordIdRows.length > 0 && discordIdRows[0].currency != null) {
@@ -464,7 +432,7 @@ async function get_player_by_discord(discord_id, server) {
     try {
         const [discordIdRows] = await client.database_connection.execute(
             'SELECT display_name FROM players WHERE discord_id = ? AND server = ? AND region = ?',
-            [discord_id, server.serverId, server.region]
+            [discord_id, server.serverId[0], server.region]
         );
 
         if (discordIdRows.length > 0 && discordIdRows[0].display_name != null) {
@@ -597,10 +565,10 @@ async function load_items() {
 async function trigger_random_item(client, server, players) {
     try{
         // Exit early if RANDOM_ITEMS is disabled
-        if (process.env.RANDOM_ITEMS === "false") return;
+        if (server.random_items === "false") return;
 
         // Retrieve the multiplier from the environment variable, defaulting to 1
-        const multiplier = parseInt(process.env.LOOT_SCALE) || 1;
+        const multiplier = parseInt(server.loot_scale) || 1;
 
         // Create a helper function to determine the quantity based on item category or shortName
         const get_item_quantity = (item) => {
@@ -645,12 +613,41 @@ async function trigger_random_item(client, server, players) {
             const quantity = get_item_quantity(item);
 
             // Send command to give item to user
-            await client.rce.sendCommand(server, `giveto "${player}" "${item.shortName}" "${quantity}"`);
-            await client.functions.log("info", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m Giving ${player} ${quantity}x ${item.displayName}`);
+            await client.rce.servers.command(server.identifier, `giveto "${player}" "${item.shortName}" "${quantity}"`);
+            await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m Giving ${player} ${quantity}x ${item.displayName}`);
         }));
     }
     catch (err) {
-        await client.functions.log("error", `\x1b[38;5;208m[${server}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m ${err.message}`);
+        await client.functions.log("error", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[RANDOM ITEMS]\x1b[0m ${err.message}`);
+    }
+}
+async function delete_server(client, guild_id, region, server_id, identifier) {
+    try {
+
+        // Check if the server exists with the given parameters
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM servers WHERE guild_id = ? AND region = ? AND server_id = ? AND identifier = ?',
+            [guild_id, region, server_id, identifier]
+        );
+
+        // If no matching server is found, log a not found message
+        if (rows.length === 0) {
+            console.log(`No Server Found With The Specified Parameters: Identifier: \`${identifier}\`, Server ID: \`${server_id}\`, Region: \`${region}\`.`);
+            return false;
+        }
+
+        // Delete the server from the database
+        await client.database_connection.query(
+            'DELETE FROM servers WHERE guild_id = ? AND region = ? AND server_id = ? AND identifier = ?',
+            [guild_id, region, server_id, identifier]
+        );
+
+        // Log a success message
+        console.log(`Successfully Deleted The Server With Identifier: \`${identifier}\` And Server ID: \`${server_id}\`.`);
+        return true;
+    } catch (err) {
+        console.error('Error deleting server record:', err);
+        return false;
     }
 }
 
@@ -660,41 +657,95 @@ async function get_server(client, identifier) {
             'SELECT * FROM servers WHERE identifier = ?',
             [identifier]
         );
-        return rows[0] || `Server With Identifier "${identifier}" Not Found!`;
+
+        // Return the first row or a not found message
+        if (rows.length === 0) {
+            return `Server With Identifier \`${identifier}\` Not Found!`;
+        }
+        return rows[0];
     } catch (err) {
         console.error('Error fetching record:', err);
-        throw err;
+        throw err; // Rethrow the error for further handling
     }
 }
-async function get_member_name(client, ign) {
+async function get_guild_servers(client, identifier, guild) {
     try {
-        const guild = client.guilds.cache.get(process.env.GUILD_ID);
-        if (!guild) {
-            return ign; // Return the IGN if the guild is not found
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM servers WHERE identifier = ? AND guild_id = ?',
+            [identifier, guild]
+        );
+
+        // Return the first row or a not found message
+        if (rows.length === 0) {
+            return `Server With Identifier \`${identifier}\` Not Found!`;
         }
-
-        // Fetch the member by username or nickname
-        const members = await guild.members.fetch(); // Fetch all members
-        const member = members.find(member => member.nickname === ign || member.user.username === ign);
-
-        return member ? member.toString() : ign; // Return member mention or IGN
-    } catch (error) {
-        console.error(`Error fetching member: ${error.message}`);
-        return ign; // Return the IGN in case of an error
+        return rows[0];
+    } catch (err) {
+        console.error('Error fetching record:', err);
+        throw err; // Rethrow the error for further handling
     }
 }
+
+async function get_server_discord(client, guild_id) {
+    try {
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM servers WHERE guild_id = ?',
+            [guild_id]
+        );
+
+        // Return the first row or a not found message
+        if (rows.length === 0) {
+            return `Server With guild_id "${guild_id}" Not Found!`;
+        }
+        return rows[0];
+    } catch (err) {
+        console.error('Error fetching record:', err);
+        throw err; // Rethrow the error for further handling
+    }
+}
+async function get_servers_by_guild(client, guild_id) {
+    try {
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM servers WHERE guild_id = ?',
+            [guild_id]
+        );
+
+        return rows; // Return the list of servers
+    } catch (err) {
+        console.error('Error fetching servers:', err);
+        return []; // Return an empty array on error
+    }
+}
+
+async function get_server_discord_identifier(client, guild_id, identifier) {
+    try {
+        const [rows] = await client.database_connection.query(
+            'SELECT * FROM servers WHERE guild_id = ? AND identifier = ?',
+            [guild_id, identifier]
+        );
+
+        // Return the first row or a not found message
+        if (rows.length === 0) {
+            return `Server Not Found!`;
+        }
+        return rows[0];
+    } catch (err) {
+        console.error('Error fetching record:', err);
+        throw err; // Rethrow the error for further handling
+    }
+}
+
 
 const handle_teleport = async (client, player_name, coords, location, server) => {
     await client.functions.log("info", `\x1b[32;1m[TELEPORT]\x1b[0m \x1b[38;5;208m${player_name}\x1b[0m Teleporting To \x1b[38;5;208m${location}\x1b[0m`);
-    await client.rce.sendCommand(server.identifier, await client.functions.format_teleport_pos(player_name, coords));
-    if (process.env.TELEPORT_LOGS === 'true' && !client.functions.is_empty(process.env.TELEPORT_LOGS_CHANNEL)) {
-        await send_embed(client, process.env.TELEPORT_LOGS_CHANNEL, `${server.identifier} - New Teleport`, "", [
-            { name: 'Player', value: `👤 ${player_name}`, inline: true },
-            { name: 'Teleported To', value: `\`${location}\``, inline: true },
-            { name: 'Coords', value: ` \`\`\`${coords}\`\`\` `, inline: true },
-            { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
-        ], "https://cdn.void-dev.co/rust_map.png");
-    }
+    await client.rce.servers.command(server.identifier, await client.functions.format_teleport_pos(player_name, coords));
+
+    await send_embed(client, server.teleport_logs_channel_id, `${server.identifier} - New Teleport`, "", [
+        { name: 'Player', value: `👤 ${player_name}`, inline: true },
+        { name: 'Teleported To', value: `\`${location}\``, inline: true },
+        { name: 'Coords', value: ` \`\`\`${coords}\`\`\` `, inline: true },
+        { name: 'Time', value: `🕜 <t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true },
+    ], "https://cdn.void-dev.co/rust_map.png");
     
 };
 
@@ -707,7 +758,7 @@ const get_player_info = async (client, player_name, server) => {
         // Fetch player info
         const [rows] = await client.database_connection.query(
             'SELECT * FROM players WHERE server = ? AND region = ? AND display_name = ?',
-            [server.serverId, server.region, player_name]
+            [server.serverId[0], server.region, player_name]
         );
 
         if (rows.length === 0) return;  // Exit if no player found
@@ -768,7 +819,7 @@ const get_player_info = async (client, player_name, server) => {
             <size=25>Deaths : <b><color=orange>${deaths_count}</color></b></size>
             <size=25>K/D Ratio : <b><color=orange>${kd_ratio}</color></b></size>
         `;
-        await client.rce.sendCommand(server.identifier, `global.say ${message}`);
+        await client.rce.servers.command(server.identifier, `global.say ${message}`);
     } catch (err) {
         client.functions.log("error", 'Error Fetching Player Info:', err);
         throw err;
@@ -780,8 +831,9 @@ async function get_record(client, player_name, type, server) {
     try {
         const [rows] = await client.database_connection.query(
             'SELECT last_redeemed FROM kit_redemptions WHERE display_name = ? AND type = ? AND server = ? AND region = ?',
-            [player_name, type, server.serverId, server.region]
+            [player_name, type, server.serverId[0], server.region]
         );
+        
         if (rows.length > 0) {
             return rows[0].last_redeemed; // Return last redeemed time
         } else {
@@ -799,20 +851,20 @@ async function set_record(client, player_name, type, server, last_redeemed) {
         // Check if the player already has a record for this kit on this server and region
         const [existingRows] = await client.database_connection.query(
             'SELECT id FROM kit_redemptions WHERE display_name = ? AND type = ? AND server = ? AND region = ?',
-            [player_name, type, server.serverId, server.region]
+            [player_name, type, server.serverId[0], server.region]
         );
 
         if (existingRows.length > 0) {
             // Update existing record
             await client.database_connection.query(
                 'UPDATE kit_redemptions SET last_redeemed = ? WHERE display_name = ? AND type = ? AND server = ? AND region = ?',
-                [last_redeemed, player_name, type, server.serverId, server.region]
+                [last_redeemed, player_name, type, server.serverId[0], server.region]
             );
         } else {
             // Insert new record
             await client.database_connection.query(
                 'INSERT INTO kit_redemptions (display_name, type, server, region, last_redeemed) VALUES (?, ?, ?, ?, ?)',
-                [player_name, type, server.serverId, server.region, last_redeemed]
+                [player_name, type, server.serverId[0], server.region, last_redeemed]
             );
         }
     } catch (err) {
@@ -833,7 +885,7 @@ const SECONDS_IN_A_DAY = 24 * SECONDS_IN_AN_HOUR;
 const AN_HOUR = 1 * SECONDS_IN_AN_HOUR;
 const TWO_HOURS = 2 * SECONDS_IN_AN_HOUR;
 
-const handle_kit = async (client, player_name, server) => {
+const handle_kit = async (client, player_name, current_server, server) => {
     try {
         const last_redeemed = await get_record(client, player_name, 'hourly', server);
         const current_timestamp = Math.floor(Date.now() / 1000);
@@ -842,16 +894,14 @@ const handle_kit = async (client, player_name, server) => {
         // Function to log and send messages for cooldown or successful claim
         const notify = async (log_message, embed_title, embed_fields, chat_message, server) => {
             await client.functions.log("info", log_message);
-            if (process.env.KIT_REDEMPTION_LOGS === 'true' && !client.functions.is_empty(process.env.KIT_REDEMPTION_CHANNEL)) {
-                await client.functions.send_embed(client, process.env.KIT_REDEMPTION_CHANNEL, `${server.identifier} - ${embed_title}`, "", embed_fields, "https://cdn.void-dev.co/ak.png");
-            }
-            await client.rce.sendCommand(server.identifier, chat_message);
+            await client.functions.send_embed(client, current_server.kits_logs_channel_id, `${server.identifier} - ${embed_title}`, "", embed_fields, "https://cdn.void-dev.co/ak.png");
+            await client.rce.servers.command(server.identifier, chat_message);
         };
 
         if (timeDiff < AN_HOUR) {
             const remaining_time = get_kit_time(AN_HOUR - timeDiff);
             const log_message = `[KITS] ${player_name} On Cooldown For ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`;
-            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
+            const member_name = client.guilds.cache.get(current_server.guild_id)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
                 { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
@@ -866,7 +916,7 @@ const handle_kit = async (client, player_name, server) => {
             await set_record(client, player_name, 'hourly', server, current_timestamp);
             const log_message = `[KITS] ${player_name} Claimed Hourly Kit!`;
 
-            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
+            const member_name = client.guilds.cache.get(current_server.guild_id)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
                 { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
@@ -876,7 +926,7 @@ const handle_kit = async (client, player_name, server) => {
             const chat_message = `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color>: <color=green><b>Claimed Their Hourly Kit!</b></color>`;
 
             // Give the player the kit
-            await client.rce.sendCommand(server.identifier, `kit givetoplayer "${process.env.HOURLY_KIT_NAME}" "${player_name}"`);
+            await client.rce.servers.command(server.identifier, `kit givetoplayer "${current_server.hourly_kit_name}" "${player_name}"`);
 
             notify(log_message, "Kit Redeemed", embed_fields, chat_message, server);
         }
@@ -898,7 +948,7 @@ async function send_auto_messages(client, server) {
         // Check if message is defined
         if (message) {
             await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[AUTO MESSAGE]\x1b[0m :`, client.functions.format_hostname(message));
-            await client.rce.sendCommand(server.identifier, `global.say <color=green><b>[AUTO MESSAGE]</b></color> <b>${message}</b>`);
+            await client.rce.servers.command(server.identifier, `global.say <color=green><b>[AUTO MESSAGE]</b></color> <b>${message}</b>`);
             last_auto_message_index = message_index; // Update the last message index
         } else {
             await client.functions.log("info", `\x1b[38;5;208m[${server.identifier}]\x1b[0m \x1b[32;1m[AUTO MESSAGE]\x1b[0m : No message found at index ${message_index}`);
@@ -918,20 +968,29 @@ async function check_link(client, discord_id) {
         return false;
     }
 }
+async function check_server_link(client, identifier, region, server_id) {
+    try {
+        const [row] = await client.database_connection.execute("SELECT * FROM servers WHERE identifier = ? AND region = ? AND server_id = ?", [identifier, region, server_id]);
+        return row.length > 0;
+    } catch (error) {
+        await client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Checking Server Link: ${error.message}`);
+        return false;
+    }
+}
 
-const handle_vip_kit = async (client, player_name, server) => {
-    const member = client.guilds.cache.get(process.env.GUILD_ID).members.cache.find(
+const handle_vip_kit = async (client, player_name, current_server, server) => {
+    const member = client.guilds.cache.get(current_server.guild_id).members.cache.find(
         member => member.nickname === player_name || member.user.username === player_name
     );
 
     if (!member) {
         await client.functions.log("info", `[KITS] Member ${player_name} Not Found In The Discord Server!`);
-        await client.rce.sendCommand(server.identifier, `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color> : <color=red><b>Could Not Find Your Discord Account, Are You Linked?</b></color>`);
+        await client.rce.servers.command(server.identifier, `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color> : <color=red><b>Could Not Find Your Discord Account, Are You Linked?</b></color>`);
         return;
     }
-    if (!member.roles.cache.has(process.env.VIP_ROLE_ID)) {
+    if (!member.roles.cache.has(server.vip_role_id)) {
         await client.functions.log("info", `[KITS] Member ${player_name} Does Not Have The VIP Role!`);
-        await client.rce.sendCommand(server.identifier, `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color> : <color=red><b>You Do Not Have The VIP Role To Claim This Kit!</b></color>`);
+        await client.rce.servers.command(server.identifier, `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color> : <color=red><b>You Do Not Have The VIP Role To Claim This Kit!</b></color>`);
         return;
     }
     try {
@@ -942,17 +1001,15 @@ const handle_vip_kit = async (client, player_name, server) => {
         // Function to log and send messages for cooldown or successful claim
         const notify = async (log_message, embed_title, embed_fields, chat_message, server) => {
             await client.functions.log("info", log_message);
-            if (process.env.KIT_REDEMPTION_LOGS === 'true' && !client.functions.is_empty(process.env.KIT_REDEMPTION_CHANNEL)) {
-                await client.functions.send_embed(client, process.env.KIT_REDEMPTION_CHANNEL, `${server.identifier} - ${embed_title}`, "", embed_fields, "https://cdn.void-dev.co/ak.png");
-            }
-            await client.rce.sendCommand(server.identifier, chat_message);
+            await client.functions.send_embed(client, current_server.kits_logs_channel_id, `${server.identifier} - ${embed_title}`, "", embed_fields, "https://cdn.void-dev.co/ak.png");
+            await client.rce.servers.command(server.identifier, chat_message);
         };
 
         if (timeDiff < TWO_HOURS) {
             const remaining_time = get_kit_time(TWO_HOURS - timeDiff);
             const log_message = `[KITS] ${player_name} On Cooldown For ${remaining_time.hours} Hours And ${remaining_time.minutes} Minutes!`;
 
-            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
+            const member_name = client.guilds.cache.get(current_server.guild_id)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
                 { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
@@ -967,7 +1024,7 @@ const handle_vip_kit = async (client, player_name, server) => {
             await set_record(client, player_name, 'vip', server, current_timestamp);
             const log_message = `[KITS] ${player_name} Claimed Hourly Kit!`;
 
-            const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
+            const member_name = client.guilds.cache.get(current_server.guild_id)?.members.cache.find(member => member.nickname === player_name || member.user.username === player_name)?.toString() || player_name;
             const embed_fields = [
                 { name: 'Player', value: `👤 ${member_name}`, inline: true },
                 { name: 'Time', value: `🕜 <t:${current_timestamp}:R>`, inline: true },
@@ -977,7 +1034,7 @@ const handle_vip_kit = async (client, player_name, server) => {
             const chat_message = `global.say <color=green>[KITS]</color> <color=#3498eb><b>${player_name}</b></color>: <color=green><b>Claimed Their VIP Kit!</b></color>`;
 
             // Give the player the kit
-            await client.rce.sendCommand(server.identifier, `kit givetoplayer "${process.env.VIP_KIT_NAME}" "${player_name}"`);
+            await client.rce.servers.command(server.identifier, `kit givetoplayer "${current_server.vip_kit_name}" "${player_name}"`);
 
             notify(log_message, "Kit Redeemed", embed_fields, chat_message, server);
         }
@@ -995,7 +1052,165 @@ const server_state_messages = {
     "RUNNING": "The Server Is Running!",
     "SUSPENDED": "The Server Has Been Suspended!",
 };
+async function create_settings_embed(client, identifier) {
+    const server = await client.functions.get_server(client, identifier);
 
+    // Fetch the guild using the guild_id from the server object
+    const guild = await client.guilds.cache.get(server.guild_id);
+
+    // Check if guild is found
+    if (!guild) {
+        throw new Error(`Guild with ID ${server.guild_id} not found`);
+    }
+
+    // Fetch linked and VIP roles from the guild
+    const linked_role = guild.roles.cache.find(role => role.id === server.linked_role_id);
+    const vip_role = guild.roles.cache.find(role => role.name === "VIP");
+    return new EmbedBuilder()
+        .setColor(process.env.EMBED_COLOR)
+        .setTitle(`${server.identifier} Settings`)
+        .setAuthor({ name: 'RCE Admin', iconURL: process.env.EMBED_LOGO, url: 'https://github.com/KyleFardy/RCE-Discord-Bot-V2' })
+
+        .setDescription(`Here Are The Settings For **[${server.region}] ${server.identifier} - ${server.server_id}**`)
+        .setThumbnail('https://cdn.void-dev.co/settings_logo.png')
+        .addFields(
+            {
+                name: 'NPC Kill Points',
+                value: `**${server.npc_kill_points?.toString() ?? 'Not Set'}**`,
+                inline: true
+            },
+            {
+                name: 'NPC Death Points',
+                value: `**${server.npc_death_points?.toString() ?? 'Not Set'}**`,
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            },  // Blank field
+            {
+                name: 'Player Kill Points',
+                value: `**${server.player_kill_points?.toString() ?? 'Not Set'}**`,
+                inline: true
+            },
+            {
+                name: 'Player Death Points',
+                value: `**${server.player_death_points?.toString() ?? 'Not Set'}**`,
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            },  // Blank field
+            {
+                name: 'Suicide Points',
+                value: `**${server.suicide_points?.toString() ?? 'Not Set'}**`,
+                inline: true
+            },
+            {
+                name: 'Extended Feeds',
+                value: `${server.bradley_feeds == 1 || server.heli_feeds == 1 ? '**Enabled**' : '**Disabled**'}`,
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            },  // Blank field
+            {
+                name: 'Loot Scale\n> `Only Needed If Random Items Is Enabled`',
+                value: server.loot_scale != null
+                    ? `**${server.loot_scale.toString()}X**`
+                    : '**Not Set**',
+                inline: false
+            },
+            {
+                name: 'Outpost\n> Example: `x,y,z`',
+                value: server.outpost != null
+                    ? (() => {
+                        const [x, y, z] = server.outpost.split(',');
+                        return `**X:** \`${x}\`\n**Y:** \`${y}\`\n**Z:** \`${z}\``;
+                    })()
+                    : '**Not Set**',
+                inline: true
+            },
+            {
+                name: 'Bandit Camp\n> Example: `x,y,z`',
+                value: server.bandit != null
+                    ? (() => {
+                        const [x, y, z] = server.bandit.split(',');
+                        return `**X:** \`${x}\`\n**Y:** \`${y}\`\n**Z:** \`${z}\``;
+                    })()
+                    : '**Not Set**',
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            },  // Blank field
+            {
+                name: 'Hourly Kit Name',
+                value: server.hourly_kit_name != null
+                    ? `\`${server.hourly_kit_name.toString()}\``
+                    : '**Not Set**',
+                inline: true
+            },
+            {
+                name: 'VIP Kit Name',
+                value: server.vip_kit_name != null
+                    ? `\`${server.vip_kit_name.toString()}\``
+                    : '**Not Set**',
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            },  // Blank field
+            {
+                name: 'Random Items',
+                value: server.random_items != 1
+                    ? '**Enabled**'
+                    : '**Disabled**',
+                inline: true
+            },
+            {
+                name: 'Raid Alerts',
+                value: `${server.rf_broadcasting == 1 ? '**Enabled**' : '**Disabled**'}`,
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            },  // Blank field
+            {
+                name: 'Linked Role',
+                value: linked_role
+                    ? `<@&${linked_role.id}>`
+                    : '**Not Set**',
+                inline: true
+            },
+            {
+                name: 'VIP Role',
+                value: vip_role
+                    ? `<@&${vip_role.id}>`
+                    : '**Disabled**',
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B',
+                inline: true
+            }  // Blank field
+    )
+        .setTimestamp()
+        .setFooter({ text: process.env.EMBED_FOOTER_TEXT, iconURL: process.env.EMBED_LOGO });
+}
+const valid_server_id = serverId => typeof serverId === 'string' && serverId.length === 7 && [...serverId].every(char => char >= '0' && char <= '9');
 module.exports = {
     log,
     format_date,
@@ -1013,6 +1228,8 @@ module.exports = {
     trigger_random_item,
     load_items,
     get_server,
+    get_server_discord,
+    get_server_discord_identifier,
     handle_teleport,
     format_teleport_pos,
     get_player_info,
@@ -1021,8 +1238,13 @@ module.exports = {
     handle_kit,
     handle_vip_kit,
     check_link,
+    check_server_link,
     send_auto_messages,
     event_messages,
     server_state_messages,
-    get_member_name
+    valid_server_id,
+    get_servers_by_guild,
+    delete_server,
+    get_guild_servers,
+    create_settings_embed
 };

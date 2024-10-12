@@ -3,21 +3,37 @@ const { Events } = require('discord.js');
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction, client) {
-        await handle_chat_input_command(interaction, client);
-    },
-};
+        // Handle command interactions
+        if (interaction.isChatInputCommand()) {
+            const command = client.commands.get(interaction.commandName);
+            if (!command) {
+                return await interaction.reply({
+                    content: `An Error Occurred With Command "${interaction.commandName}".`,
+                    ephemeral: true
+                });
+            }
 
-async function handle_chat_input_command(interaction, client) {
-    if (!interaction.isChatInputCommand()) return;
+            try {
+                await command.execute(interaction, client);
+            } catch (error) {
+                console.log("Error executing command:", error);
+                await interaction.reply({
+                    content: 'There Was An Error Executing This Command!',
+                    ephemeral: true
+                });
+            }
+        }
 
-    const command = client.commands.get(interaction.commandName);
-    if (!command) {
-        await interaction.reply({
-            content: `An Error Occurred With Command ${interaction.commandName}`,
-            ephemeral: true
-        });
-        return; // Return early to avoid executing the command
+        // Handle autocomplete interactions
+        if (interaction.isAutocomplete()) {
+            const command = client.commands.get(interaction.commandName);
+            if (!command) return;
+
+            try {
+                await command.autocomplete(interaction);
+            } catch (error) {
+                console.log("Error In Auto Complete:", error);
+            }
+        }
     }
-
-    await command.execute(interaction, client);
-}
+};

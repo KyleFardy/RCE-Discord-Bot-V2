@@ -13,8 +13,6 @@ module.exports = {
 
 // Helper function to log player respawn
 async function log_player_respawn(client, server_id, ign) {
-    const player_respawned_message = `\x1b[38;5;208m[${server_id}]\x1b[0m \x1b[32;1m[PLAYER RESPAWNED]\x1b[0m \x1b[32;1m${ign}\x1b[0m Has Respawned!`;
-
     // Utilize the logging function from the client to log the respawn event
-    await client.functions.log("info", player_respawned_message);
+    await client.functions.log("info", `\x1b[38;5;208m[${server_id}]\x1b[0m \x1b[32;1m[PLAYER RESPAWNED]\x1b[0m \x1b[32;1m${ign}\x1b[0m Has Respawned!`);
 }

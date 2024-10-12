@@ -10,7 +10,8 @@ module.exports = {
         await log_player_suicide(client, data.server.identifier, data.ign);
 
         // Remove the points for the player who committed suicide
-        await client.player_stats.remove_points(data.server, data.ign, process.env.SUICIDE_POINTS);
+        const current_server = await client.functions.get_server(client, data.server.identifier);
+        await client.player_stats.remove_points(data.server, data.ign, current_server.suicide_points);
     },
 };
 

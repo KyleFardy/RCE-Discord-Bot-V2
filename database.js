@@ -78,7 +78,32 @@ class STATS {
                     heli_feeds FLOAT DEFAULT 0.5,
                     random_items BOOLEAN DEFAULT FALSE,
                     guild_owner VARCHAR(255) NOT NULL,
-                    guild_id VARCHAR(255) NOT NULL
+                    guild_id VARCHAR(255) NOT NULL,
+                    category_id VARCHAR(255) NOT NULL,
+                    linked_role_id VARCHAR(255) NOT NULL,
+                    link_channel_id VARCHAR(255) NOT NULL,
+                    kill_feeds_channel_id VARCHAR(255) NOT NULL,
+                    events_channel_id VARCHAR(255) NOT NULL,
+                    stats_channel_id VARCHAR(255) NOT NULL,
+                    chat_logs_channel_id VARCHAR(255) NOT NULL,
+                    item_spawning_channel_id VARCHAR(255) NOT NULL,
+                    kits_logs_channel_id VARCHAR(255) NOT NULL,
+                    team_logs_channel_id VARCHAR(255) NOT NULL,
+                    teleport_logs_channel_id VARCHAR(255) NOT NULL,
+                    shop_channel_id VARCHAR(255) NOT NULL,
+                    settings_channel_id VARCHAR(255) NOT NULL,
+                    npc_kill_points int NOT NULL,
+                    npc_death_points int NOT NULL,
+                    player_kill_points int NOT NULL,
+                    player_death_points int NOT NULL,
+                    suicide_points int NOT NULL,
+                    outpost VARCHAR(255) NOT NULL,
+                    bandit VARCHAR(255) NOT NULL,
+                    loot_scale INT DEFAULT 1,
+                    hourly_kit_name VARCHAR(255) NULL,
+                    vip_kit_name VARCHAR(255) NULL,
+                    vip_role_id VARCHAR(255) NULL,
+                    enabled int(11) NOT NULL DEFAULT 1
                 );`,
             },
         ];
@@ -150,7 +175,7 @@ class STATS {
     }
     async wipe_chat_bans(server_identifier) {
         try {
-            const [result, fields] = await this.client.database_connection.execute(`DELETE FROM chat_blacklist WHERE server = '${server_identifier.serverId}' AND region = '${server_identifier.region}'`);
+            const [result, fields] = await this.client.database_connection.execute(`DELETE FROM chat_blacklist WHERE server = '${server_identifier.serverId[0]}' AND region = '${server_identifier.region}'`);
             return `Successfully Deleted ${result.affectedRows} Banned Chatters!`;
         } catch (error) {
             return `Error Occurred While Wiping Banned Chatters: ${error.message}`;
@@ -166,7 +191,7 @@ class STATS {
                 // Player exists, proceed to insert the ban
                 await this.client.database_connection.execute(
                     `INSERT INTO bans (id, display_name, reason, server, region) VALUES (DEFAULT, ?, DEFAULT, ?, ?)`,
-                    [display_name, server_identifier.serverId, server_identifier.region]
+                    [display_name, server_identifier.serverId[0], server_identifier.region]
                 );
             } else {
                 await this.client.functions.log("info", `\x1b[33;1m[DATABASE]\x1b[0m Player '${display_name}' does not exist, ban not inserted.`);
@@ -184,7 +209,7 @@ class STATS {
                 // Player does not exist, so insert them into the database
                 await this.client.database_connection.execute(
                     `INSERT INTO players (id, display_name, discord_id, home, currency, server, region) VALUES (DEFAULT, ?, DEFAULT, DEFAULT, DEFAULT, ?, ?)`,
-                    [display_name, server_identifier.serverId, server_identifier.region]
+                    [display_name, server_identifier.serverId[0], server_identifier.region]
                 );
             }
         } catch (error) {
@@ -204,14 +229,14 @@ class STATS {
 
             const [existingBan] = await this.client.database_connection.execute(
                 "SELECT * FROM chat_blacklist WHERE display_name = ? AND server = ? AND region = ?",
-                [display_name, server_identifier.serverId, server_identifier.region]
+                [display_name, server_identifier.serverId[0], server_identifier.region]
             );
 
             if (!existingBan.length) {
                 // Player is not banned, insert into chat_blacklist
                 await this.client.database_connection.execute(
                     "INSERT INTO chat_blacklist (id, display_name, reason, server, region) VALUES (DEFAULT, ?, ?, ?, ?)",
-                    [display_name, reason, server_identifier.serverId, server_identifier.region]
+                    [display_name, reason, server_identifier.serverId[0], server_identifier.region]
                 );
             }
         } catch (error) {
@@ -233,7 +258,7 @@ class STATS {
             // Insert the kill record
             await this.client.database_connection.execute(
                 "INSERT INTO kills (display_name, victim, type, server, region) VALUES (?, ?, ?, ?, ?)",
-                [display_name, victim, killType, server_identifier.serverId, server_identifier.region]
+                [display_name, victim, killType, server_identifier.serverId[0], server_identifier.region]
             );
         } catch (err) {
             await this.client.functions.log("error", `\x1b[34;1m[DATABASE]\x1b[0m Error In Inserting Kill: ${err.message}`);
@@ -250,7 +275,7 @@ class STATS {
                 // Update the player's stat column
                 await this.client.database_connection.execute(
                     `UPDATE players SET ${statColumn} = ${statColumn} + 1 WHERE display_name = ? AND server = ? AND region = ?`,
-                    [player_name, server_identifier.serverId, server_identifier.region]
+                    [player_name, server_identifier.serverId[0], server_identifier.region]
                 );
             }
         } catch (err) {
@@ -263,7 +288,7 @@ class STATS {
         // Check if the player exists
         const [result] = await this.client.database_connection.execute(
             `SELECT COUNT(*) as count FROM players WHERE display_name = ? AND server = ? AND region = ?`,
-            [player_name, server.serverId, server.region]
+            [player_name, server.serverId[0], server.region]
         );
 
         if (result[0].count > 0) {
@@ -272,9 +297,9 @@ class STATS {
             // Player does not exist, insert a new record
             await this.client.database_connection.execute(
                 `INSERT INTO players (display_name, server, region, currency) VALUES (?, ?, ?, ?)`,
-                [player_name, server.serverId, server.region, 0]
+                [player_name, server.serverId[0], server.region, 0]
             );
-            await this.client.functions.log("info", `\x1b[33;1m[DATABASE]\x1b[0m Created A New Player ${player_name} In Server ${server.serverId}, Region ${server.region}`);
+            await this.client.functions.log("info", `\x1b[33;1m[DATABASE]\x1b[0m Created A New Player ${player_name} In Server ${server.serverId[0]}, Region ${server.region}`);
             return false; // Player was just created
         }
     }
@@ -287,7 +312,7 @@ class STATS {
                 // If the player already existed, update the points
                 await this.client.database_connection.execute(
                     `UPDATE players SET currency = currency + ? WHERE display_name = ? AND server = ? AND region = ?`,
-                    [amount, player_name, server_identifier.serverId, server_identifier.region]
+                    [amount, player_name, server_identifier.serverId[0], server_identifier.region]
                 );
             }
         } catch (err) {
@@ -303,7 +328,7 @@ class STATS {
             // If the player already existed, update the points
                 const [result] = await this.client.database_connection.execute(
                     `UPDATE players SET currency = currency - ? WHERE display_name = ? AND server = ? AND region = ?`,
-                    [amount, player_name, server.serverId, server.region]
+                    [amount, player_name, server.serverId[0], server.region]
                 );
             }
         } catch (err) {
@@ -319,7 +344,7 @@ class STATS {
             // Retrieve the player's points (whether they existed or were just created)
             const [results] = await this.client.database_connection.execute(
                 `SELECT currency FROM players WHERE display_name = ? AND server = ? AND region = ?`,
-                [player_name, server.serverId, server.region]
+                [player_name, server.serverId[0], server.region]
             );
 
             return results.length > 0 ? results[0].currency : 0;
@@ -330,7 +355,7 @@ class STATS {
     }
     async link_discord(server_identifier, player_name, discord_id) {
         return new Promise(async (resolve, reject) => {
-            await this.client.database_connection.execute('SELECT * FROM players WHERE display_name = ? AND server = ? AND region = ?', [player_name, server_identifier.serverId, server_identifier.region], async (err, player) => {
+            await this.client.database_connection.execute('SELECT * FROM players WHERE display_name = ? AND server = ? AND region = ?', [player_name, server_identifier.serverId[0], server_identifier.region], async (err, player) => {
                 if (err) {
                     reject(err);
                     return;
@@ -340,7 +365,7 @@ class STATS {
                     return;
                 }
                 if (player[0].discord_id === null) {
-                    await this.client.database_connection.execute('UPDATE players SET discord_id = ? WHERE display_name = ? AND server = ? AND region = ?', [discord_id, player_name, server_identifier.serverId, server_identifier.region], (updateErr) => {
+                    await this.client.database_connection.execute('UPDATE players SET discord_id = ? WHERE display_name = ? AND server = ? AND region = ?', [discord_id, player_name, server_identifier.serverId[0], server_identifier.region], (updateErr) => {
                         if (updateErr) {
                             reject(updateErr);
                         } else {

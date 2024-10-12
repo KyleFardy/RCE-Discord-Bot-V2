@@ -13,7 +13,6 @@ module.exports = {
 
 async function handle_link_account(interaction, client) {
     const existingLink = await client.functions.check_link(client, interaction.user.id);
-
     if (!existingLink) {
         const modal = create_link_modal();
         await interaction.showModal(modal);

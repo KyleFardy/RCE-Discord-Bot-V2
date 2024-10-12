@@ -9,6 +9,8 @@ module.exports = {
     async execute(data, rce, client) {
         const { server, ign, old_content, new_content } = data; // Destructure data for clarity
 
+        const current_server = await client.functions.get_server(client, data.server.identifier);
+
         const new_message = sanitize_message(new_content);
         const is_blacklisted = await check_blacklisted(ign, client);
 
@@ -19,10 +21,7 @@ module.exports = {
 
         await log_new_message(server.identifier, ign, new_content, client);
         await send_chat_message(server.identifier, ign, new_message, client);
-
-        if (process.env.CHAT_LOGS === 'true' && !client.functions.is_empty(process.env.CHAT_LOGS_CHANNEL)) {
-            await log_chat_message(old_content, new_content, ign, client);
-        }
+        await log_chat_message(old_content, new_content, ign, client, current_server);
     }
 };
 
@@ -42,7 +41,7 @@ async function check_blacklisted(ign, client) {
 
 // Handle a message from a blacklisted player
 async function handle_blacklisted_message(server_id, ign, new_message, client) {
-    await client.rce.sendCommand(server_id, `global.say <color=green>[CHAT]</color> <color=#3498eb><b>${ign}</b></color> <color=red><b>Is Banned From Chatting!</b></color>`);
+    await client.rce.servers.command(server_id, `global.say <color=green>[CHAT]</color> <color=#3498eb><b>${ign}</b></color> <color=red><b>Is Banned From Chatting!</b></color>`);
     await client.functions.log("error", `[BLACKLISTED MESSAGE] ${ign} : ${new_message}`);
 }
 
@@ -53,14 +52,14 @@ async function log_new_message(server_id, ign, new_content, client) {
 
 // Send a chat message to the server
 async function send_chat_message(server_id, ign, new_message, client) {
-    await client.rce.sendCommand(server_id, `global.say <color=green>[CHAT]</color> <color=#3498eb><b>${ign}</b></color> : ${new_message}`);
+    await client.rce.servers.command(server_id, `global.say <color=green>[CHAT]</color> <color=#3498eb><b>${ign}</b></color> : ${new_message}`);
 }
 
 // Log chat messages to a channel
-async function log_chat_message(old_content, new_content, ign, client) {
-    const member_name = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.find(member => member.nickname === ign || member.user.username === ign)?.toString() || ign;
+async function log_chat_message(old_content, new_content, ign, client, server) {
+    const member_name = client.guilds.cache.get(server.guild_id)?.members.cache.find(member => member.nickname === ign || member.user.username === ign)?.toString() || ign;
 
-    await client.functions.send_embed(client, process.env.CHAT_LOGS_CHANNEL, "New Message", "", [
+    await client.functions.send_embed(client, server.chat_logs_channel_id, "New Message", "", [
         { name: 'Player', value: `👤 ${member_name}`, inline: true },
         { name: "\u200B\u200B", value: "\u200B\u200B", inline: true },
         { name: 'Old Message', value: `${old_content}`, inline: true },
