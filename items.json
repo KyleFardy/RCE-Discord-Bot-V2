@@ -162,6 +162,20 @@
     "category": "Ammunition"
   },
   {
+    "id": "-907422733",
+    "image": "https://wiki.rustclash.com/img/items180/largebackpack.png",
+    "displayName": "Large Backpack",
+    "shortName": "largebackpack",
+    "category": "Attire"
+  },
+  {
+    "id": "2068884361",
+    "image": "https://wiki.rustclash.com/img/items180/smallbackpack.png",
+    "displayName": "Small Backpack",
+    "shortName": "smallbackpack",
+    "category": "Attire"
+  },
+  {
     "id": "1638322904",
     "image": "https://wiki.rustclash.com/img/items180/ammo.rocket.fire.png",
     "displayName": "Incendiary Rocket",
